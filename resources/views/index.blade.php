@@ -73,7 +73,7 @@ https://templatemo.com/tm-516-known
                          <li><a href="#courses" class="smoothScroll">Niveles</a></li>
                          <li><a href="#testimonial" class="smoothScroll">Blocs</a></li>
                          <li><a href="#contact" class="smoothScroll">Contactanos</a></li>
-                         <li><a href="login.html" class="smoothScroll">Login</a></li>
+                         <li><a href="{{route('login')}}" class="smoothScroll">Login</a></li>
 
                     </ul>
 
