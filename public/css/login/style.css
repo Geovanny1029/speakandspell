@@ -338,7 +338,7 @@ textarea {
 	
 	position: relative;
 	clear: both;
-	
+	align-items: center;
 	width: auto;
 	
 	margin-bottom: 2em;
