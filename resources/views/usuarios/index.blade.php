@@ -92,22 +92,10 @@
     </div>
   </div>
 </div>
+
+
   <!-- /main-inner --> 
 
-<!-- /extra -->
-<div class="extra">
-  <div class="extra-inner">
-    <div class="container">
-      <div class="row">
-
-                    <!-- /span3 -->
-                </div>
-      <!-- /row --> 
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /extra-inner --> 
-</div>
 <!-- /footer --> 
 
 <!-- Le javascript
