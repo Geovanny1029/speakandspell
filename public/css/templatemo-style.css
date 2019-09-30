@@ -215,9 +215,6 @@ https://templatemo.com/tm-516-known
 .my-4 {
   margin-bottom: 1.5rem !important; }
 
-  .ftco-animate {
-  opacity: 0;
-  visibility: hidden; }
 
   /*---------------------------------------
      GENERAL               
@@ -781,7 +778,129 @@ https://templatemo.com/tm-516-known
     display: flex !important; }
 
 
+/*cuadro*/
+.contenedor11 {
+  height: 250px;
+  width: 250px;
+  -webkit-perspective: 700;
+}
 
+.carta {
+    height: 100%;
+  width: 100%;
+  transition: all 1s;
+  transform-style: preserve-3d;
+  box-shadow: 0px 0px 5px black;
+}
+
+.carta:hover{
+  transform: rotateY(180deg);
+}
+
+.lado{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+   background: #F0F0F0;
+  backface-visibility: hidden;
+}
+
+.frente{ background-color: crimson; }
+.frente h3 {
+   position: absolute;
+   font-size: 38px;
+
+}
+
+
+.atras{
+  height: 100%;
+  width: 100%;
+
+  transform: rotateY(180deg);
+}
+
+.atras h3 {
+  display: block;
+  text-align: center;
+  margin: 10px 0;
+}
+
+#contenedor{
+  overflow: hidden;
+  margin: 1% 15% 1% 15%;
+
+}
+
+
+
+#derecha{
+  float: right;
+  padding: 4%;
+  color: #fff;
+  height: 200px;
+  width: 350px;
+  display: flex;
+   -webkit-perspective: 700;
+}
+
+#izquierda{
+  float: left;
+  padding: 4%;
+  color: #fff;
+  height: 200px;
+  width: 350px;
+  display: flex;
+   -webkit-perspective: 700;
+}
+
+
+#contenedor1{
+  overflow: hidden;
+  margin: 1% 15% 6% 15%;
+
+}
+
+
+
+#derecha1{
+  float: right;
+  padding: 4%;
+  color: #fff;
+  height: 200px;
+  width: 350px;
+  display: flex;
+   -webkit-perspective: 700;
+}
+
+#izquierda1{
+  float: left;
+  padding: 4%;
+  color: #fff;
+  height: 200px;
+  width: 350px;
+  display: flex;
+   -webkit-perspective: 700;
+}
+#derecha2{
+  float: left;
+  padding: 10% 10%;
+  color: #fff;
+  width: 300px;
+  margin:5px 100px 3px 100px;
+  background: #039;
+  display: flex;
+}
+
+#izquierda2{
+  float: right;
+  padding: 10% 10%;
+  color: #fff;
+  width: 300px;
+  margin:5px 100px 3px 100px;
+  background: #039;
+  display: flex;  
+}
   /*---------------------------------------
      NEWS              
   -----------------------------------------*/

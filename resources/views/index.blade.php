@@ -70,7 +70,7 @@ https://templatemo.com/tm-516-known
                     <ul class="nav navbar-nav navbar-nav-first">
                          <li><a href="#top" class="smoothScroll">Inicio</a></li>
                          <li><a href="#about" class="smoothScroll">Acerca</a></li>
-                         <li><a href="#courses" class="smoothScroll">Niveles</a></li>
+                         <li><a href="#contenedor" class="smoothScroll">Niveles</a></li>
                          <li><a href="#testimonial" class="smoothScroll">Blocs</a></li>
                          <li><a href="#contact" class="smoothScroll">Contactanos</a></li>
                          <li><a href="{{route('login')}}" class="smoothScroll">Login</a></li>
@@ -189,51 +189,97 @@ https://templatemo.com/tm-516-known
 
 
      <!-- Courses Niveles -->
-     <section class="ftco-section" id="courses">
-          <div class="container1">
-               <div class="row justify-content-center mb-5 pb-2">
-                    <div class="col-md-12 text-center heading-section ftco-animate">
-                         <h2 class="mb-4"><span>Nuestros</span> Niveles</h2>
-                         <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country</p>
-                    </div>
-               </div> 
-                    <div class="row">
-                         <div class="col-md-6 course1 d-lg-flex ftco-animate">
-                              <div class="img1" style="background-image: url(images/course-1.jpg);"></div>
-                              <div class="text1 bg-light p-4">
-                                   <h3><a href="#">Nivel Principiante</a></h3>
-                                   <p class="subheading"><span>Class time:</span> 9:00am - 10am</p>
-                                   <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country</p>
-                              </div>
-                         </div>
-                         <div class="col-md-6 course1 d-lg-flex ftco-animate">
-                              <div class="img1" style="background-image: url(images/course-2.jpg);"></div>
-                              <div class="text1 bg-light p-4">
-                                   <h3><a href="#">Nivel Intermedio</a></h3>
-                                   <p class="subheading"><span>Class time:</span> 9:00am - 10am</p>
-                                   <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country</p>
-                              </div>
-                         </div>
-                         <div class="col-md-6 course1 d-lg-flex ftco-animate">
-                              <div class="img1" style="background-image: url(images/course-3.jpg);"></div>
-                              <div class="text1 bg-light p-4">
-                                   <h3><a href="#">Nivel Avanzado</a></h3>
-                                   <p class="subheading"><span>Class time:</span> 9:00am - 10am</p>
-                                   <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country</p>
-                              </div>
-                         </div>
-                         <div class="col-md-6 course1 d-lg-flex ftco-animate">
-                              <div class="img1" style="background-image: url(images/course-4.jpg);"></div>
-                              <div class="text1 bg-light p-4">
-                                   <h3><a href="#">Nivel Conversacion</a></h3>
-                                   <p class="subheading"><span>Class time:</span> 9:00am - 10am</p>
-                                   <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country</p>
-                              </div>
-                         </div>
-                    </div>
-          </div>
-     </section>
 
+     <div id="contenedor">
+          <center>Hola</center>
+               <div id="izquierda">
+                      <div class="carta">
+                         <div class="lado frente">
+                               <h3>Entradas</h3>
+                              <img style="width: 300px;" src="http://silvestregustolatino.com/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/causa_camaron.jpg" alt="">
+                         </div>
+    
+                         <div class="lado atras">
+                              <h3>Entradas</h3>
+                              <ul >
+                                   <li style="text-decoration: none;
+                                   padding: 10px;
+                                   z-index:80;">Causa Rellena</li>
+                                   <li style="text-decoration: none;
+                                   padding: 10px;
+                                   z-index:80;">Ensalada de Palta</li>
+                              </ul>
+                         </div>    
+                         </div>
+               </div>
+               <div id="derecha">
+                         <div class="carta">
+                         <div class="lado frente">
+                               <h3>Entradas</h3>
+                              <img style="height: 100%; width: 100%;" src="http://silvestregustolatino.com/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/causa_camaron.jpg" alt="">
+                         </div>
+    
+                         <div class="lado atras">
+                              <h3>Entradas</h3>
+                              <ul >
+                                   <li style="text-decoration: none;
+                                   padding: 10px;
+                                   z-index:80;">Causa Rellena</li>
+                                   <li style="text-decoration: none;
+                                   padding: 10px;
+                                   z-index:80;">Ensalada de Palta</li>
+                              </ul>
+                         </div>    
+                         </div>
+                    
+               </div>
+                    
+               </div>
+   
+     <div id="contenedor">
+               <div id="izquierda">
+                      <div class="carta">
+                         <div class="lado frente">
+                               <h3>Entradas</h3>
+                              <img style="width: 300px;" src="http://silvestregustolatino.com/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/causa_camaron.jpg" alt="">
+                         </div>
+    
+                         <div class="lado atras">
+                              <h3>Entradas</h3>
+                              <ul >
+                                   <li style="text-decoration: none;
+                                   padding: 10px;
+                                   z-index:80;">Causa Rellena</li>
+                                   <li style="text-decoration: none;
+                                   padding: 10px;
+                                   z-index:80;">Ensalada de Palta</li>
+                              </ul>
+                         </div>    
+                         </div>
+               </div>
+               <div id="derecha">
+                         <div class="carta">
+                         <div class="lado frente">
+                               <h3>Entradas</h3>
+                              <img style="height: 100%; width: 100%;" src="http://silvestregustolatino.com/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/causa_camaron.jpg" alt="">
+                         </div>
+    
+                         <div class="lado atras">
+                              <h3>Entradas</h3>
+                              <ul >
+                                   <li style="text-decoration: none;
+                                   padding: 10px;
+                                   z-index:80;">Causa Rellena</li>
+                                   <li style="text-decoration: none;
+                                   padding: 10px;
+                                   z-index:80;">Ensalada de Palta</li>
+                              </ul>
+                         </div>    
+                         </div>
+                    
+               </div>
+                    
+               </div>
 
      <!-- TESTIMONIAL -->
      <section id="testimonial">
