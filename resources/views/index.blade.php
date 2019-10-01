@@ -193,42 +193,32 @@ https://templatemo.com/tm-516-known
      <div id="contenedor">
           <center>Hola</center>
                <div id="izquierda">
-                      <div class="carta">
+                    <div class="carta">
                          <div class="lado frente">
-                               <h3>Entradas</h3>
-                              <img style="width: 300px;" src="http://silvestregustolatino.com/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/causa_camaron.jpg" alt="">
+                              <h4 style="font-size: 25px;" align="center">Nivel Principiante</h4>
+                              <center><img style="width: 80px;" src="img/principiante.png" alt=""></center>
                          </div>
     
                          <div class="lado atras">
-                              <h3>Entradas</h3>
-                              <ul >
-                                   <li style="text-decoration: none;
-                                   padding: 10px;
-                                   z-index:80;">Causa Rellena</li>
-                                   <li style="text-decoration: none;
-                                   padding: 10px;
-                                   z-index:80;">Ensalada de Palta</li>
-                              </ul>
+                              <h3 >Acerca del nivel</h3>
+                              <p>
+                                   En este nivel aprenderas conceptos basicos, abecedario, vocales, verbos auxiliares
+                              </p>
                          </div>    
-                         </div>
+                    </div>
                </div>
                <div id="derecha">
                          <div class="carta">
                          <div class="lado frente">
-                               <h3>Entradas</h3>
-                              <img style="height: 100%; width: 100%;" src="http://silvestregustolatino.com/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/causa_camaron.jpg" alt="">
+                              <h4 style="font-size: 25px;" align="center">Nivel Intermedio</h4>
+                              <center><img style="width: 80px;" src="img/intermedio.png" alt=""></center>
                          </div>
     
                          <div class="lado atras">
-                              <h3>Entradas</h3>
-                              <ul >
-                                   <li style="text-decoration: none;
-                                   padding: 10px;
-                                   z-index:80;">Causa Rellena</li>
-                                   <li style="text-decoration: none;
-                                   padding: 10px;
-                                   z-index:80;">Ensalada de Palta</li>
-                              </ul>
+                              <h3>Acerca del nivel</h3>
+                              <p>
+                                   
+                              </p>
                          </div>    
                          </div>
                     
@@ -240,15 +230,15 @@ https://templatemo.com/tm-516-known
                <div id="izquierda">
                       <div class="carta">
                          <div class="lado frente">
-                               <h3>Entradas</h3>
-                              <img style="width: 300px;" src="http://silvestregustolatino.com/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/causa_camaron.jpg" alt="">
+                              <h4 style="font-size: 25px;" align="center">Nivel Avanzado</h4>
+                              <center><img style="width: 80px;" src="img/avanzado.png" alt=""></center>
                          </div>
     
                          <div class="lado atras">
                               <h3>Entradas</h3>
                               <ul >
                                    <li style="text-decoration: none;
-                                   padding: 10px;
+                                   padding: 15px;
                                    z-index:80;">Causa Rellena</li>
                                    <li style="text-decoration: none;
                                    padding: 10px;
@@ -260,8 +250,8 @@ https://templatemo.com/tm-516-known
                <div id="derecha">
                          <div class="carta">
                          <div class="lado frente">
-                               <h3>Entradas</h3>
-                              <img style="height: 100%; width: 100%;" src="http://silvestregustolatino.com/magento/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/causa_camaron.jpg" alt="">
+                              <h4 style="font-size: 25px;" align="center">Nivel Conversacion</h4>
+                              <center><img style="width: 80px;" src="img/conversacion.png" alt=""></center>
                          </div>
     
                          <div class="lado atras">
