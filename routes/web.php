@@ -19,4 +19,9 @@ Route::resource('user','UserController');
 Route::get('/login', 'LoginController@login')->name('login');
 Auth::routes();
 
+//menu de opciones index
+Route::get('menu',[
+			'uses' => 'UserController@menu',
+			'as'   => 'user.menu'
+]);
 Route::get('/home', 'HomeController@index')->name('home');

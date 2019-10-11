@@ -18,7 +18,7 @@ class LoginController extends Controller
         if (Auth::attempt(['name' =>$request['name'], 'password' => $request['password']])) {
 
 
-                   return redirect()->route('user.index');
+                   return redirect()->route('user.menu');
              
             // Authentication passed...
         }else{

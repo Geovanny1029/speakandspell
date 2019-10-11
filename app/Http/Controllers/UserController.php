@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+Use App\Alumnos;
 class UserController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');///se configura en midlewere/autenticate para proteger las rutas
+    }    
     /**
      * Display a listing of the resource.
      *
@@ -13,9 +17,15 @@ class UserController extends Controller
      */
     public function index()
     {
-          return view('usuarios.index');
+        $alumnos = Alumnos::orderBy('matricula','asc')->get();
+        return view('usuarios.lista')->with('alumnos',$alumnos);
     }
 
+    public function menu()
+    {
+        
+        return view('usuarios.menu');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -23,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+         return view('usuarios.altaU');
     }
 
     /**

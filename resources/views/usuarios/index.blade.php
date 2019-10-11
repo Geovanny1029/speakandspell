@@ -5,8 +5,8 @@
 <title>Administrador</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="stylesheet" href="{{asset('css/login/bootstrap.min.css')}}">
-<link rel="stylesheet" href="{{asset('css/login/bootstrap-responsive.min.css')}}">
+<link rel="stylesheet" href="{{asset('css/login/bootstrap.css')}}">
+
 <link rel="stylesheet" href="{{asset('css/login/font-awesome.css')}}">
 <link rel="stylesheet" href="{{asset('css/login/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/login/pages/dashboard.css')}}">
@@ -21,10 +21,36 @@
     <![endif]-->
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
+{{-- nuevo --}}
+<nav class="navbar navbar-fixed-top" style="background-color: red;">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header"> 
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" style="color: white;">Sistema de administracion de usuarios</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+  </div>
+</nav>
+{{-- <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
-    <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">Sistema de administracion de Usuarios </a>
+    <div class="container"> 
       <div class="nav-collapse">
         <ul class="nav pull-right">
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
@@ -44,7 +70,7 @@
     <!-- /container --> 
   </div>
   <!-- /navbar-inner --> 
-</div><br><br>
+</div> --}}
 <!-- /navbar -->
 
 <!-- /subnavbar -->
@@ -54,38 +80,7 @@
       <div class="row">
         <div class="span12">
           <div class="widget">
-            <div class="widget-header"> <i class="icon-bookmark"></i>
-              <h3>Menu de Opciones</h3>
-            </div>
-            <div class="widget-content">
-              <div class="shortcuts">
-                <a href="javascript:;" class="shortcut">
-                  <i class="shortcut-icon icon-user"></i>
-                  <span class="shortcut-label">Usuarios</span> 
-                </a>                
-                <a href="javascript:;" class="shortcut">
-                  <i class="shortcut-icon icon-bookmark"></i>
-                  <span class="shortcut-label">Pagos</span>
-                </a>
-                <a href="javascript:;" class="shortcut">
-                  <i class="shortcut-icon icon-file"></i>
-                  <span class="shortcut-label">Notes</span> 
-                </a>
-                <a href="javascript:;" class="shortcut"> 
-                  <i class="shortcut-icon icon-comment"></i>
-                  <span class="shortcut-label">Corte</span> 
-                </a>
-                <a href="javascript:;" class="shortcut">
-                  <i class="shortcut-icon icon-list-alt"></i>
-                  <span class="shortcut-label">Utilerias</span> 
-                </a>
-                <a href="javascript:;" class="shortcut">
-                  <i class="shortcut-icon icon-picture"></i>
-                  <span class="shortcut-label">Bloc</span> 
-                </a>
-
-              </div>
-            </div>
+            @yield('content')
           </div>
         </div>
       </div>
@@ -101,7 +96,7 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="{{ URL::asset('js/login/jquery-1.7.2.min.js')}}"></script>
+<script src="{{ URL::asset('js/login/jquery-1.9.1.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/excanvas.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/bootstrap.js')}}"></script>
 <script src="{{ URL::asset('js/login/full-calendar/fullcalendar.min.js')}}"></script>

@@ -84,7 +84,7 @@ textarea {
 }
 
 .navbar .nav a {
-	font-size: 11px;
+	font-size: 15px;
 }
 .navbar .nav>li>a { color:#fff !important;}
 .navbar .brand {
@@ -253,7 +253,6 @@ textarea {
 .main {
 	padding-bottom: 2em;
 	
-	border-bottom: 1px solid #000;
 }
 
 
@@ -377,7 +376,6 @@ textarea {
 		left: 10px;
 		
 		display: inline-block;
-		margin-right: 3em;
 		
 		font-size: 14px;
 		font-weight: 800;
@@ -387,6 +385,12 @@ textarea {
 		text-shadow: 1px 1px 2px rgba(255,255,255,.5);
 	}
 	
+/*modal boostratp 3.0*/
+.autoModal.modal .modal-body{
+    max-height: 100%;
+}
+
+
 		.widget-header [class^="icon-"], .widget-header [class*=" icon-"] {
 			
 			display: inline-block;
