@@ -119,7 +119,7 @@ https://templatemo.com/tm-516-known
                               <div class="caption">
                                    <div class="container">
                                         <div class="col-md-6 col-sm-12">
-                                             <h1>LA casita de madera</h1>
+                                             <h1>La casita de madera</h1>
                                              <h3>Nam eget sapien vel nibh euismod vulputate in vel nibh. Quisque eu ex eu urna venenatis sollicitudin ut at libero. Visit <a rel="nofollow" href="https://www.facebook.com/templatemo">templatemo</a> page.</h3>
                                              <a href="#contact" class="section-btn btn btn-default smoothScroll">Let's chat</a>
                                         </div>
@@ -191,7 +191,7 @@ https://templatemo.com/tm-516-known
      <!-- Courses Niveles -->
 
      <div id="contenedor">
-          <center>Hola</center>
+          <center><h1>Nuestros Niveles </center></h1>
                <div id="izquierda">
                     <div class="carta">
                          <div class="lado frente">
@@ -201,8 +201,8 @@ https://templatemo.com/tm-516-known
     
                          <div class="lado atras">
                               <h3 >Acerca del nivel</h3>
-                              <p>
-                                   En este nivel aprenderas conceptos basicos, abecedario, vocales, verbos auxiliares
+                              <p style="margin-left: 1em;">
+                                   En este nivel aprenderas conceptos basicos, abecedario, vocales, verbos auxiliares.
                               </p>
                          </div>    
                     </div>
@@ -216,8 +216,8 @@ https://templatemo.com/tm-516-known
     
                          <div class="lado atras">
                               <h3>Acerca del nivel</h3>
-                              <p>
-                                   
+                              <p style="margin-left: 1em;">
+                                   En este nivel aprenderas 6 y 7 formas de realizar una oracion, pasado de verbos regulares e irregulares.
                               </p>
                          </div>    
                          </div>
@@ -235,15 +235,10 @@ https://templatemo.com/tm-516-known
                          </div>
     
                          <div class="lado atras">
-                              <h3>Entradas</h3>
-                              <ul >
-                                   <li style="text-decoration: none;
-                                   padding: 15px;
-                                   z-index:80;">Causa Rellena</li>
-                                   <li style="text-decoration: none;
-                                   padding: 10px;
-                                   z-index:80;">Ensalada de Palta</li>
-                              </ul>
+                              <h3>Acerca del nivel</h3>
+                              <p style="margin-left: 1em;">
+                                   En este nivel aprenderas 8 y 9 formas de realizar una oracion, verbos auxiliares wiil,would,has y have.
+                              </p>
                          </div>    
                          </div>
                </div>
@@ -255,15 +250,10 @@ https://templatemo.com/tm-516-known
                          </div>
     
                          <div class="lado atras">
-                              <h3>Entradas</h3>
-                              <ul >
-                                   <li style="text-decoration: none;
-                                   padding: 10px;
-                                   z-index:80;">Causa Rellena</li>
-                                   <li style="text-decoration: none;
-                                   padding: 10px;
-                                   z-index:80;">Ensalada de Palta</li>
-                              </ul>
+                              <h3>Acerca del nivel</h3>
+                              <p style="margin-left: 1em;">
+                                   En este nivel aprenderas mas de 10 formas de realizar oraciones,exposiciones y interacion en el habla.
+                              </p>
                          </div>    
                          </div>
                     
@@ -410,12 +400,8 @@ https://templatemo.com/tm-516-known
                     <div class="col-md-4 col-sm-6">
                          <div class="footer-info">
                               <div class="section-title">
-                                   <h2>Headquarter</h2>
+                                   <h2>Social Networks</h2>
                               </div>
-                              <address>
-                                   <p>1800 dapibus a tortor pretium,<br> Integer nisl dui, ABC 12000</p>
-                              </address>
-
                               <ul class="social-icon">
                                    <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
                                    <li><a href="#" class="fa fa-twitter"></a></li>
@@ -439,33 +425,10 @@ https://templatemo.com/tm-516-known
                                    <p>+65 2244 1100, +66 1800 1100</p>
                                    <p><a href="mailto:youremail.co">hello@youremail.co</a></p>
                               </address>
-
-                              <div class="footer_menu">
-                                   <h2>Quick Links</h2>
-                                   <ul>
-                                        <li><a href="#">Career</a></li>
-                                        <li><a href="#">Investor</a></li>
-                                        <li><a href="#">Terms & Conditions</a></li>
-                                        <li><a href="#">Refund Policy</a></li>
-                                   </ul>
-                              </div>
                          </div>
                     </div>
 
                     <div class="col-md-4 col-sm-12">
-                         <div class="footer-info newsletter-form">
-                              <div class="section-title">
-                                   <h2>Newsletter Signup</h2>
-                              </div>
-                              <div>
-                                   <div class="form-group">
-                                        <form action="#" method="get">
-                                             <input type="email" class="form-control" placeholder="Enter your email" name="email" id="email" required="">
-                                             <input type="submit" class="form-control" name="submit" id="form-submit" value="Send me">
-                                        </form>
-                                        <span><sup>*</sup> Please note - we do not spam your email.</span>
-                                   </div>
-                              </div>
                               <div>
                                    <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v4.0"></script>
@@ -473,7 +436,6 @@ https://templatemo.com/tm-516-known
 <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="340" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
                               </div>
                          </div>
-                    </div>
                     
                </div>
           </div>
