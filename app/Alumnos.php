@@ -26,7 +26,8 @@ class Alumnos extends Model
    		'celular',
    		'activo',   		   		 
    	];
-
+         public $timestamps = false;
+         
    		public function nivelAl(){
 
         return $this->belongsTo('App\Nivel','nivel'); 

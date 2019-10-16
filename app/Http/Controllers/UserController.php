@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 Use App\Alumnos;
+use App\User;
+use App\Nivel;
+use DB;
 class UserController extends Controller
 {
 
@@ -17,8 +20,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        $alumnos = Alumnos::orderBy('matricula','asc')->get();
+
+        $alumnos = Alumnos::orderBy('matricula','asc')->where('activo','1')->get();
         return view('usuarios.lista')->with('alumnos',$alumnos);
+    }
+
+    public function inactivos()
+    {
+
+        $alumnos = Alumnos::orderBy('matricula','asc')->where('activo','0')->get();
+        return view('usuarios.listainactivos')->with('alumnos',$alumnos);
     }
 
     public function menu()
@@ -33,7 +44,11 @@ class UserController extends Controller
      */
     public function create()
     {
-         return view('usuarios.altaU');
+        $matricula = DB::table('alumnos')->orderBy('matricula', 'DESC')->first();
+        $ultimo = $matricula->matricula+1;
+        $listaN = Nivel::orderBY('nombre','ASC')->pluck('nombre','id');
+        $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
+         return view('usuarios.altaU')->with('listaN',$listaN)->with('listaH',$listaH)->with('ultimo',$ultimo);
     }
 
     /**
@@ -44,7 +59,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new Alumnos($request->all());
+        $user->matricula = $request->matricula;
+        $user->nombre=strtoupper($request->nombre);
+        $user->ap=strtoupper($request->apellido_paterno);
+        $user->am=strtoupper($request->apellido_materno);
+        $user->nacimiento=strtoupper($request->nacimiento);
+        $user->direccion=strtoupper($request->direccion);
+        $user->ciudad=strtoupper($request->ciudad);
+        $user->ocupacion=strtoupper($request->ocupacion);
+        $user->estudios=strtoupper($request->estudios);
+        $user->nivel=strtoupper($request->nivel);
+        $user->descuento=strtoupper($request->descuento);
+        $user->casa=strtoupper($request->casa);
+        $user->oficina=strtoupper($request->celular);
+        $user->celular=strtoupper($request->oficina);
+        $user->activo=1;
+        $user->save();
+
+        return view('usuarios.menu');
     }
 
     /**

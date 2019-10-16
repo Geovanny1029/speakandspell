@@ -24,4 +24,10 @@ Route::get('menu',[
 			'uses' => 'UserController@menu',
 			'as'   => 'user.menu'
 ]);
+
+//lista inactivos
+Route::get('inactivos',[
+			'uses' => 'UserController@inactivos',
+			'as'   => 'user.inactivos'
+]);
 Route::get('/home', 'HomeController@index')->name('home');

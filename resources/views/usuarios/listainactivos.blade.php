@@ -5,7 +5,7 @@
             </div>
             <div class="widget-content">
               <div class="shortcuts">
-                Lista de usuarios activos 
+                Lista de usuarios inactivos 
               </div>
         <table class="table table-striped" id="tablaasignaturas">
           <thead>

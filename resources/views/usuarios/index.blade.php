@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="{{asset('css/login/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/login/pages/dashboard.css')}}">
 
-
+<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
         rel="stylesheet">
 
@@ -36,13 +36,13 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name}} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+              <li><a href="{{ url('/logout') }}" onclick="event.preventDefault();    document.getElementById('logout-form').submit();"><span class="icon-bar"></span>Salir</a>
+                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                  {{ csrf_field() }}
+                </form>
+              </li>
           </ul>
         </li>
       </ul>
@@ -96,11 +96,19 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
+
 <script src="{{ URL::asset('js/login/jquery-1.9.1.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/excanvas.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/bootstrap.js')}}"></script>
 <script src="{{ URL::asset('js/login/full-calendar/fullcalendar.min.js')}}"></script>
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="{{ URL::asset('js/login/base.js')}}"></script>
+<script>
+  $(document).ready( function () {
+     $('#tablaasignaturas').DataTable();
+  });
+    
+</script>
 
 </body>
 </html>
