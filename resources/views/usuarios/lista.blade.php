@@ -6,7 +6,7 @@
             <div class="widget-content">
               <div class="shortcuts">
                 Lista de usuarios activos 
-              </div>
+              </div><br>
         <table class="table table-striped" id="tablaasignaturas">
           <thead>
             <th>Matricula</th>

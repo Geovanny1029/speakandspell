@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="{{asset('css/login/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/login/pages/dashboard.css')}}">
 
-<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
         rel="stylesheet">
 
@@ -101,7 +101,8 @@
 <script src="{{ URL::asset('js/login/excanvas.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/bootstrap.js')}}"></script>
 <script src="{{ URL::asset('js/login/full-calendar/fullcalendar.min.js')}}"></script>
-<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
 <script src="{{ URL::asset('js/login/base.js')}}"></script>
 <script>
   $(document).ready( function () {
