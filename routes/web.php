@@ -30,4 +30,25 @@ Route::get('inactivos',[
 			'uses' => 'UserController@inactivos',
 			'as'   => 'user.inactivos'
 ]);
+
+
+//lista niveles
+Route::get('listaNivel',[
+			'uses' => 'UserController@listaNivel',
+			'as'   => 'user.listaNivel'
+]);
+
+//form nivel
+Route::get('altaLevel',[
+			'uses' => 'UserController@createNivel',
+			'as'   => 'user.createNivel'
+]);
+
+//alta nivel
+Route::post('altaNivel',[
+			'uses' => 'UserController@altaNivel',
+			'as'   => 'user.altaNivel'
+]);
+
+
 Route::get('/home', 'HomeController@index')->name('home');

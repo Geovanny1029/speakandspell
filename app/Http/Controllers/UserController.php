@@ -91,6 +91,27 @@ class UserController extends Controller
         //
     }
 
+
+    public function listaNivel(){
+        $niveles = Nivel::orderBy('id','asc')->get();
+        return view('usuarios.listaN')->with('niveles',$niveles);
+    }
+
+    public function createNivel(){
+        return view('usuarios.altaN');
+    }
+
+    public function altaNivel(Request $request){
+        $nivel = new Nivel($request->all());
+        $nivel->nombre = strtoupper($request->nombre);
+        $nivel->horario = $request->horario;
+        $nivel->finicio = $request->fecha_inicio;
+        $nivel->ffin = $request->fecha_fin;
+        $nivel->costo = $request->costo;
+        $nivel->save();
+
+        return view('usuarios.menu');
+    }
     /**
      * Show the form for editing the specified resource.
      *

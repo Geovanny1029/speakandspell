@@ -17,6 +17,8 @@ class Nivel extends Model
    		'costo',   
    	];
 
+    public $timestamps = false;
+
     public function alumno(){
 
         return $this->hasMany('App\Alumnos'); 

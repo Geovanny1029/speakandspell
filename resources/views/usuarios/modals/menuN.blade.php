@@ -7,11 +7,11 @@
           </div>
           <div class="modal-body">
                 <div class="shortcuts">
-                  <a href="{{route('user.index')}}" class="shortcut">
+                  <a href="{{route('user.createNivel')}}" class="shortcut">
                     <i class="shortcut-icon icon icon-plus-sign-alt"></i>
                     <span class="shortcut-label">Alta Nivel</span> 
                   </a>                
-                  <a href="javascript:;" class="shortcut" data-toggle="modal" data-target="#menuNiveles">
+                  <a href="{{route('user.listaNivel')}}" class="shortcut">
                     <i class="shortcut-icon icon-list-alt"></i>
                     <span class="shortcut-label">Ver Niveles</span> 
                   </a>
