@@ -6,15 +6,15 @@
             <div class="widget-content">
               <div class="shortcuts">
                 <a href="#" class="shortcut" data-toggle="modal" data-target="#menuUsuarios">
-                  <i class="shortcut-icon icon-user"></i>
+                  <i class="shortcut-icon icon icon-group"></i>
                   <span class="shortcut-label">Usuarios</span> 
                 </a>                
                 <a href="javascript:;" class="shortcut" data-toggle="modal" data-target="#menuNiveles">
-                  <i class="shortcut-icon icon-list-alt"></i>
+                  <i class="shortcut-icon icon icon-sitemap"></i>
                   <span class="shortcut-label">Niveles</span> 
                 </a>
                 <a href="javascript:;" class="shortcut">
-                  <i class="shortcut-icon icon-bookmark"></i>
+                  <i class="shortcut-icon icon icon-usd"></i>
                   <span class="shortcut-label">Pagos</span>
                 </a>
                 <a href="javascript:;" class="shortcut"> 

@@ -5,12 +5,17 @@
             </div>
             <div class="widget-content">
               <div class="shortcuts">
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                    <a href="{{route('user.menu')}}" class="btn btn-success" style="width: 100%">INICIO</a>
+                    </div>
+                  </div>                
                 {!! Form::open(['route' => 'user.store', 'method' => 'POST']) !!}
 
                   <div class="row">
                     <div class="form-group col-md-1">
                       {!! Form::label('matricula', 'Matricula') !!} 
-                      {!! Form::text('matricula',$ultimo,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'matricula', 'required' ] ) !!}
+                      {!! Form::text('matricula',$ultimo,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'matricula', 'required',' readonly'=>' readonly' ] ) !!}
                     </div>
                   </div>
                   <div class="row">

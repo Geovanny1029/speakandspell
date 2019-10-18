@@ -8,16 +8,16 @@
           <div class="modal-body">
                 <div class="shortcuts">
                   <a href="{{route('user.index')}}" class="shortcut">
-                    <i class="shortcut-icon icon-user"></i>
-                    <span class="shortcut-label">Usuarios</span> 
+                    <i class="shortcut-icon icon icon-plus-sign-alt"></i>
+                    <span class="shortcut-label">Alta Nivel</span> 
                   </a>                
                   <a href="javascript:;" class="shortcut" data-toggle="modal" data-target="#menuNiveles">
                     <i class="shortcut-icon icon-list-alt"></i>
-                    <span class="shortcut-label">Niveles</span> 
+                    <span class="shortcut-label">Ver Niveles</span> 
                   </a>
                   <a href="javascript:;" class="shortcut">
-                    <i class="shortcut-icon icon-bookmark"></i>
-                    <span class="shortcut-label">Pagos</span>
+                    <i class="shortcut-icon icon icon-calendar-empty"></i>
+                    <span class="shortcut-label">Listar</span>
                   </a>
                 </div>
           </div>

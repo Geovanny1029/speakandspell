@@ -16,7 +16,7 @@
                     <span class="shortcut-label">Ver usuarios</span> 
                   </a>
                   <a href="{{route('user.inactivos')}}" class="shortcut">
-                    <i class="shortcut-icon icon-bookmark"></i>
+                    <i class="shortcut-icon icon icon-minus-sign-alt"></i>
                     <span class="shortcut-label">Usuarios Baja</span>
                   </a>
                 </div>
