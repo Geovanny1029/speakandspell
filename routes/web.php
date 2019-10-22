@@ -52,3 +52,9 @@ Route::post('altaNivel',[
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//dar baja alumno
+Route::get('user/{id}/destroy',[
+			'uses' => 'UserController@destroy',
+			'as'   => 'user.destroy'
+]);
