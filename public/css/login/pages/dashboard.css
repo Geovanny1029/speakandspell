@@ -13,7 +13,7 @@ Bootstrap Admin Template by EGrappler.com
 }
 
 .shortcuts .shortcut { 
-	width: 22.50%;
+	width: 42.50%;
 	display: inline-block;
 	padding: 12px 0;
 	margin: 0 .9% 1em;
@@ -43,7 +43,7 @@ Bootstrap Admin Template by EGrappler.com
 }
 
 .shortcuts .shortcut:hover {
-	background: #00ba8b;
+	background: red;
 	margin-top: 2px;
 	box-shadow: 0 0 5px;
 }

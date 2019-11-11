@@ -7,7 +7,7 @@
               <div class="shortcuts">
                 <a href="#" class="shortcut" data-toggle="modal" data-target="#menuUsuarios">
                   <i class="shortcut-icon icon icon-group"></i>
-                  <span class="shortcut-label">Usuarios</span> 
+                  <span class="shortcut-label">Alumnos</span> 
                 </a>                
                 <a href="javascript:;" class="shortcut" data-toggle="modal" data-target="#menuNiveles">
                   <i class="shortcut-icon icon icon-sitemap"></i>
@@ -21,14 +21,7 @@
                   <i class="shortcut-icon icon-comment"></i>
                   <span class="shortcut-label">Corte</span> 
                 </a>
-                <a href="javascript:;" class="shortcut">
-                  <i class="shortcut-icon icon-file"></i>
-                  <span class="shortcut-label">Notes</span> 
-                </a>                
-                <a href="javascript:;" class="shortcut">
-                  <i class="shortcut-icon icon-picture"></i>
-                  <span class="shortcut-label">Bloc</span> 
-                </a>
+
  @include('usuarios.modals.menuN')
  @include('usuarios.modals.menuU')
               </div>
