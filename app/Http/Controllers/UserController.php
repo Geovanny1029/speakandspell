@@ -22,6 +22,10 @@ class UserController extends Controller
     {
 
         $alumnos = Alumnos::orderBy('matricula','asc')->where('activo','1')->get();
+
+        $alumnos->each(function($alumnos){
+            $alumnos->nivelAl;
+        });
         return view('usuarios.lista')->with('alumnos',$alumnos);
     }
 
@@ -143,6 +147,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $alumno = Alumnos::where('matricula as id',$id)->first();
+        dd($alumno);
+        $alumno->activo = 0;
+        $alumno->save();
+
+        return redirect()->route('user.index');
     }
 }
