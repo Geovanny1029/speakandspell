@@ -20,7 +20,7 @@
 
               <td> {{$alumno->matricula}}   </td>
               <td> {{$alumno->nombre}} {{$alumno->ap}} {{$alumno->am}} </td>
-              <td> {{$alumno->nivelAl->nombre}} </td>
+              <td> {{$alumno->nivel}} </td>
               <td>
                 <div class="dropdown">
                   <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -29,7 +29,7 @@
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li><a href="#">Ver perfil</a></li>
-                    <li><a href="#">Editar</a></li>
+                    <li><a data-toggle="modal" data-target="#editModal" onclick="fun_edit('{{$alumno->matricula}}')" id="editar" value="{{route('users.view')}}">Editar</a></li>
                     <li><a href="#">Pagos</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a onclick="return confirm('¿Seguro que deseas dar de baja este Usuario?')" href="{{route('user.destroy', $alumno->matricula)}}">Dar Baja</a></li>
@@ -39,6 +39,7 @@
             </tr>
             @endforeach
           </tbody>
+          @include('usuarios.modals.editaU')
         </table>              
             </div>
 @endsection

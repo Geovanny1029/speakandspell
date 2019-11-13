@@ -58,3 +58,16 @@ Route::get('user/{id}/destroy',[
 			'uses' => 'UserController@destroy',
 			'as'   => 'user.destroy'
 ]);
+
+//modal edit usuario
+	Route::get('userse',[
+			'uses' => 'UsersController@view',
+			'as'   => 'users.view'
+		]);
+
+
+// actualiza alumno
+		Route::post('usersu',[
+			'uses' => 'UsersController@actualiza',
+			'as'   => 'users.actualiza'
+		]);

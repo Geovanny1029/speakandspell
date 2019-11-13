@@ -9,15 +9,15 @@
                 <div class="shortcuts">
                   <a href="{{route('user.create')}}" class="shortcut">
                     <i class="shortcut-icon icon-user"></i>
-                    <span class="shortcut-label">Dar alta Alumno</span> 
+                    <span class="shortcut-label">Alta Alumno</span> 
                   </a>                
                   <a href="{{route('user.index')}}" class="shortcut">
                     <i class="shortcut-icon icon-list-alt"></i>
-                    <span class="shortcut-label">Ver usuarios</span> 
+                    <span class="shortcut-label">Ver alumnos</span> 
                   </a>
                   <a href="{{route('user.inactivos')}}" class="shortcut">
                     <i class="shortcut-icon icon icon-minus-sign-alt"></i>
-                    <span class="shortcut-label">Usuarios Baja</span>
+                    <span class="shortcut-label">Baja Alumno</span>
                   </a>
                 </div>
           </div>

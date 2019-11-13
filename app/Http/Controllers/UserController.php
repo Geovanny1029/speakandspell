@@ -139,6 +139,17 @@ class UserController extends Controller
         //
     }
 
+    public function view(Request $request)
+        {
+            if($request->ajax()){
+                $id = $request->id;
+                $info = Alumnos::find($id);
+              
+                //echo json_decode($info);
+                return response()->json($info);
+            }
+        }
+
     /**
      * Remove the specified resource from storage.
      *

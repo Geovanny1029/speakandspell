@@ -100,6 +100,7 @@
 <script src="{{ URL::asset('js/login/jquery-1.9.1.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/excanvas.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/bootstrap.js')}}"></script>
+<script src="{{ URL::asset('js/metodos.js')}}"></script>
 <script src="{{ URL::asset('js/login/full-calendar/fullcalendar.min.js')}}"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
