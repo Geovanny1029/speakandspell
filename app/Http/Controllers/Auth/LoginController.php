@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
 {
@@ -18,7 +19,7 @@ class LoginController extends Controller
         if (Auth::attempt(['name' =>$request['name'], 'password' => $request['password']])) {
 
 
-                   return redirect()->route('user.menu');
+                   return redirect()->route('user.menu')->with('error', 'Authentication Failed!');
              
             // Authentication passed...
         }else{

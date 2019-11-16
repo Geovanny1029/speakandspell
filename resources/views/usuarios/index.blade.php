@@ -97,7 +97,7 @@
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
 
-<script src="{{ URL::asset('js/login/jquery-1.9.1.min.js')}}"></script>
+<script src="{{ URL::asset('js/login/jquery-3.4.0.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/excanvas.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/bootstrap.js')}}"></script>
 <script src="{{ URL::asset('js/metodos.js')}}"></script>

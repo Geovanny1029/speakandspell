@@ -24,6 +24,7 @@
 
  @include('usuarios.modals.menuN')
  @include('usuarios.modals.menuU')
+ @include('sweetalert::alert')
               </div>
             </div>
 @endsection

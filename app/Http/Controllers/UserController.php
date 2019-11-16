@@ -26,7 +26,7 @@ class UserController extends Controller
         $alumnos->each(function($alumnos){
             $alumnos->nivelAl;
         });
-        return view('usuarios.lista')->with('alumnos',$alumnos);
+        return view('usuarios.lista');
     }
 
     public function inactivos()
