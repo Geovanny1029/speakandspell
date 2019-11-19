@@ -26,7 +26,8 @@ class UserController extends Controller
         $alumnos->each(function($alumnos){
             $alumnos->nivelAl;
         });
-        return view('usuarios.lista');
+
+        return view('usuarios.lista')->with('alumnos',$alumnos);
     }
 
     public function inactivos()
@@ -143,7 +144,7 @@ class UserController extends Controller
         {
             if($request->ajax()){
                 $id = $request->id;
-                $info = Alumnos::find($id);
+                $info = Alumno::where('matricula','"'.$id.'"')->first();
               
                 //echo json_decode($info);
                 return response()->json($info);

@@ -39,7 +39,7 @@
             </tr>
             @endforeach
           </tbody>
-          @include('usuarios.modals.editaU')
+@include('usuarios.modals.editaU')
         </table>              
             </div>
 @endsection

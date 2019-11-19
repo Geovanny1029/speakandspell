@@ -96,7 +96,7 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="{{ URL::asset('js/login/jquery-3.4.0.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/excanvas.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/bootstrap.js')}}"></script>
