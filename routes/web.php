@@ -61,7 +61,7 @@ Route::get('user/{id}/destroy',[
 
 //modal edit usuario
 	Route::get('userse',[
-			'uses' => 'UsersController@view',
+			'uses' => 'UserController@view',
 			'as'   => 'users.view'
 		]);
 

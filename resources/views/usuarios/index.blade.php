@@ -96,12 +96,14 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
 <script src="{{ URL::asset('js/login/jquery-3.4.0.min.js')}}"></script>
+<script src="{{ URL::asset('js/metodos.js')}}"></script>
 <script src="{{ URL::asset('js/login/excanvas.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/bootstrap.js')}}"></script>
-<script src="{{ URL::asset('js/metodos.js')}}"></script>
+
 <script src="{{ URL::asset('js/login/full-calendar/fullcalendar.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
 <script src="{{ URL::asset('js/login/base.js')}}"></script>

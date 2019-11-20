@@ -7,8 +7,8 @@ $.ajaxSetup({
 //vista editar usuario
 function fun_edit(id)
     {
-      var view_url = $("#editarU").val();
-      console.log(view_url);
+      var view_url = 'http://localhost:8000/userse';
+    
       $.ajax({
         url: view_url,
         type:"GET", 

@@ -144,9 +144,7 @@ class UserController extends Controller
         {
             if($request->ajax()){
                 $id = $request->id;
-                $info = Alumno::where('matricula','"'.$id.'"')->first();
-              
-                //echo json_decode($info);
+                $info = Alumnos::where('matricula',$id)->first();
                 return response()->json($info);
             }
         }
