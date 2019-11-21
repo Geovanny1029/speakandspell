@@ -5,6 +5,11 @@
             </div>
             <div class="widget-content">
               <div class="shortcuts">
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                    <a href="{{route('user.menu')}}" class="btn btn-success" style="width: 100%">INICIO</a>
+                    </div>
+                  </div> 
                 Lista de usuarios inactivos 
               </div>
         <table class="table table-striped" id="tablaasignaturas">
@@ -18,7 +23,7 @@
             @foreach($alumnos as $alumno)
             <tr>
 
-              <td> {{$alumno->matricula}} </td>
+              <td> {{$alumno->id}} </td>
               <td> {{$alumno->nombre}} </td>
               <td> {{$alumno->nivel}} </td>
               <td>

@@ -65,9 +65,21 @@ Route::get('user/{id}/destroy',[
 			'as'   => 'users.view'
 		]);
 
+//modal edit nivel
+	Route::get('nivele',[
+			'uses' => 'UserController@viewn',
+			'as'   => 'nivel.view'
+		]);
+
 
 // actualiza alumno
 		Route::post('usersu',[
-			'uses' => 'UsersController@actualiza',
+			'uses' => 'UserController@actualiza',
 			'as'   => 'users.actualiza'
+		]);
+
+// actualiza nivel
+		Route::post('nivelu',[
+			'uses' => 'UserController@actualizan',
+			'as'   => 'nivel.actualiza'
 		]);

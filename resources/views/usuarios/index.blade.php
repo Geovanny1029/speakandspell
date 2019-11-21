@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="{{asset('css/login/font-awesome.css')}}">
 <link rel="stylesheet" href="{{asset('css/login/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/login/pages/dashboard.css')}}">
-
+<link rel="stylesheet" href="{{asset('css/login/lity.css')}}">
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
         rel="stylesheet">
@@ -105,6 +105,7 @@
 <script src="{{ URL::asset('js/login/full-calendar/fullcalendar.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="{{ URL::asset('js/lity.js')}}"></script> 
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
 <script src="{{ URL::asset('js/login/base.js')}}"></script>
 <script>

@@ -9,7 +9,8 @@
                     <div class="form-group col-md-12">
                     <a href="{{route('user.menu')}}" class="btn btn-success" style="width: 100%">INICIO</a>
                     </div>
-                  </div>                
+                  </div> 
+               
                 {!! Form::open(['route' => 'user.store', 'method' => 'POST']) !!}
 
                   <div class="row">
@@ -19,66 +20,60 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('nombre', 'Nombre(s)') !!} 
                       {!! Form::text('nombre',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Nombre(s)', 'required' ] ) !!}
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('apellido_paterno','Apellido Paterno') !!} 
                       {!! Form::text('apellido_paterno',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Apellido Paterno', 'required' ] ) !!}
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('Apellido_materno', 'Apellido Materno') !!} 
                       {!! Form::text('apellido_materno',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Apellido Materno', 'required' ] ) !!}
                     </div>
-                    <div class="form-group col-md-6">
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-4">
                       {!! Form::label('nacimiento', 'Nacimiento') !!} 
                       {!! Form::text('nacimiento',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Nacimiento', 'required' ] ) !!}
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('direccion', 'Direccion') !!} 
                       {!! Form::text('direccion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Direccion', 'required' ] ) !!}
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('ciudad', 'Ciudad') !!} 
                       {!! Form::text('ciudad',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Ciudad', 'required' ] ) !!}
                     </div>
                   </div>
                   <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('ocupacion', 'Ocupacion') !!} 
                       {!! Form::text('ocupacion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Ocupacion', 'required' ] ) !!}
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('estudios', 'Estudios') !!} 
                       {!! Form::text('estudios',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Estudios', 'required' ] ) !!}
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('Nivel', 'Nivel') !!} 
                       {!! Form::select('nivel',$listaN,null,['class' => 'form-control']) !!}
                     </div>
-                    <div class="form-group col-md-6">
-                      {!! Form::label('horario', 'Horario') !!} 
-                      {!! Form::select('horario',$listaH,null,['class' => 'form-control']) !!}
-                    </div>
                   </div>
                   <div class="row">
                     <div class="form-group col-md-6">
-                      {!! Form::label('inscripcion', 'Apellidos') !!} 
-                      {!! Form::text('Apellido_usuario',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Apellidos' ] ) !!}
+                      {!! Form::label('horario', 'Horario') !!} 
+                      {!! Form::select('horario',$listaH,null,['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group col-md-6">
                       {!! Form::label('descuento', 'Descuento') !!} 
                       {!! Form::text('descuento',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => '$' ] ) !!}
                     </div>
-                  </div> 
+                  </div>
 
+<hr>
+<h6>Telefonos</h6>
 
                   <div class="row">
                     <div class="form-group col-md-4">

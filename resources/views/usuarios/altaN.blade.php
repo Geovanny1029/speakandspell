@@ -14,7 +14,7 @@
 
                   <div class="row">
                     <div class="form-group col-md-6">
-                      {!! Form::label('nombre', 'Nombre(s)') !!} 
+                      {!! Form::label('nombre', 'Nombre Nivel') !!} 
                       {!! Form::text('nombre',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Nombre(s)', 'required' ] ) !!}
                     </div>
                     <div class="form-group col-md-6">
