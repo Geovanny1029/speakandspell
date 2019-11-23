@@ -30,17 +30,18 @@ class LoginController extends Controller
             $fechacre = Carbon::parse($hoy);
             $mes = strtoupper($fechacre->formatLocalized('%B'));
 
-            $alumnos = Alumnos::whereraw('`activo` = 1 AND MONTH(STR_TO_DATE(`nacimiento`, "%d/%m/%Y")) = '.$mesnum)->get();
+            $alumnos = Alumnos::whereraw('`activo` = 1 AND MONTH(STR_TO_DATE(`nacimiento`, "%d/%m/%Y")) = '.$mesnum)->orderby('nacimiento','asc')->get();
             $cuantos = count($alumnos);
-            $fecha = "Cumpleañeros del mes de: <b>".$mes."</b>:\n\n";
+            $fecha = "Cumpleañeros del mes de: ".$mes.":";
             $cumpleañeros = "";
             for ($i=0; $i <  $cuantos; $i++) { 
-                $valor ="<b>".substr($alumnos[$i]->nacimiento,0,-8)."</b>";
-                $cumpleañeros .= "<b>".$alumnos[$i]->nombre.$alumnos[$i]->am."</b> Dia: ".$valor."\n"; 
+                $valor ="<td>".substr($alumnos[$i]->nacimiento,0,-8)."</td>";
+                $cumpleañeros .= "<tr><td style = 'text-align:left'><b>".$alumnos[$i]->nombre.$alumnos[$i]->am."</b></td>".$valor."<tr>";
             }
-
-            $cumple = nl2br($cumpleañeros);
-            alert()->html('<i>'.$fecha.'</i>','<h5>'.$cumple.'</h5>','message')->autoClose(8000);;
+            
+            $tabla = "<table class='table table-striped'><thead class='thead-dark'><th>NOMBRE</th><th>DIA</th></thead><tbody>".$cumpleañeros."</tbody></table>";
+            // $cumple = nl2br($cumpleañeros);
+            alert()->html($fecha,$tabla,'')->persistent('Close');
 
                    return redirect()->route('user.menu');
              

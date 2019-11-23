@@ -95,9 +95,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $alumnos = Alumnos::find($id);
+        $alumno = Alumnos::find($id);
 
-        return view('usuarios.show')->with('alumnos',$alumnos);
+        return view('usuarios.show')->with('alumno',$alumno);
     }
 
 

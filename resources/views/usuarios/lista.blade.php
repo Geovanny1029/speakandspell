@@ -6,11 +6,17 @@
             </div>
             <div class="widget-content">
               <div class="shortcuts">
-                  <div class="row">
-                    <div class="form-group col-md-12">
-                    <a href="{{route('user.menu')}}" class="btn btn-success" style="width: 100%">INICIO</a>
-                    </div>
-                  </div> 
+                  <div class="form-group col-md-12" id="gralprevio">
+                    <div class="dropdown" >
+                      <button class="form-group col-md-12 btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                         ACCION
+                      </button>
+                    <ul class="dropdown-menu form-group col-md-12">
+                      <li><a href="{{route('user.menu')}}">INICIO</a></li>
+                      <li><a href="{{route('user.create')}}">ALTA ALUMNO</a></li>
+                    </ul>
+                    </div> 
+                  </div>
 
                 Lista de usuarios activos 
               </div><br>
