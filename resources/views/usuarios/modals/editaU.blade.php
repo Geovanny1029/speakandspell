@@ -9,7 +9,7 @@
             <h4 class="modal-title">Editar Alumno</h4>
           </div>
           <div class="modal-body">
-              {!! Form::open(['route' => 'users.actualiza', 'method' => 'POST']) !!}
+              {!! Form::open(['route' => 'users.actualiza', 'method' => 'POST','files'=>true]) !!}
               <div class="row">
                <div class="form-group col-md-4">
                  {!! Form::label('edit_nombre', 'Nombre(s)') !!}  
@@ -72,6 +72,12 @@
                  {!! Form::text('edit_celular',null,['class' => 'form-control', 'placeholder' => 'Numero Celular','id' => 'edit_celular' ] ) !!}
                </div>
               </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  {!! Form::label('','' ,['id' => 'edit_f']) !!} 
+                  {!! Form::file('edit_ruta_foto',['id'=>'edit_foto','accept'=>'image/*','capture'=>'capture']) !!}
+                </div>                  
+              </div> 
 
            
               <div class="row">

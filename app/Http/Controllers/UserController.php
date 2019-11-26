@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 Use App\Alumnos;
 use App\User;
 use App\Nivel;
+use Carbon\Carbon;
 use DB;
 class UserController extends Controller
 {
@@ -53,7 +54,7 @@ class UserController extends Controller
     {
         $matricula = DB::table('alumnos')->orderBy('id', 'DESC')->first();
         $ultimo = $matricula->id+1;
-        $listaN = Nivel::orderBY('nombre','ASC')->pluck('nombre','id');
+        $listaN = Nivel::groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
         $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
          return view('usuarios.altaU')->with('listaN',$listaN)->with('listaH',$listaH)->with('ultimo',$ultimo);
     }
@@ -66,25 +67,37 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new Alumnos($request->all());
-        $user->id = $request->id;
-        $user->nombre=strtoupper($request->nombre);
-        $user->ap=strtoupper($request->apellido_paterno);
-        $user->am=strtoupper($request->apellido_materno);
-        $user->nacimiento=strtoupper($request->nacimiento);
-        $user->direccion=strtoupper($request->direccion);
-        $user->ciudad=strtoupper($request->ciudad);
-        $user->ocupacion=strtoupper($request->ocupacion);
-        $user->estudios=strtoupper($request->estudios);
-        $user->nivel=strtoupper($request->nivel);
-        $user->descuento=strtoupper($request->descuento);
-        $user->casa=strtoupper($request->casa);
-        $user->oficina=strtoupper($request->celular);
-        $user->celular=strtoupper($request->oficina);
-        $user->activo=1;
-        $user->save();
 
-        return view('usuarios.menu');
+
+        if($request->hasFile('ruta_foto')){
+            $file = $request->file('ruta_foto');
+            $name = $request->id."_".$request->nombre."_".$request->apellido_paterno;
+            $file->move(public_path().'/fotos/',$name);
+        }else{
+            $name = $request->ruta_foto;
+        }
+
+            $user = new Alumnos($request->all());
+            $user->id = $request->id;
+            $user->nombre=strtoupper($request->nombre);
+            $user->ap=strtoupper($request->apellido_paterno);
+            $user->am=strtoupper($request->apellido_materno);
+            $user->nacimiento=strtoupper($request->nacimiento);
+            $user->direccion=strtoupper($request->direccion);
+            $user->ciudad=strtoupper($request->ciudad);
+            $user->ocupacion=strtoupper($request->ocupacion);
+            $user->estudios=strtoupper($request->estudios);
+            $user->nivel=strtoupper($request->nivel);
+            $user->descuento=strtoupper($request->descuento);
+            $user->casa=strtoupper($request->casa);
+            $user->oficina=strtoupper($request->celular);
+            $user->celular=strtoupper($request->oficina);
+            $user->activo=1;
+            $user->ruta_foto= $name;
+            $user->save();
+
+            return view('usuarios.menu'); 
+          
     }
 
     /**
@@ -96,8 +109,25 @@ class UserController extends Controller
     public function show($id)
     {
         $alumno = Alumnos::find($id);
+        $input = date($alumno->nacimiento);
+        $format = 'd/m/Y';
+        $date = Carbon::createFromFormat($format, $input)->format('Y-m-d');
+        $edad = Carbon::createFromDate($date)->age;
 
-        return view('usuarios.show')->with('alumno',$alumno);
+//calculando meses de nivel
+        $nivel = Nivel::find($alumno->nivel);
+        $start = date($nivel->finicio);
+        $inicio = 'd/m/Y';
+
+        $end = date($nivel->ffin);
+        $fin = 'd/m/Y';
+
+        $finicio = Carbon::createFromFormat($inicio, $start);
+        $ffin = Carbon::createFromFormat($fin, $end);
+
+        $meses = $finicio->diffInMonths($ffin) + 1;
+        
+        return view('usuarios.show')->with('alumno',$alumno)->with('edad',$edad)->with('meses',$meses);
     }
 
 
@@ -148,6 +178,15 @@ class UserController extends Controller
 
         $id = $request->edit_id;
         $data = Alumnos::find($id);
+
+        if($request->hasFile('edit_ruta_foto')){
+            $file = $request->file('edit_ruta_foto');
+            $name = $data->id."_".$request->edit_nombre."_".$request->edit_ap;
+            $file->move(public_path().'/fotos/',$name);
+
+        }
+
+
         $data->nombre= strtoupper($request->edit_nombre);
         $data->ap = strtoupper($request->edit_ap);
         $data->am = strtoupper($request->edit_am);
@@ -161,6 +200,7 @@ class UserController extends Controller
         $data->casa = strtoupper($request->edit_casa);
         $data->oficina = strtoupper($request->edit_oficina);
         $data->celular= strtoupper($request->edit_celular);
+        $data->ruta_foto= $name;
         $data->save();
 
         return back();
@@ -198,6 +238,13 @@ class UserController extends Controller
                 return response()->json($info);
             }
         }
+
+    public function gethorario(Request $request, $id){
+                if($request->ajax()){
+                $horario = Nivel::where('nombre','like',$id)->get();
+                return response()->json($horario);
+            }
+    }
 
     /**
      * Remove the specified resource from storage.

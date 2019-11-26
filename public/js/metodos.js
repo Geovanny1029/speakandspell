@@ -29,6 +29,12 @@ function fun_edit(id)
           $("#edit_oficina").val(result.oficina);
           $("#edit_celular").val(result.celular);
           $("#edit_id").val(result.id);
+          $ruta = result.ruta_foto;
+          if($ruta == "" || $ruta == null){
+             $("#edit_f").text("Alta Foto");
+          }else{
+             $("#edit_f").text("Cambiar Foto"+result.ruta_foto);
+          }
         }
       });
     }
@@ -54,3 +60,11 @@ function fun_edit_nivel(id)
         }
       });
     }
+
+  $("#nivel").change(function (event){
+    $.get("horario/"+event.target.value+"",function(response,nivel){
+      for (var i = 0; i < response.length; i++) {
+        $("#horario").append("<option value ='"+response[$i].id+"'>"+response[$i].nombre+"</option>");
+      }
+    });
+  });

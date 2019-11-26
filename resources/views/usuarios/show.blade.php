@@ -19,11 +19,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                            @if($alumno->ruta_foto == null)
+                            <img src="/fotos/speakandspell.png" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                No hay foto
+                                
+                            </div>
+                            @else
+                            <img src="/fotos/{{$alumno->ruta_foto}}" alt=""/>
                             <div class="file btn btn-lg btn-primary">
                                 Change Photo
                                 <input type="file" name="file"/>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -33,6 +41,9 @@
                                     </h5>
                                     <h6>
                                         Nivel : {{$alumno->nivel}}
+                                    </h6>
+                                    <h6>
+                                        Duracion : {{$meses}} Meses
                                     </h6>
                                  
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -99,7 +110,7 @@
                                                 <label>Edad:</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>{{$alumno->nacimiento}}</p>
+                                                <p>{{$edad}} Años</p>
                                             </div>
                                         </div>
                             </div>

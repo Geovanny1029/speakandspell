@@ -24,7 +24,8 @@ class Alumnos extends Model
    		'casa',
    		'oficina',
    		'celular',
-   		'activo',   		   		 
+   		'activo',
+         'ruta_foto',   		   		 
    	];
          public $timestamps = false;
          

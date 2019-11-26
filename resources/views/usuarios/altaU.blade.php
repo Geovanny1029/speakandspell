@@ -17,12 +17,12 @@
                     </div> 
                   </div>
                
-                {!! Form::open(['route' => 'user.store', 'method' => 'POST']) !!}
+                {!! Form::open(['route' => 'user.store', 'method' => 'POST' ,'files'=>true]) !!}
 
                   <div class="row">
                     <div class="form-group col-md-1">
                       {!! Form::label('matricula', 'Matricula') !!} 
-                      {!! Form::text('matricula',$ultimo,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'matricula', 'required',' readonly'=>' readonly' ] ) !!}
+                      {!! Form::text('id',$ultimo,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'matricula', 'required',' readonly'=>' readonly' ] ) !!}
                     </div>
                   </div>
                   <div class="row">
@@ -64,13 +64,13 @@
                     </div>
                     <div class="form-group col-md-4">
                       {!! Form::label('Nivel', 'Nivel') !!} 
-                      {!! Form::select('nivel',$listaN,null,['class' => 'form-control']) !!}
+                      {!! Form::select('nivel',$listaN,null,['class' => 'form-control','id'=>'nivel']) !!}
                     </div>
                   </div>
                   <div class="row">
                     <div class="form-group col-md-6">
                       {!! Form::label('horario', 'Horario') !!} 
-                      {!! Form::select('horario',$listaH,null,['class' => 'form-control']) !!}
+                      {!! Form::select('horario',$listaH,null,['class' => 'form-control','id'=>'horario']) !!}
                     </div>
                     <div class="form-group col-md-6">
                       {!! Form::label('descuento', 'Descuento') !!} 
@@ -94,7 +94,13 @@
                       {!! Form::label('oficina', 'Oficina') !!} 
                       {!! Form::text('oficina',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Oficina' ] ) !!}
                     </div>                    
-                  </div>                                                                                                                             
+                  </div>   
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      {!! Form::label('Foto', 'Foto') !!} 
+                      {!! Form::file('ruta_foto') !!}
+                    </div>                  
+                  </div>                                                                                                                           
                   <div class="row">
                     <div class="form-group col-md-3">
                     {!! Form::submit('Registrar',[ 'class' => 'btn btn-primary']) !!} 
