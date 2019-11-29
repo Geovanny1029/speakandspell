@@ -62,7 +62,7 @@ https://templatemo.com/tm-516-known
                     </button>
                     
                     <!-- lOGO TEXT HERE -->
-                    <a href="#" class="navbar-brand"> <img src="images/logosas.png" alt=""></a>
+                    <a href="#" class="navbar-brand"> <img src="images/speakn1.jpg" alt=""></a>
                </div>
 
                <!-- MENU LINKS -->

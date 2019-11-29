@@ -54,6 +54,10 @@
               </div>
               <div class="row">
                <div class="form-group col-md-4">
+                 {!! Form::label('edit_horario', 'Horario') !!}  
+                 {!! Form::select('edit_horario',$listaH,null,['class'=>'form-control','id' => 'edit_horario']) !!} 
+               </div>
+               <div class="form-group col-md-4">
                  {!! Form::label('edit_descuento', 'Descuento') !!}  
                  {!! Form::text('edit_descuento',null,['class' => 'form-control', 'placeholder' => 'Descuento','id' => 'edit_descuento' ] ) !!}
                </div>

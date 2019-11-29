@@ -8,6 +8,7 @@ use App\User;
 use App\Nivel;
 use Carbon\Carbon;
 use DB;
+use PDF;
 class UserController extends Controller
 {
 
@@ -23,14 +24,14 @@ class UserController extends Controller
     {
 
         $alumnos = Alumnos::orderBy('id','asc')->where('activo','1')->get();
-
-        $listaN = Nivel::orderBY('nombre','ASC')->pluck('nombre','id');
+        $listaN = Nivel::groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
+        $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
 
         $alumnos->each(function($alumnos){
             $alumnos->nivelAl;
         });
 
-        return view('usuarios.lista')->with('alumnos',$alumnos)->with('listaN',$listaN);
+        return view('usuarios.lista')->with('alumnos',$alumnos)->with('listaN',$listaN)->with('listaH',$listaH);
     }
 
     public function inactivos()
@@ -87,16 +88,18 @@ class UserController extends Controller
             $user->ciudad=strtoupper($request->ciudad);
             $user->ocupacion=strtoupper($request->ocupacion);
             $user->estudios=strtoupper($request->estudios);
-            $user->nivel=strtoupper($request->nivel);
+            $user->nivel=strtoupper($request->horario);
             $user->descuento=strtoupper($request->descuento);
             $user->casa=strtoupper($request->casa);
             $user->oficina=strtoupper($request->celular);
             $user->celular=strtoupper($request->oficina);
             $user->activo=1;
             $user->ruta_foto= $name;
-            $user->save();
+            
 
-            return view('usuarios.menu'); 
+            $pdf = PDF::loadView('pdf.fichaInscripcion',['user'=>$user]);
+
+            return $pdf->stream(); 
           
     }
 
@@ -226,7 +229,8 @@ class UserController extends Controller
             if($request->ajax()){
                 $id = $request->id;
                 $info = Alumnos::where('id',$id)->first();
-                return response()->json($info);
+                $nivel = Nivel::find($info->nivel);
+                return response()->json(array('info'=>$info,'nivel'=>$nivel));
             }
         }
 
@@ -239,11 +243,10 @@ class UserController extends Controller
             }
         }
 
-    public function gethorario(Request $request, $id){
-                if($request->ajax()){
-                $horario = Nivel::where('nombre','like',$id)->get();
-                return response()->json($horario);
-            }
+    public function gethorario($id){
+              
+                return $horario = Nivel::where('nombre','like',$id)->get();
+              
     }
 
     /**

@@ -15,25 +15,25 @@ function fun_edit(id)
         data: {"id":id}, 
         success: function(result){
           //console.log(result);
-          $("#edit_nombre").val(result.nombre);
-          $("#edit_am").val(result.am);
-          $("#edit_ap").val(result.ap);
-          $("#edit_nacimiento").val(result.nacimiento);
-          $("#edit_direccion").val(result.direccion);
-          $("#edit_ciudad").val(result.ciudad);
-          $("#edit_ocupacion").val(result.ocupacion);
-          $("#edit_estudios").val(result.estudios);
-          $("#edit_nivel").val(result.nivel);
-          $("#edit_descuento").val(result.descuento);
-          $("#edit_casa").val(result.casa);
-          $("#edit_oficina").val(result.oficina);
-          $("#edit_celular").val(result.celular);
-          $("#edit_id").val(result.id);
-          $ruta = result.ruta_foto;
+          $("#edit_nombre").val(result.info.nombre);
+          $("#edit_am").val(result.info.am);
+          $("#edit_ap").val(result.info.ap);
+          $("#edit_nacimiento").val(result.info.nacimiento);
+          $("#edit_direccion").val(result.info.direccion);
+          $("#edit_ciudad").val(result.info.ciudad);
+          $("#edit_ocupacion").val(result.info.ocupacion);
+          $("#edit_estudios").val(result.info.estudios);
+          $("#edit_nivel").val(result.nivel.nombre);
+          $("#edit_descuento").val(result.info.descuento);
+          $("#edit_casa").val(result.info.casa);
+          $("#edit_oficina").val(result.info.oficina);
+          $("#edit_celular").val(result.info.celular);
+          $("#edit_id").val(result.info.id);
+          $ruta = result.info.ruta_foto;
           if($ruta == "" || $ruta == null){
              $("#edit_f").text("Alta Foto");
           }else{
-             $("#edit_f").text("Cambiar Foto"+result.ruta_foto);
+             $("#edit_f").text("Cambiar Foto"+result.info.ruta_foto);
           }
         }
       });
@@ -61,10 +61,37 @@ function fun_edit_nivel(id)
       });
     }
 
-  $("#nivel").change(function (event){
-    $.get("horario/"+event.target.value+"",function(response,nivel){
-      for (var i = 0; i < response.length; i++) {
-        $("#horario").append("<option value ='"+response[$i].id+"'>"+response[$i].nombre+"</option>");
-      }
+//select dinamico alta usuario horario nivel
+  $(document).ready(function(){
+    $("#nivel").change(function(){
+      var nivel = $(this).val();
+      $.get('horario/'+nivel, function(data){
+//esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+        console.log(data);
+          var producto_select = '<option value="">Seleccione Horario</option>'
+            for (var i=0; i<data.length;i++)
+              producto_select+='<option value="'+data[i].id+'">'+data[i].horario+'</option>';
+
+            $("#horario").html(producto_select);
+
+      });
+    });
+  });
+
+
+//select dinamico edit usuario horario nivel
+  $(document).ready(function(){
+    $("#edit_nivel").change(function(){
+      var nivel = $(this).val();
+      $.get('user/horario/'+nivel, function(data){
+//esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+        console.log(data);
+          var producto_select = '<option value="">Seleccione Horario</option>'
+            for (var i=0; i<data.length;i++)
+              producto_select+='<option value="'+data[i].id+'">'+data[i].horario+'</option>';
+
+            $("#edit_horario").html(producto_select);
+
+      });
     });
   });
