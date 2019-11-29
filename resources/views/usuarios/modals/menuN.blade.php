@@ -15,7 +15,7 @@
                     <i class="shortcut-icon icon-list-alt"></i>
                     <span class="shortcut-label">Ver Niveles</span> 
                   </a>
-                  <a href="javascript:;" class="shortcut">
+                  <a href="{{route('user.listaxnivel')}}" class="shortcut">
                     <i class="shortcut-icon icon icon-calendar-empty"></i>
                     <span class="shortcut-label">Listar</span>
                   </a>

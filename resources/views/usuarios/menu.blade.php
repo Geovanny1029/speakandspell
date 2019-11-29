@@ -13,7 +13,7 @@
                   <i class="shortcut-icon icon icon-sitemap"></i>
                   <span class="shortcut-label">Niveles</span> 
                 </a>
-                <a href="javascript:;" class="shortcut">
+                <a href="{{route('user.pagos')}}" class="shortcut">
                   <i class="shortcut-icon icon icon-usd"></i>
                   <span class="shortcut-label">Pagos</span>
                 </a>

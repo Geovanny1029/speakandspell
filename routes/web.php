@@ -34,6 +34,23 @@ Route::get('inactivos',[
 			'as'   => 'user.inactivos'
 ]);
 
+//listar alumnos por nivel
+Route::get('listarxnivel',[
+			'uses' => 'UserController@listaxnivel',
+			'as'   => 'user.listaxnivel'
+]);
+
+//lista pagos
+Route::get('pagos',[
+			'uses' => 'UserController@pagos',
+			'as'   => 'user.pagos'
+]);
+
+//corte
+Route::get('pagos',[
+			'uses' => 'UserController@corte',
+			'as'   => 'user.corte'
+]);
 
 //lista niveles
 Route::get('listaNivel',[

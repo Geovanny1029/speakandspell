@@ -41,6 +41,20 @@ class UserController extends Controller
         return view('usuarios.listainactivos')->with('alumnos',$alumnos);
     }
 
+    public function listaxnivel(){
+        return view('usuarios.listaxnivel');
+    }
+
+
+    public function pagos(){
+        return view('usuarios.pagos');
+    }
+
+    public function corte(){
+        return view('usuarios.corte');
+    }
+
+
     public function menu()
     {
         

@@ -13,14 +13,17 @@
 
 		</div><br>
 		<div class="cabecera1">
-		<center><b>SOLICITUD DE PAGO DE GASTOS ADICIONALES <br> PARA REFERENCIAS FACTURADAS (CERRADAS)</b></center>
+		<center><b></b></center>
 		</div>
 	</div>
 	<br><br>
 	<div class="contenido">
 		<div class="container-fluid" style="border: 2px solid black;">
 			<br>
-			
+			lkjlkajlkja
+			lalkjalkjalkjak
+			kakjhakjhkjhakjhajk
+			ajkhjahkjhak
 		</div>
 		<div class="pie">
 			<div class="col-md-12">
