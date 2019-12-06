@@ -109,9 +109,29 @@ class UserController extends Controller
             $user->celular=strtoupper($request->oficina);
             $user->activo=1;
             $user->ruta_foto= $name;
-            
+            // $user->save();
 
-            $pdf = PDF::loadView('pdf.fichaInscripcion',['user'=>$user]);
+
+            $input = date($request->nacimiento);
+            $format = 'd/m/Y';
+            $date = Carbon::createFromFormat($format, $input)->format('Y-m-d');
+            $edad = Carbon::createFromDate($date)->age;
+
+            //calculando meses de nivel
+            $nivel = Nivel::find($request->horario);
+            $start = date($nivel->finicio);
+            $inicio = 'd/m/Y';
+
+            $end = date($nivel->ffin);
+            $fin = 'd/m/Y';
+
+            $finicio = Carbon::createFromFormat($inicio, $start);
+            $ffin = Carbon::createFromFormat($fin, $end);
+
+            $meses = $finicio->diffInMonths($ffin) + 1;
+
+
+            $pdf = PDF::loadView('pdf.fichaInscripcion',['user'=>$user,'meses'=>$meses,'edad'=>$edad]);
 
             return $pdf->stream(); 
           
@@ -201,6 +221,8 @@ class UserController extends Controller
             $name = $data->id."_".$request->edit_nombre."_".$request->edit_ap;
             $file->move(public_path().'/fotos/',$name);
 
+        }else{
+            $name = $request->edit_ruta_foto;
         }
 
 
@@ -212,7 +234,7 @@ class UserController extends Controller
         $data->ciudad = strtoupper($request->edit_ciudad);
         $data->ocupacion = strtoupper($request->edit_ocupacion);
         $data->estudios = strtoupper($request->edit_estudios);
-        $data->nivel = strtoupper($request->edit_nivel);
+        $data->nivel = strtoupper($request->edit_horario);
         $data->descuento = strtoupper($request->edit_descuento);
         $data->casa = strtoupper($request->edit_casa);
         $data->oficina = strtoupper($request->edit_oficina);

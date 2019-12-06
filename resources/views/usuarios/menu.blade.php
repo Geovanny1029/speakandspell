@@ -13,11 +13,11 @@
                   <i class="shortcut-icon icon icon-sitemap"></i>
                   <span class="shortcut-label">Niveles</span> 
                 </a>
-                <a href="{{route('user.pagos')}}" class="shortcut">
+                <a href="{{route('user.pagosalumnos')}}" class="shortcut">
                   <i class="shortcut-icon icon icon-usd"></i>
                   <span class="shortcut-label">Pagos</span>
                 </a>
-                <a href="javascript:;" class="shortcut"> 
+                <a href="{{route('user.corte')}}" class="shortcut"> 
                   <i class="shortcut-icon icon-comment"></i>
                   <span class="shortcut-label">Corte</span> 
                 </a>

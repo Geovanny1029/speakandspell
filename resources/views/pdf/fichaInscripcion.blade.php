@@ -7,50 +7,92 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
+	<center><img src="./images/speakn1.jpg" width="220" height="80" align="center"></center>
 	<div class="cabecera">
-		<div class="logo">
-			<center><img src="./images/logosas.png" width="200" height="70" align="right"></center>
-
-		</div><br>
 		<div class="cabecera1">
-		<center><b></b></center>
+		<center><b>Escuela de Ingles</b> <br> 
+		Calle 29 No. 108 x 72 y 74, Progreso, Yuc. Tel. (969) 935 1608<br>
+	Ficha de Inscripcion</center>
 		</div>
 	</div>
-	<br><br>
+
 	<div class="contenido">
-		<div class="container-fluid" style="border: 2px solid black;">
-			<br>
-			lkjlkajlkja
-			lalkjalkjalkjak
-			kakjhakjhkjhakjhajk
-			ajkhjahkjhak
-		</div>
-		<div class="pie">
-			<div class="col-md-12">
-				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<table  style = 'width: 100%;'>
-						<tbody>
-							<tr>
-								<td style="width: 30%;"><p style="text-align: center;">ELABORO</p><br><br>____________________________<br><p style="text-align: center;">EJECUTIVO</p></td>
-								<td style="width: 30%;"><p style="text-align: center;">AUTORIZO</p><br><br>____________________________<br><p style="text-align: center;">JEFE DE DEPARTAMENTO</p></td>
-								<td style="width: 30%;"><p style="text-align: center;">FACTURO</p><br><br>____________________________<br><p style="text-align: center;">JEFE DE FACTURACIÓN</p></td>
-							</tr>
-						</tbody>						
-					</table>
-					
-					<table style="width: 100%;">
-						<tr>
-							<td style="width:5%;"></td>
-							<td style="width: 90%; text-align: left;"><p>N° CUENTA DE GASTOS ADICIONALES: ____________________________________</p> </td>
-							<td style="width: 5%;"></td>
-						</tr>
-					</table>
-					<br>	
-					<p><strong>Nota: </strong>Se deberá anexar el soporte con la autorización del cliente para la forma de cobro y aceptación del gasto adicional.</p>
-				</div>					
-				<div class="col-md-1"></div>
+		<br>
+		<table style="width: 100%;  border-collapse: separate;
+  border-spacing:  5px 5px;  ">
+			<tr>
+				<td colspan="2"><b>Matricula:</b>  {{$user->id}}</td>
+				
+			</tr>
+			<tr>
+				<td style="width: 40%"><b>Nombres:</b>  {{$user->nombre}}</td>
+				
+				<td colspan="2"><b>Apellidos:</b>  {{$user->ap}} {{$user->am}}</td>
+			</tr>
+			<tr>
+				<td colspan="3"><b>Direccion:</b> {{$user->direccion}}</td>
+			</tr>
+			<tr>
+				<td style="width: 40%"><b>Ciudad:</b> {{$user->ciudad}}</td>
+				<td><b>Estado:</b> Yucatan</td>
+				<td><b>Ocupacion:</b> {{$user->ocupacion}}</td>
+				
+			</tr>
+			<tr>
+				<td colspan="3"><b>Telefonos</b> </td>
+			</tr>
+			<tr>
+				<td><b>Casa:</b> {{$user->casa}}</td>
+				<td><b>Oficina:</b> {{$user->oficina}}</td>
+				<td><b>Celular:</b> {{$user->celular}}</td>
+			</tr>
+			<tr>
+				<td><b>Fecha de nacimiento:</b> {{$user->nacimiento}} </td>
+				<td><b>Edad:</b> {{$edad}}</td>
+				<td><b>Grado:</b>4TO PRIMARIA</td>
+			</tr>
+			<tr>
+				<td><b>Nivel: </b> {{$user->nivel}}</td>
+				<td><b>Horario:</b> {{$user->nivel}}</td>
+
+			</tr>
+
+		</table><br>
+
+		<center>Control de Pago</center><br>
+		<table class="pago">
+			<tr class="pago1">
+				<td colspan="2"  class="pago1"><center><b>CURSO DE INGLES</b></center></td>
+			</tr>
+			<tr class="pago1">
+				<td class="pago2">Duracion:</td>
+				<td class="pago1">{{$meses}}</td>
+			</tr class="pago1">
+			<tr class="pago1">
+				<td class="pago2">Inscripcion:</td>
+				<td class="pago1">$500</td>
+			</tr>
+			<tr class="pago1">
+				<td class="pago2">Mensualidad:</td>
+				<td class="pago1">$500</td>
+			</tr>
+			<tr class="pago1">
+				<td class="pago2">Inicio Curso:</td>
+				<td class="pago1">3 agosto</td>
+			</tr>
+		</table><br>
+		<div>
+			<div class="left">Fecha: 02 Diciembre 2019</div>
+			<div class="right">Prof David Mendez Morales</div>
+		</div><br>
+		<div><br>
+			<center><b>COMPROMISO DE ASISTENCIA</b></center><br>
+			Me comprometo a manifestar mi baja definitiva en la oficina personalmente, para que los pagos se cancelen y no sigan causando pago alguno (los pagos ya efectuados no tienen devolucion). <br><br>
+
+			<div class="right">__________________________    <br>
+				  Firma del padre o tutor
 			</div>
 		</div>
+
 </body>
 </html>

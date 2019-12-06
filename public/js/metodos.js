@@ -24,6 +24,7 @@ function fun_edit(id)
           $("#edit_ocupacion").val(result.info.ocupacion);
           $("#edit_estudios").val(result.info.estudios);
           $("#edit_nivel").val(result.nivel.nombre);
+          $("#edit_horario").val(result.info.nivel);
           $("#edit_descuento").val(result.info.descuento);
           $("#edit_casa").val(result.info.casa);
           $("#edit_oficina").val(result.info.oficina);

@@ -41,9 +41,9 @@ Route::get('listarxnivel',[
 ]);
 
 //lista pagos
-Route::get('pagos',[
+Route::get('pagosalumnos',[
 			'uses' => 'UserController@pagos',
-			'as'   => 'user.pagos'
+			'as'   => 'user.pagosalumnos'
 ]);
 
 //corte
