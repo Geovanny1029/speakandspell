@@ -128,6 +128,7 @@ class UserController extends Controller
             $finicio = Carbon::createFromFormat($inicio, $start);
             $ffin = Carbon::createFromFormat($fin, $end);
 
+dd($finicio->format('m'));
             $meses = $finicio->diffInMonths($ffin) + 1;
 
 

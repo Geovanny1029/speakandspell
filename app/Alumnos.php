@@ -34,4 +34,9 @@ class Alumnos extends Model
         return $this->belongsTo('App\Nivel','nivel'); 
     }
 
+        public function pago(){
+
+        return $this->hasMany('App\Pagos'); 
+    }   
+
 }

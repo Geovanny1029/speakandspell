@@ -4,20 +4,30 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class pagos extends Model
+class Pagos extends Model
 {
-	protected $table = "pagos";
+
+	protected $table = "alumnos";
 
 	protected $fillable= [
-   		'id',
+      		'id',
    		'id_usuario',
    		'id_nivel',
    		'fecha_pago',
    		'estatus',
    		'monto',
    		'mes',
-   		'tipo',   
-   	];
+   		'tipo', ]
 
-    public $timestamps = false;
+   	public $timestamps = false;
+
+   	 public function alumnop(){
+
+        return $this->belongsTo('App\Alumnos','id_usuario'); 
+    }
+
+   	 public function nivelp(){
+
+        return $this->belongsTo('App\Nivel','id_nivel'); 
+    }    
 }
