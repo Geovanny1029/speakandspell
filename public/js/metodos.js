@@ -96,3 +96,14 @@ function fun_edit_nivel(id)
       });
     });
   });
+
+  $(document).ready(function(){  
+    $("#familiard").change(function() {  
+        if($("#familiard").is(':checked')) {  
+            $("#labelinscripcion").css('display','none'); 
+        } else {  
+            $("#labelinscripcion").css('display','inline-block'); 
+        }  
+    });  
+  
+  });  

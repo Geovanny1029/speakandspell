@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pagos extends Model
 {
 
-	protected $table = "alumnos";
+	protected $table = "pagos";
 
 	protected $fillable= [
       		'id',
@@ -17,7 +17,7 @@ class Pagos extends Model
    		'estatus',
    		'monto',
    		'mes',
-   		'tipo', ]
+   		'tipo', ];
 
    	public $timestamps = false;
 

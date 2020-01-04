@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 Use App\Alumnos;
 use App\User;
 use App\Nivel;
+use App\Pagos;
 use Carbon\Carbon;
 use DB;
 use PDF;
@@ -103,15 +104,19 @@ class UserController extends Controller
             $user->ocupacion=strtoupper($request->ocupacion);
             $user->estudios=strtoupper($request->estudios);
             $user->nivel=strtoupper($request->horario);
-            $user->descuento=strtoupper($request->descuento);
             $user->casa=strtoupper($request->casa);
             $user->oficina=strtoupper($request->celular);
             $user->celular=strtoupper($request->oficina);
             $user->activo=1;
             $user->ruta_foto= $name;
-            // $user->save();
+            $user->save();
 
 
+            $hoy = Carbon::now();
+            $today = $hoy->format('Y-m-d');
+
+
+            //sacar meses
             $input = date($request->nacimiento);
             $format = 'd/m/Y';
             $date = Carbon::createFromFormat($format, $input)->format('Y-m-d');
@@ -128,11 +133,68 @@ class UserController extends Controller
             $finicio = Carbon::createFromFormat($inicio, $start);
             $ffin = Carbon::createFromFormat($fin, $end);
 
-dd($finicio->format('m'));
+
             $meses = $finicio->diffInMonths($ffin) + 1;
 
 
             $pdf = PDF::loadView('pdf.fichaInscripcion',['user'=>$user,'meses'=>$meses,'edad'=>$edad]);
+
+        //pagos inscripcion y colegiatura
+          //si marcan la casilla familiar directo
+            if($request->familiard == 1){
+                Pagos::create(
+                ['id_usuario'  => $request->id,
+                 'id_nivel' => $request->horario,
+                 'fecha_pago' => $today,
+                 'estatus' => 1,
+                 'monto' => 500,
+                 'mes' => $finicio->format('m'),
+                 'tipo' => 1]
+                );
+            }else{
+                if($request->inscripcion != null || $request->inscripcion != ""){
+                    if($request->inscripcion == 500){
+                        Pagos::create(
+                        ['id_usuario'  => $request->id,
+                        'id_nivel' => $request->horario,
+                        'fecha_pago' => $today,
+                        'estatus' => 1,
+                        'monto' => 500,
+                        'mes' => $finicio->format('m'),
+                        'tipo' => 1]);
+                    }else{
+                        Pagos::create(
+                        ['id_usuario'  => $request->id,
+                        'id_nivel' => $request->horario,
+                        'fecha_pago' => $today,
+                        'estatus' => 2,
+                        'monto' => $request->inscripcion,
+                        'mes' => $finicio->format('m'),
+                        'tipo' => 1]);
+                    }
+                }
+                if($request->colegiatura != null || $request->colegiatura != ""){
+                    if($request->colegiatura == 500){
+                        Pagos::create(
+                        ['id_usuario'  => $request->id,
+                        'id_nivel' => $request->horario,
+                        'fecha_pago' => $today,
+                        'estatus' => 1,
+                        'monto' => 500,
+                        'mes' => $finicio->format('m'),
+                        'tipo' => 2]);
+                    }else{
+                        Pagos::create(
+                        ['id_usuario'  => $request->id,
+                        'id_nivel' => $request->horario,
+                        'fecha_pago' => $today,
+                        'estatus' => 2,
+                        'monto' => $request->colegiatura,
+                        'mes' => $finicio->format('m'),
+                        'tipo' => 2]);
+                    }                    
+                }                
+            }
 
             return $pdf->stream(); 
           

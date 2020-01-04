@@ -72,15 +72,10 @@
                       {!! Form::label('horario', 'Horario') !!} 
                       {!! Form::select('horario',$listaH,null,['class' => 'form-control','id'=>'horario']) !!}
                     </div>
-                    <div class="form-group col-md-6">
-                      {!! Form::label('descuento', 'Descuento') !!} 
-                      {!! Form::text('descuento',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => '$' ] ) !!}
-                    </div>
                   </div>
 
-<hr>
-<h6>Telefonos</h6>
-
+                  <hr>
+                  <h6>Telefonos</h6>
                   <div class="row">
                     <div class="form-group col-md-4">
                       {!! Form::label('casa', 'Casa') !!} 
@@ -94,7 +89,24 @@
                       {!! Form::label('oficina', 'Oficina') !!} 
                       {!! Form::text('oficina',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Oficina' ] ) !!}
                     </div>                    
-                  </div>   
+                  </div>
+                  <hr>
+                  <h6>Pago</h6>
+                  <div class="row">
+                    <div class="form-group col-md-2">
+                      {!! Form::label('FamiliarDirecto', 'Familiar Directo') !!}<br>
+                      {!! Form::checkbox('familiard', '1',null,['class'=>'familiar','id'=>'familiard']) !!}
+                    </div>                       
+                    <div class="form-group col-md-4" id="labelinscripcion" style="display: inline-block">
+                      {!! Form::label('Inscripcion', 'inscripcion') !!} 
+                      {!! Form::text('inscripcion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => '$' ] ) !!}
+                    </div>
+                    <div class="form-group col-md-4">
+                      {!! Form::label('Colegiatura', 'Colegiatura') !!} 
+                      {!! Form::text('colegiatura',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => '$' ] ) !!}
+                    </div> 
+                                     
+                  </div>                     
                   <div class="row">
                     <div class="form-group col-md-4">
                       {!! Form::label('Foto', 'Foto') !!} 
