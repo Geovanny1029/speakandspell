@@ -79,6 +79,12 @@ Route::get('user/{id}/destroy',[
 			'as'   => 'user.destroy'
 ]);
 
+//pagos alumnos
+Route::get('user/{id}/pagos',[
+			'uses' => 'UserController@pagosal',
+			'as'   => 'user.pagosal'
+]);
+
 //modal edit usuario
 	Route::get('userse',[
 			'uses' => 'UserController@view',

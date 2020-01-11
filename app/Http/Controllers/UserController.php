@@ -362,4 +362,11 @@ class UserController extends Controller
 
         return redirect()->route('user.index');
     }
+
+    public function pagosal($id)
+    {
+        $alumno = Alumnos::find($id);
+        $pagos = Pagos::where('id_usuario',$alumno->id)->where('id_nivel',$alumno->nivel)->get();
+         return view('usuarios.pagosal');
+    }
 }

@@ -43,7 +43,7 @@
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li><a href="{{route('user.show',$alumno->id)}}" data-lity>Ver perfil</a></li>
                     <li><a  data-toggle="modal" data-target="#editModal" onclick="fun_edit('{{$alumno->id}}')" id="editaU" value="{{route('users.view')}}">Editar</a></li>
-                    <li><a href="#">Pagos</a></li>
+                    <li><a href="{{route('user.pagosal',$alumno->id)}}" data-lity>Pagos</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a onclick="return confirm('¿Seguro que deseas dar de baja este Usuario?')" href="{{route('user.destroy', $alumno->id)}}">Dar Baja</a></li>
                   </ul>
