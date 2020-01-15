@@ -112,6 +112,10 @@
   $(document).ready( function () {
      $('#tablaasignaturas').DataTable();
   });
+
+    $(document).ready( function () {
+     $('#tablapagoalumnos').DataTable();
+  });
     
 </script>
 

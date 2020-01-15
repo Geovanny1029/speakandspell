@@ -85,6 +85,11 @@ Route::get('user/{id}/pagos',[
 			'as'   => 'user.pagosal'
 ]);
 
+Route::get('pagoview',[
+			'uses' => 'UserController@pagoview',
+			'as'   => 'pagos.view'
+]);
+
 //modal edit usuario
 	Route::get('userse',[
 			'uses' => 'UserController@view',

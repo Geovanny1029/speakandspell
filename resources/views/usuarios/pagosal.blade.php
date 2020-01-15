@@ -17,8 +17,29 @@
 <div class="container emp-profile" style="max-width: 920px;">
             <form method="post">
                 <div class="row">
-                    <div class="col-md-4">
-                        Pagos
+                    <div class="col-md-12">
+                        <center>Informacion</center>
+                        Alumno: {{$alumno->nombre}}<br>
+                        Nivel: {{$alumno->nivel}}<br>
+                        <br>
+
+                        Estado de pagos:<br>
+                        @foreach($pagos as $pago)
+                          @if($pago->tipo == 1)
+                          inscripcion
+                          @elseif($pago->tipo == 2)
+                          colegiatura
+                          @else
+                          @endif
+                         {{$pago->tipo}}<br>
+                        @endforeach
+
+      <?php
+       $mes = [];
+        for ($i=$mesi; $i <= $mesf ; $i++) { 
+           echo $mes[$i];
+         } 
+      ?>
                     </div>
                 </div>
                 <div class="row">

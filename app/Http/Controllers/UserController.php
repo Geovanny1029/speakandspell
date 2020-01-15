@@ -48,7 +48,12 @@ class UserController extends Controller
 
 
     public function pagos(){
-        return view('usuarios.pagos');
+        $alumnos = Alumnos::orderBy('id','asc')->where('activo','1')->get();
+
+        $alumnos->each(function($alumnos){
+            $alumnos->nivelAl;
+        });
+        return view('usuarios.pagos')->with('alumnos',$alumnos);
     }
 
     public function corte(){
@@ -365,8 +370,20 @@ class UserController extends Controller
 
     public function pagosal($id)
     {
+        //sacar id alumno
         $alumno = Alumnos::find($id);
+
+        //sacar sus pagos
         $pagos = Pagos::where('id_usuario',$alumno->id)->where('id_nivel',$alumno->nivel)->get();
-         return view('usuarios.pagosal');
+
+        //fechas de inicio y fin 
+        $ini = Nivel::where('id',$alumno->nivel)->first();
+        $mesinicio = date_create($ini->finicio);
+        $mesi = date_format($mesinicio,'m');
+
+        $mesfin = date_create($ini->ffin);
+       
+dd($mesfin);
+         return view('usuarios.pagosal')->with('alumno',$alumno)->with('pagos',$pagos)->with('mesi',$mesi)->with('mesf',$mesf);
     }
 }
