@@ -9,7 +9,7 @@
             <h4 class="modal-title">Pagar</h4>
           </div>
           <div class="modal-body">
-              {!! Form::open(['route' => 'users.actualiza', 'method' => 'POST','files'=>true]) !!}
+              {!! Form::open(['route' => 'user.pagomesalum', 'method' => 'POST','files'=>true]) !!}
               <div class="row">
                <div class="form-group col-md-12">
                <center>  {!! Form::label('pago', 'Ingresa Cantidad') !!} </center> 
@@ -21,7 +21,7 @@
               <div class="row">
                 <div class="form-group col-md-2">
                  {!! Form::submit('pagar',[ 'class' => 'btn btn-primary']) !!} 
-                 <input type="hidden" id="edit_id" name="edit_id">
+                 <input type="hidden" id="id_alum" name="id_alum">
                 </div>
               </div>
 

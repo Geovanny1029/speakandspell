@@ -383,7 +383,104 @@ class UserController extends Controller
 
         $mesfin = date_create($ini->ffin);
        
-dd($mesfin);
          return view('usuarios.pagosal')->with('alumno',$alumno)->with('pagos',$pagos)->with('mesi',$mesi)->with('mesf',$mesf);
+    }
+
+    public function pagomesalum(Request $request){
+        //fecha actual y mes actual
+        $hoy = Carbon::now();
+        $today = $hoy->format('Y-m-d');
+        $mesactual = $hoy->format('m');
+       
+        //id del alumno
+        $id = $request->id_alum;
+        //sacamos informacion de nivel por el costo 
+        $info = Alumnos::where('id',$id)->first();
+        $nivel = Nivel::find($info->nivel);
+        $costoN = $nivel->costo;
+
+        //sacamos registro del ultimo pago
+        $info = Pagos::where('id_usuario',$id)->where('tipo',2)->first();
+
+        //lo que el usuario teclea
+        $abono = $request->pago;
+
+        // si el abono es igual ala colegiatura le pone estatus 1 si no 2
+        if($abono == $costoN){
+            $estatus = 1; 
+        }else{
+            $estatus = 2;
+        }
+         // si cuando paga es el mismo mes
+         if($info->mes == $mesactual){
+            //y ya esta pagado crea registros de siguiente mes
+            if($info->estatus == 1){
+                Pagos::create(
+                ['id_usuario'  => $id,
+                    'id_nivel' => $info->nivel,
+                    'fecha_pago' => $today,
+                    'estatus' => $estatus,
+                    'monto' => $abono,
+                    'mes' => $today->format('m')+1,
+                    'tipo' => 2]);
+                 return back();
+            }// si no esta pagado hace condiciones
+            else{
+                //si el monto que tenia mas el abonado es igual actualiza a 1
+                if(($abono+$info->monto)==$costoN){
+
+                    $pagoupdate = array_merge($request->all(),array(
+                    'fecha_pago' => $today,
+                    'estatus'=>1,
+                    'monto' => ($abono+$info->monto)));
+
+                    $pag = Pagos::find($info->id);
+                    $pag->update($pagoupdate);
+                    return back();
+                }else
+                // si el monto que tenia mas el abonado es menor actualiza monto
+                 if(($abono+$info->monto)<$costoN){
+                    $pagoupdate = array_merge($request->all(),array(
+                    'fecha_pago' => $today,
+                    'monto' => ($abono+$info->monto)));
+
+                    $pag = Pagos::find($info->id);
+                    $pag->update($pagoupdate);
+                    return back();
+                }else
+                 // si el monto que tenia mas el abonado es mayor actualiza a 1 y la diferencia crea registro del siguiente mes
+                 if (($abono+$info->monto)>$costoN) {
+                   $pagoupdate = array_merge($request->all(),array(
+                    'fecha_pago' => $today,
+                    'estatus'=>1,
+                    'monto' => $costoN));
+                    $pag = Pagos::find($info->id);
+                    $pag->update($pagoupdate);
+
+                    Pagos::create(
+                    ['id_usuario'  => $id,
+                        'id_nivel' => $info->nivel,
+                        'fecha_pago' => $today,
+                        'estatus' => 2,
+                        'monto' => $costoN-($abono+$info->monto),
+                        'mes' => $today->format('m')+1,
+                        'tipo' => 2]);
+
+                }
+                return back();
+            }
+         }// si no es del mismo mes crear normal
+         else{
+            Pagos::create(
+            ['id_usuario'  => $id,
+            'id_nivel' => $info->nivel,
+            'fecha_pago' => $today,
+            'estatus' => $estatus,
+            'monto' => $abono,
+            'mes' => $today->format('m'),
+            'tipo' => 2]);
+            return back();
+         }
+
     }
 }

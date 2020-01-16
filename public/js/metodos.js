@@ -40,6 +40,23 @@ function fun_edit(id)
       });
     }
 
+//vista id de alumno
+function fun_id_alum(id)
+    {
+      var view_url = 'http://localhost:8000/userse';
+    
+      $.ajax({
+        url: view_url,
+        type:"GET", 
+        data: {"id":id}, 
+        success: function(result){
+          //console.log(result);
+          $("#id_alum").val(result.info.id);
+
+        }
+      });
+    }
+
 
 //vista editar nivel
 function fun_edit_nivel(id)

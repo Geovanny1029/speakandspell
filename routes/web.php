@@ -46,6 +46,11 @@ Route::get('pagosalumnos',[
 			'as'   => 'user.pagosalumnos'
 ]);
 
+Route::post('pagomesalumnos',[
+			'uses' => 'UserController@pagomesalum',
+			'as'   => 'user.pagomesalum'
+]);
+
 //corte
 Route::get('pagos',[
 			'uses' => 'UserController@corte',
@@ -85,10 +90,6 @@ Route::get('user/{id}/pagos',[
 			'as'   => 'user.pagosal'
 ]);
 
-Route::get('pagoview',[
-			'uses' => 'UserController@pagoview',
-			'as'   => 'pagos.view'
-]);
 
 //modal edit usuario
 	Route::get('userse',[

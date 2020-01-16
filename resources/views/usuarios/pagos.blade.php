@@ -35,7 +35,7 @@
               <td> {{$alumno->nombre}} {{$alumno->ap}} {{$alumno->am}} </td>
               <td> {{$alumno->nivel}} </td>
               <td>
-               <button class="btn btn-info" data-toggle="modal" data-target="#modalpago" onclick="fun_edit('{{$alumno->id}}')" id="editar" value="{{route('pagos.view')}}">Pagar </button>
+               <button class="btn btn-info" data-toggle="modal" data-target="#modalpago" onclick="fun_id_alum('{{$alumno->id}}')" id="id_al" value="{{route('users.view')}}">Pagar </button>
               </td>
             </tr>
             @endforeach
