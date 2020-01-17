@@ -52,17 +52,25 @@ function fun_id_alum(id)
         success: function(result){
           //console.log(result);
           $("#id_alum").val(result.info.id);
-          $("#pag_nom_alum").text(result.info.nombre+result.info.ap);
+          $("#pag_nom_alum").text(result.info.nombre+" "+result.info.ap);
           $("#pag_nivel_alum").text(result.nivel.nombre);
 
           var pago = result.pagos.estatus
-
-          if(pago == 1){
-            mes = mes(result.pagos.mes+1);
-             $("#pag_mes_alum").text(mes);
+          var tipo = result.pagos.tipo
+          
+          if(tipo == 2){
+            if(pago == 1){
+              mes = mes(result.pagos.mes+1);
+               $("#pag_mes_alum").text(mes);
+            }else{
+              mes = mes(result.pagos.mes);
+               $("#pag_mes_alum").text("Debe "+(result.nivel.costo-result.pagos.monto)+"$ SALDO DEL MES DE "+mes);
+            }  
           }else{
-             $("#pag_mes_alum").text("SALDO DEL MES"+mes);
+            mes = mes(result.pagos.mes);
+            $("#pag_mes_alum").text(mes);
           }
+
 
         }
       });

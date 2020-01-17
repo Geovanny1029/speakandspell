@@ -153,7 +153,7 @@ class UserController extends Controller
                  'fecha_pago' => $today,
                  'estatus' => 1,
                  'monto' => 500,
-                 'mes' => $finicio->format('m'),
+                 'mes' => $hoy->format('m'),
                  'tipo' => 1]
                 );
             }else{
@@ -165,7 +165,7 @@ class UserController extends Controller
                         'fecha_pago' => $today,
                         'estatus' => 1,
                         'monto' => 500,
-                        'mes' => $finicio->format('m'),
+                        'mes' => $hoy->format('m'),
                         'tipo' => 1]);
                     }else{
                         Pagos::create(
@@ -174,7 +174,7 @@ class UserController extends Controller
                         'fecha_pago' => $today,
                         'estatus' => 2,
                         'monto' => $request->inscripcion,
-                        'mes' => $finicio->format('m'),
+                        'mes' => $hoy->format('m'),
                         'tipo' => 1]);
                     }
                 }
@@ -186,7 +186,7 @@ class UserController extends Controller
                         'fecha_pago' => $today,
                         'estatus' => 1,
                         'monto' => 500,
-                        'mes' => $finicio->format('m'),
+                        'mes' => $hoy->format('m'),
                         'tipo' => 2]);
                     }else{
                         Pagos::create(
@@ -195,7 +195,7 @@ class UserController extends Controller
                         'fecha_pago' => $today,
                         'estatus' => 2,
                         'monto' => $request->colegiatura,
-                        'mes' => $finicio->format('m'),
+                        'mes' => $hoy->format('m'),
                         'tipo' => 2]);
                     }                    
                 }                
@@ -396,15 +396,22 @@ class UserController extends Controller
         //id del alumno
         $id = $request->id_alum;
         //sacamos informacion de nivel por el costo 
-        $info = Alumnos::where('id',$id)->first();
-        $nivel = Nivel::find($info->nivel);
+        $infoa = Alumnos::where('id',$id)->first();
+        $nivel = Nivel::find($infoa->nivel);
         $costoN = $nivel->costo;
 
         //sacamos registro del ultimo pago
-        $info = Pagos::where('id_usuario',$id)->where('tipo',2)->orderBy('id','desc')->first();
+        $info = Pagos::where('id_usuario',$id)->where('id_nivel',$nivel->id)->where('tipo',2)->orderBy('id','desc')->first();
 
-        $mp = Carbon::parse($info->fecha_pago);
-        $mes_pago = $mp->format('m');
+        $info2 = Pagos::where('id_usuario',$id)->where('id_nivel',$nivel->id)->where('tipo',1)->orderBy('id','desc')->first();
+
+        $numeroinf = count($info);
+
+        if($numeroinf != 0){
+            $mp = Carbon::parse($info->fecha_pago);
+            $mes_pago = $mp->format('m');
+        }
+
       
         //lo que el usuario teclea
         $abono = $request->pago;
@@ -415,6 +422,9 @@ class UserController extends Controller
         }else{
             $estatus = 2;
         }
+
+        //pagar primer mes si solo pago inscripcion detecta si algun dato tipo colegiatura
+      if($numeroinf != 0){
          // si cuando paga es el mismo mes
          if($info->mes == $mesactual){
             //y ya esta pagado crea registros de siguiente mes
@@ -466,7 +476,7 @@ class UserController extends Controller
                         'id_nivel' => $info->id_nivel,
                         'fecha_pago' => $today,
                         'estatus' => 2,
-                        'monto' => $costoN-($abono+$info->monto),
+                        'monto' => ($abono+$info->monto)-$costoN,
                         'mes' => $hoy->format('m')+1,
                         'tipo' => 2]);
 
@@ -523,8 +533,8 @@ class UserController extends Controller
                             'id_nivel' => $info->id_nivel,
                             'fecha_pago' => $today,
                             'estatus' => 2,
-                            'monto' => $costoN-($abono+$info->monto),
-                            'mes' => $hoy->format('m')+1,
+                            'monto' => ($abono+$info->monto)-$costoN,
+                            'mes' => $info->mes+1,
                             'tipo' => 2]);
 
                     }
@@ -532,6 +542,7 @@ class UserController extends Controller
                 }//
 
             }else{
+                //pago mes normal correspondiente
                 Pagos::create(
                     ['id_usuario'  => $id,
                     'id_nivel' => $info->id_nivel,
@@ -544,6 +555,17 @@ class UserController extends Controller
             }
 
          }
-
+      }else{
+        //si no crea registro del primer mes de colegiatura
+        Pagos::create(
+        ['id_usuario'  => $id,
+        'id_nivel' => $info2->id_nivel,
+        'fecha_pago' => $today,
+        'estatus' => $estatus,
+        'monto' => $abono,
+        'mes' => $hoy->format('m'),
+        'tipo' => 2]);
+        return back();
+      }
     }
 }
