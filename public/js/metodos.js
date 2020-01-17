@@ -52,12 +52,38 @@ function fun_id_alum(id)
         success: function(result){
           //console.log(result);
           $("#id_alum").val(result.info.id);
+          $("#pag_nom_alum").text(result.info.nombre+result.info.ap);
+          $("#pag_nivel_alum").text(result.nivel.nombre);
+
+          var pago = result.pagos.estatus
+
+          if(pago == 1){
+            mes = mes(result.pagos.mes+1);
+             $("#pag_mes_alum").text(mes);
+          }else{
+             $("#pag_mes_alum").text("SALDO DEL MES"+mes);
+          }
 
         }
       });
     }
 
 
+function mes($id){
+    
+  if($id == 1){return "ENERO";}else
+  if($id == 2){return "FEBRERO";}else
+  if($id == 3){return "MARZO";}else
+  if($id == 4){return "ABRIL";}else
+  if($id == 5){return "MAYO";}else
+  if($id == 6){return "JUNIO";}else
+  if($id == 7){return "JULIO";}else
+  if($id == 8){return "AGOSTO";}else
+  if($id == 9){return "SEPTIEMBRE";}else
+  if($id == 10){return "OCTUBRE";}else
+  if($id == 11){return "NOVIEMBRE";}else
+  if($id == 12){return "DICIEMBRE";}
+}
 //vista editar nivel
 function fun_edit_nivel(id)
     {

@@ -13,6 +13,9 @@
               <div class="row">
                <div class="form-group col-md-12">
                <center>  {!! Form::label('pago', 'Ingresa Cantidad') !!} </center> 
+               <b>Alumno:</b> <label id="pag_nom_alum"></label><br>
+               <b>Nivel:</b> <label id="pag_nivel_alum"></label><br>
+               <b>Mes a pagar:</b><label id="pag_mes_alum"></label><br>
                  {!! Form::text('pago',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'pago', 'required' ] ) !!}
                </div>
 
