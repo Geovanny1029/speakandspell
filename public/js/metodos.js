@@ -55,23 +55,39 @@ function fun_id_alum(id)
           $("#pag_nom_alum").text(result.info.nombre+" "+result.info.ap);
           $("#pag_nivel_alum").text(result.nivel.nombre);
 
-          var pago = result.pagos.estatus
-          var tipo = result.pagos.tipo
-          
-          if(tipo == 2){
-            if(pago == 1){
-              mes = mes(result.pagos.mes+1);
-               $("#pag_mes_alum").text(mes);
+          var pago = result.pagos.estatus;
+          var tipo = result.pagos.tipo;
+          var mes_final = result.mes_fin;
+          // si el ultimo registro es igual a final de mes del curso 
+          if(mes_final == result.pagos.mes && pago == 1 ){
+            $("#showpago1").hide();
+            $("#showpago2").show();
+            $("#pago_completo").text("EL alumno ha pagado completo el curso");
+          }else
+          {//si el tipo es colegiatura
+            if(tipo == 2){
+             
+              //si tiene pagado el ultimo mes pone fecha siguiente
+              if(pago == 1){
+                mes = mes(result.pagos.mes+1);
+                 $("#showpago1").show();
+                 $("#showpago2").hide();
+                 $("#pag_mes_alum").text(mes);
+              }else// si no debe colegiatura y le dice cuanto debe
+              {
+                mes = mes(result.pagos.mes);
+                $("#showpago1").show();
+                 $("#showpago2").hide();
+                 $("#pag_mes_alum").text("Debe "+(result.nivel.costo-result.pagos.monto)+"$ SALDO DEL MES DE "+mes);
+              }  
             }else{
+              //si no paga mes ya que el ultimo registro que agarro es inscripcion
               mes = mes(result.pagos.mes);
-               $("#pag_mes_alum").text("Debe "+(result.nivel.costo-result.pagos.monto)+"$ SALDO DEL MES DE "+mes);
-            }  
-          }else{
-            mes = mes(result.pagos.mes);
-            $("#pag_mes_alum").text(mes);
+              $("#showpago1").show();
+              $("#showpago2").hide();
+              $("#pag_mes_alum").text(mes);
+            }
           }
-
-
         }
       });
     }

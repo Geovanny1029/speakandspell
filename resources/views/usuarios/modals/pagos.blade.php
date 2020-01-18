@@ -11,7 +11,7 @@
           <div class="modal-body">
               {!! Form::open(['route' => 'user.pagomesalum', 'method' => 'POST','files'=>true]) !!}
               <div class="row">
-               <div class="form-group col-md-12">
+               <div class="form-group col-md-12" id="showpago1" style="display: inline-block;">
                <center>  {!! Form::label('pago', 'Ingresa Cantidad') !!} </center> 
                <b>Alumno:</b> <label id="pag_nom_alum"></label><br>
                <b>Nivel:</b> <label id="pag_nivel_alum"></label><br>
@@ -19,6 +19,9 @@
                  {!! Form::text('pago',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'pago', 'required' ] ) !!}
                </div>
 
+               <div class="form-group col-md-12" id="showpago2" style="display: none;">
+                    <h3><label id="pago_completo"></label></h3>
+               </div>
               </div>
            
               <div class="row">

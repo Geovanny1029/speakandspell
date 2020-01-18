@@ -89,7 +89,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-
         if($request->hasFile('ruta_foto')){
             $file = $request->file('ruta_foto');
             $name = $request->id."_".$request->nombre."_".$request->apellido_paterno;
@@ -335,7 +334,14 @@ class UserController extends Controller
                 $info = Alumnos::where('id',$id)->first();
                 $nivel = Nivel::find($info->nivel);
                 $pagos = Pagos::where('id_usuario',$info->id)->orderBy('id','desc')->first();
-                return response()->json(array('info'=>$info,'nivel'=>$nivel,'pagos'=>$pagos));
+
+                // $mes_fi = Carbon::parse($nivel->ffin);
+                // dd($mes_fi);
+                // $mes_fin = $mes_fi->format('m');
+
+                $mes_fin = Carbon::createFromFormat('d/m/Y', $nivel->ffin)->format('m');
+
+                return response()->json(array('info'=>$info,'nivel'=>$nivel,'pagos'=>$pagos,'mes_fin'=>$mes_fin));
             }
         }
 
@@ -400,12 +406,19 @@ class UserController extends Controller
         $nivel = Nivel::find($infoa->nivel);
         $costoN = $nivel->costo;
 
+
         //sacamos registro del ultimo pago
         $info = Pagos::where('id_usuario',$id)->where('id_nivel',$nivel->id)->where('tipo',2)->orderBy('id','desc')->first();
 
         $info2 = Pagos::where('id_usuario',$id)->where('id_nivel',$nivel->id)->where('tipo',1)->orderBy('id','desc')->first();
 
-        $numeroinf = count($info);
+
+        if($info == null){
+            $numeroinf = 0;
+        }else{
+            $numeroinf = 1;
+        }
+        
 
         if($numeroinf != 0){
             $mp = Carbon::parse($info->fecha_pago);
