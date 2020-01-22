@@ -78,7 +78,7 @@
 			</tr>
 			<tr class="pago1">
 				<td class="pago2">Inicio Curso:</td>
-				<td class="pago1">3 agosto</td>
+				<td class="pago1">curso</td>
 			</tr>
 		</table><br>
 		<div>

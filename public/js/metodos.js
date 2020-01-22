@@ -57,7 +57,9 @@ function fun_id_alum(id)
 
           var pago = result.pagos.estatus;
           var tipo = result.pagos.tipo;
+          var mes_inicio = result.mes_finicio;
           var mes_final = result.mes_fin;
+
           // si el ultimo registro es igual a final de mes del curso 
           if(mes_final == result.pagos.mes && pago == 1 ){
             $("#showpago1").hide();
@@ -82,7 +84,7 @@ function fun_id_alum(id)
               }  
             }else{
               //si no paga mes ya que el ultimo registro que agarro es inscripcion
-              mes = mes(result.pagos.mes);
+              mes = mes(mes_inicio);
               $("#showpago1").show();
               $("#showpago2").hide();
               $("#pag_mes_alum").text(mes);
