@@ -89,6 +89,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+
+
         if($request->hasFile('ruta_foto')){
             $file = $request->file('ruta_foto');
             $name = $request->id."_".$request->nombre."_".$request->apellido_paterno;
@@ -113,7 +115,7 @@ class UserController extends Controller
             $user->celular=strtoupper($request->oficina);
             $user->activo=1;
             $user->ruta_foto= $name;
-            $user->save();
+            // $user->save();
 
 
             $hoy = Carbon::now();
@@ -144,8 +146,17 @@ class UserController extends Controller
 
             $pdf = PDF::loadView('pdf.fichaInscripcion',['user'=>$user,'meses'=>$meses,'edad'=>$edad]);
 
+            //datos necesarios para algortitmo de pago
+            $nivelP = Nivel::find($request->horario);
+            $abono = $request->colegiatura;
+            $colegiatura = $nivelP->costo;
+            $CostoC = $meses*$colegiatura;
+
+
         //pagos inscripcion y colegiatura
-        //si el curso ya empezo paga el mes que entra    
+    //si abono es menor o igual al total del curso   
+    if($abono <= $CostoC){        
+        //si el curso ya empezo paga el mes que entra
         if($primer_pago >= $monthactual){
             //si marcan la casilla familiar directo
             if($request->familiard == 1){
@@ -159,27 +170,88 @@ class UserController extends Controller
                  'tipo' => 1]
                 );
 
-                if($request->colegiatura != null || $request->colegiatura != ""){
-                    if($request->colegiatura == 500){
-                        Pagos::create(
-                        ['id_usuario'  => $request->id,
-                        'id_nivel' => $request->horario,
-                        'fecha_pago' => $today,
-                        'estatus' => 1,
-                        'monto' => 500,
-                        'mes' =>  $primer_pago,
-                        'tipo' => 2]);
+                //metodo propuesto
+                //si el abono es menor a la colegiatura
+                if($abono < $colegiatura ){
+                    Pagos::create(
+                    ['id_usuario'  => $request->id,
+                    'id_nivel' => $request->horario,
+                    'fecha_pago' => $today,
+                    'estatus' => 2,
+                    'monto' => $abono,
+                    'mes' =>  $primer_pago,
+                    'tipo' => 2]);                    
+                }else{
+                    //si el abono es entero 
+                    if(is_int($abono/$colegiatura) == true){
+                        $mesesApagar = $abono/$colegiatura;
+
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $aux = 0;
+                            Pagos::create(
+                            ['id_usuario'  => $request->id,
+                            'id_nivel' => $request->horario,
+                            'fecha_pago' => $today,
+                            'estatus' => 1,
+                            'monto' => 500,
+                            'mes' =>  $primer_pago+$i,
+                            'tipo' => 2]);
+                            $aux++;
+                        }
                     }else{
-                        Pagos::create(
-                        ['id_usuario'  => $request->id,
-                        'id_nivel' => $request->horario,
-                        'fecha_pago' => $today,
-                        'estatus' => 2,
-                        'monto' => $request->colegiatura,
-                        'mes' =>  $primer_pago,
-                        'tipo' => 2]);
-                    }                    
+                        //si no es entero saca los enteros y el residuo del saldo
+                        $mesesApagarC= explode(".", $abono/$colegiatura);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $abono%$colegiatura;
+                                Pagos::create(
+                                ['id_usuario'  => $request->id,
+                                'id_nivel' => $request->horario,
+                                'fecha_pago' => $today,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $primer_pago+($numeroMeses-1),
+                                'tipo' => 2]);
+                            } else{
+                                Pagos::create(
+                                ['id_usuario'  => $request->id,
+                                'id_nivel' => $request->horario,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $primer_pago+$i,
+                                'tipo' => 2]);      
+                            }
+
+                        }                                                       
+
+                    }
                 }
+
+
+                // if($request->colegiatura != null || $request->colegiatura != ""){
+                //     if($request->colegiatura == 500){
+                //         Pagos::create(
+                //         ['id_usuario'  => $request->id,
+                //         'id_nivel' => $request->horario,
+                //         'fecha_pago' => $today,
+                //         'estatus' => 1,
+                //         'monto' => 500,
+                //         'mes' =>  $primer_pago,
+                //         'tipo' => 2]);
+                //     }else{
+                //         Pagos::create(
+                //         ['id_usuario'  => $request->id,
+                //         'id_nivel' => $request->horario,
+                //         'fecha_pago' => $today,
+                //         'estatus' => 2,
+                //         'monto' => $request->colegiatura,
+                //         'mes' =>  $primer_pago,
+                //         'tipo' => 2]);
+                //     }                    
+                // }
 
             }else{
                 if($request->inscripcion != null || $request->inscripcion != ""){
@@ -203,27 +275,84 @@ class UserController extends Controller
                         'tipo' => 1]);
                     }
                 }
-                if($request->colegiatura != null || $request->colegiatura != ""){
-                    if($request->colegiatura == 500){
-                        Pagos::create(
-                        ['id_usuario'  => $request->id,
-                        'id_nivel' => $request->horario,
-                        'fecha_pago' => $today,
-                        'estatus' => 1,
-                        'monto' => 500,
-                        'mes' =>  $primer_pago,
-                        'tipo' => 2]);
+                // if($request->colegiatura != null || $request->colegiatura != ""){
+                //     if($request->colegiatura == 500){
+                //         Pagos::create(
+                //         ['id_usuario'  => $request->id,
+                //         'id_nivel' => $request->horario,
+                //         'fecha_pago' => $today,
+                //         'estatus' => 1,
+                //         'monto' => 500,
+                //         'mes' =>  $primer_pago,
+                //         'tipo' => 2]);
+                //     }else{
+                //         Pagos::create(
+                //         ['id_usuario'  => $request->id,
+                //         'id_nivel' => $request->horario,
+                //         'fecha_pago' => $today,
+                //         'estatus' => 2,
+                //         'monto' => $request->colegiatura,
+                //         'mes' =>  $primer_pago,
+                //         'tipo' => 2]);
+                //     }                    
+                // }                
+            
+                //metodo propuesto
+                if($abono < $colegiatura ){
+                    Pagos::create(
+                    ['id_usuario'  => $request->id,
+                    'id_nivel' => $request->horario,
+                    'fecha_pago' => $today,
+                    'estatus' => 2,
+                    'monto' => $abono,
+                    'mes' =>  $primer_pago,
+                    'tipo' => 2]);                    
+                }else{
+                    if(is_int($abono/$colegiatura) == true){
+                        $mesesApagar = $abono/$colegiatura;
+
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $aux = 0;
+                            Pagos::create(
+                            ['id_usuario'  => $request->id,
+                            'id_nivel' => $request->horario,
+                            'fecha_pago' => $today,
+                            'estatus' => 1,
+                            'monto' => 500,
+                            'mes' =>  $primer_pago+$i,
+                            'tipo' => 2]);
+                            $aux++;
+                        }
                     }else{
-                        Pagos::create(
-                        ['id_usuario'  => $request->id,
-                        'id_nivel' => $request->horario,
-                        'fecha_pago' => $today,
-                        'estatus' => 2,
-                        'monto' => $request->colegiatura,
-                        'mes' =>  $primer_pago,
-                        'tipo' => 2]);
-                    }                    
-                }                
+                        
+                        $mesesApagarC= explode(".", $abono/$colegiatura);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $abono%$colegiatura;
+                                Pagos::create(
+                                ['id_usuario'  => $request->id,
+                                'id_nivel' => $request->horario,
+                                'fecha_pago' => $today,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $primer_pago+($numeroMeses-1),
+                                'tipo' => 2]);
+                            }else{
+                                Pagos::create(
+                                ['id_usuario'  => $request->id,
+                                'id_nivel' => $request->horario,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $primer_pago+$i,
+                                'tipo' => 2]);      
+                            }
+
+                        }                                                       
+                    }
+                }
             }
         }
         else{
@@ -239,27 +368,84 @@ class UserController extends Controller
                  'tipo' => 1]
                 );
 
-                if($request->colegiatura != null || $request->colegiatura != ""){
-                    if($request->colegiatura == 500){
-                        Pagos::create(
-                        ['id_usuario'  => $request->id,
-                        'id_nivel' => $request->horario,
-                        'fecha_pago' => $today,
-                        'estatus' => 1,
-                        'monto' => 500,
-                        'mes' =>  $hoy->format('m'),
-                        'tipo' => 2]);
+                //metodo propuesto
+                if($abono < $colegiatura ){
+                    Pagos::create(
+                    ['id_usuario'  => $request->id,
+                    'id_nivel' => $request->horario,
+                    'fecha_pago' => $today,
+                    'estatus' => 2,
+                    'monto' => $abono,
+                    'mes' =>  $hoy->format('m'),
+                    'tipo' => 2]);                    
+                }else{
+                    if(is_int($abono/$colegiatura) == true){
+                        $mesesApagar = $abono/$colegiatura;
+
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $aux = 0;
+                            Pagos::create(
+                            ['id_usuario'  => $request->id,
+                            'id_nivel' => $request->horario,
+                            'fecha_pago' => $today,
+                            'estatus' => 1,
+                            'monto' => 500,
+                            'mes' =>  $hoy->format('m')+$i,
+                            'tipo' => 2]);
+                            $aux++;
+                        }
                     }else{
-                        Pagos::create(
-                        ['id_usuario'  => $request->id,
-                        'id_nivel' => $request->horario,
-                        'fecha_pago' => $today,
-                        'estatus' => 2,
-                        'monto' => $request->colegiatura,
-                        'mes' =>  $hoy->format('m'),
-                        'tipo' => 2]);
-                    }                    
+                        
+                        $mesesApagarC= explode(".", $abono/$colegiatura);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $abono%$colegiatura;
+                                Pagos::create(
+                                ['id_usuario'  => $request->id,
+                                'id_nivel' => $request->horario,
+                                'fecha_pago' => $today,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $hoy->format('m')+($numeroMeses-1),
+                                'tipo' => 2]);
+                            } else{
+                                Pagos::create(
+                                ['id_usuario'  => $request->id,
+                                'id_nivel' => $request->horario,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $hoy->format('m')+$i,
+                                'tipo' => 2]);      
+                            }
+
+                        }                                                       
+
+                    }
                 }
+                // if($request->colegiatura != null || $request->colegiatura != ""){
+                //     if($request->colegiatura == 500){
+                //         Pagos::create(
+                //         ['id_usuario'  => $request->id,
+                //         'id_nivel' => $request->horario,
+                //         'fecha_pago' => $today,
+                //         'estatus' => 1,
+                //         'monto' => 500,
+                //         'mes' =>  $hoy->format('m'),
+                //         'tipo' => 2]);
+                //     }else{
+                //         Pagos::create(
+                //         ['id_usuario'  => $request->id,
+                //         'id_nivel' => $request->horario,
+                //         'fecha_pago' => $today,
+                //         'estatus' => 2,
+                //         'monto' => $request->colegiatura,
+                //         'mes' =>  $hoy->format('m'),
+                //         'tipo' => 2]);
+                //     }                    
+                // }
 
             }else{
                 if($request->inscripcion != null || $request->inscripcion != ""){
@@ -283,29 +469,87 @@ class UserController extends Controller
                         'tipo' => 1]);
                     }
                 }
-                if($request->colegiatura != null || $request->colegiatura != ""){
-                    if($request->colegiatura == 500){
-                        Pagos::create(
-                        ['id_usuario'  => $request->id,
-                        'id_nivel' => $request->horario,
-                        'fecha_pago' => $today,
-                        'estatus' => 1,
-                        'monto' => 500,
-                        'mes' =>  $hoy->format('m'),
-                        'tipo' => 2]);
+                // if($request->colegiatura != null || $request->colegiatura != ""){
+                //     if($request->colegiatura == 500){
+                //         Pagos::create(
+                //         ['id_usuario'  => $request->id,
+                //         'id_nivel' => $request->horario,
+                //         'fecha_pago' => $today,
+                //         'estatus' => 1,
+                //         'monto' => 500,
+                //         'mes' =>  $hoy->format('m'),
+                //         'tipo' => 2]);
+                //     }else{
+                //         Pagos::create(
+                //         ['id_usuario'  => $request->id,
+                //         'id_nivel' => $request->horario,
+                //         'fecha_pago' => $today,
+                //         'estatus' => 2,
+                //         'monto' => $request->colegiatura,
+                //         'mes' =>  $hoy->format('m'),
+                //         'tipo' => 2]);
+                //     }                    
+                // }                
+                //metodo propuesto
+                if($abono < $colegiatura ){
+                    Pagos::create(
+                    ['id_usuario'  => $request->id,
+                    'id_nivel' => $request->horario,
+                    'fecha_pago' => $today,
+                    'estatus' => 2,
+                    'monto' => $abono,
+                    'mes' =>  $primer_pago,
+                    'tipo' => 2]);                    
+                }else{
+                    if(is_int($abono/$colegiatura) == true){
+                        $mesesApagar = $abono/$colegiatura;
+
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $aux = 0;
+                            Pagos::create(
+                            ['id_usuario'  => $request->id,
+                            'id_nivel' => $request->horario,
+                            'fecha_pago' => $today,
+                            'estatus' => 1,
+                            'monto' => 500,
+                            'mes' =>  $primer_pago+$i,
+                            'tipo' => 2]);
+                            $aux++;
+                        }
                     }else{
-                        Pagos::create(
-                        ['id_usuario'  => $request->id,
-                        'id_nivel' => $request->horario,
-                        'fecha_pago' => $today,
-                        'estatus' => 2,
-                        'monto' => $request->colegiatura,
-                        'mes' =>  $hoy->format('m'),
-                        'tipo' => 2]);
-                    }                    
-                }                
+                        
+                        $mesesApagarC= explode(".", $abono/$colegiatura);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $abono%$colegiatura;
+                                Pagos::create(
+                                ['id_usuario'  => $request->id,
+                                'id_nivel' => $request->horario,
+                                'fecha_pago' => $today,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $primer_pago+($numeroMeses-1),
+                                'tipo' => 2]);
+                            }else{
+                                Pagos::create(
+                                ['id_usuario'  => $request->id,
+                                'id_nivel' => $request->horario,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $primer_pago+$i,
+                                'tipo' => 2]);      
+                            }
+                        }                                                       
+                    }
+                }           
             }            
         }
+    }else{
+        return back();
+    }
 
             return $pdf->stream(); 
           
