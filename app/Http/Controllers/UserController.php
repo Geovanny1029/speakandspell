@@ -115,7 +115,7 @@ class UserController extends Controller
             $user->celular=strtoupper($request->oficina);
             $user->activo=1;
             $user->ruta_foto= $name;
-            // $user->save();
+            $user->save();
 
 
             $hoy = Carbon::now();
@@ -170,51 +170,25 @@ class UserController extends Controller
                  'tipo' => 1]
                 );
 
-                //metodo propuesto
+                //metodo propuesto si tiene colegiatura
                 //si el abono es menor a la colegiatura
-                if($abono < $colegiatura ){
-                    Pagos::create(
-                    ['id_usuario'  => $request->id,
-                    'id_nivel' => $request->horario,
-                    'fecha_pago' => $today,
-                    'estatus' => 2,
-                    'monto' => $abono,
-                    'mes' =>  $primer_pago,
-                    'tipo' => 2]);                    
-                }else{
-                    //si el abono es entero 
-                    if(is_int($abono/$colegiatura) == true){
-                        $mesesApagar = $abono/$colegiatura;
-
-                        for ($i=0; $i < $mesesApagar ; $i++) { 
-                            $aux = 0;
-                            Pagos::create(
-                            ['id_usuario'  => $request->id,
-                            'id_nivel' => $request->horario,
-                            'fecha_pago' => $today,
-                            'estatus' => 1,
-                            'monto' => 500,
-                            'mes' =>  $primer_pago+$i,
-                            'tipo' => 2]);
-                            $aux++;
-                        }
+                if($abono != null || $abono == "null"){
+                    if($abono < $colegiatura ){
+                        Pagos::create(
+                        ['id_usuario'  => $request->id,
+                        'id_nivel' => $request->horario,
+                        'fecha_pago' => $today,
+                        'estatus' => 2,
+                        'monto' => $abono,
+                        'mes' =>  $primer_pago,
+                        'tipo' => 2]);                    
                     }else{
-                        //si no es entero saca los enteros y el residuo del saldo
-                        $mesesApagarC= explode(".", $abono/$colegiatura);
-                        $numeroMeses = $mesesApagarC[0]+1;
-                        
-                        for ($i=0; $i < $numeroMeses; $i++) { 
-                            if($i == ($numeroMeses-1)){
-                                $residuo = $abono%$colegiatura;
-                                Pagos::create(
-                                ['id_usuario'  => $request->id,
-                                'id_nivel' => $request->horario,
-                                'fecha_pago' => $today,
-                                'estatus' => 2,
-                                'monto' => $residuo,
-                                'mes' =>  $primer_pago+($numeroMeses-1),
-                                'tipo' => 2]);
-                            } else{
+                        //si el abono es entero 
+                        if(is_int($abono/$colegiatura) == true){
+                            $mesesApagar = $abono/$colegiatura;
+
+                            for ($i=0; $i < $mesesApagar ; $i++) { 
+                                $aux = 0;
                                 Pagos::create(
                                 ['id_usuario'  => $request->id,
                                 'id_nivel' => $request->horario,
@@ -222,14 +196,42 @@ class UserController extends Controller
                                 'estatus' => 1,
                                 'monto' => 500,
                                 'mes' =>  $primer_pago+$i,
-                                'tipo' => 2]);      
+                                'tipo' => 2]);
+                                $aux++;
                             }
+                        }else{
+                            //si no es entero saca los enteros y el residuo del saldo
+                            $mesesApagarC= explode(".", $abono/$colegiatura);
+                            $numeroMeses = $mesesApagarC[0]+1;
+                            
+                            for ($i=0; $i < $numeroMeses; $i++) { 
+                                if($i == ($numeroMeses-1)){
+                                    $residuo = $abono%$colegiatura;
+                                    Pagos::create(
+                                    ['id_usuario'  => $request->id,
+                                    'id_nivel' => $request->horario,
+                                    'fecha_pago' => $today,
+                                    'estatus' => 2,
+                                    'monto' => $residuo,
+                                    'mes' =>  $primer_pago+($numeroMeses-1),
+                                    'tipo' => 2]);
+                                } else{
+                                    Pagos::create(
+                                    ['id_usuario'  => $request->id,
+                                    'id_nivel' => $request->horario,
+                                    'fecha_pago' => $today,
+                                    'estatus' => 1,
+                                    'monto' => 500,
+                                    'mes' =>  $primer_pago+$i,
+                                    'tipo' => 2]);      
+                                }
 
-                        }                                                       
+                            }                                                       
 
+                        }
                     }
                 }
-
+                    
 
                 // if($request->colegiatura != null || $request->colegiatura != ""){
                 //     if($request->colegiatura == 500){
@@ -297,49 +299,23 @@ class UserController extends Controller
                 //     }                    
                 // }                
             
-                //metodo propuesto
-                if($abono < $colegiatura ){
-                    Pagos::create(
-                    ['id_usuario'  => $request->id,
-                    'id_nivel' => $request->horario,
-                    'fecha_pago' => $today,
-                    'estatus' => 2,
-                    'monto' => $abono,
-                    'mes' =>  $primer_pago,
-                    'tipo' => 2]);                    
-                }else{
-                    if(is_int($abono/$colegiatura) == true){
-                        $mesesApagar = $abono/$colegiatura;
-
-                        for ($i=0; $i < $mesesApagar ; $i++) { 
-                            $aux = 0;
-                            Pagos::create(
-                            ['id_usuario'  => $request->id,
-                            'id_nivel' => $request->horario,
-                            'fecha_pago' => $today,
-                            'estatus' => 1,
-                            'monto' => 500,
-                            'mes' =>  $primer_pago+$i,
-                            'tipo' => 2]);
-                            $aux++;
-                        }
+                //metodo propuesto si se llena abono si no no hace nada
+                if($abono != null || $abono != "" ){
+                    if($abono < $colegiatura ){
+                        Pagos::create(
+                        ['id_usuario'  => $request->id,
+                        'id_nivel' => $request->horario,
+                        'fecha_pago' => $today,
+                        'estatus' => 2,
+                        'monto' => $abono,
+                        'mes' =>  $primer_pago,
+                        'tipo' => 2]);                    
                     }else{
-                        
-                        $mesesApagarC= explode(".", $abono/$colegiatura);
-                        $numeroMeses = $mesesApagarC[0]+1;
-                        
-                        for ($i=0; $i < $numeroMeses; $i++) { 
-                            if($i == ($numeroMeses-1)){
-                                $residuo = $abono%$colegiatura;
-                                Pagos::create(
-                                ['id_usuario'  => $request->id,
-                                'id_nivel' => $request->horario,
-                                'fecha_pago' => $today,
-                                'estatus' => 2,
-                                'monto' => $residuo,
-                                'mes' =>  $primer_pago+($numeroMeses-1),
-                                'tipo' => 2]);
-                            }else{
+                        if(is_int($abono/$colegiatura) == true){
+                            $mesesApagar = $abono/$colegiatura;
+
+                            for ($i=0; $i < $mesesApagar ; $i++) { 
+                                $aux = 0;
                                 Pagos::create(
                                 ['id_usuario'  => $request->id,
                                 'id_nivel' => $request->horario,
@@ -347,12 +323,40 @@ class UserController extends Controller
                                 'estatus' => 1,
                                 'monto' => 500,
                                 'mes' =>  $primer_pago+$i,
-                                'tipo' => 2]);      
+                                'tipo' => 2]);
+                                $aux++;
                             }
+                        }else{
+                            
+                            $mesesApagarC= explode(".", $abono/$colegiatura);
+                            $numeroMeses = $mesesApagarC[0]+1;
+                            
+                            for ($i=0; $i < $numeroMeses; $i++) { 
+                                if($i == ($numeroMeses-1)){
+                                    $residuo = $abono%$colegiatura;
+                                    Pagos::create(
+                                    ['id_usuario'  => $request->id,
+                                    'id_nivel' => $request->horario,
+                                    'fecha_pago' => $today,
+                                    'estatus' => 2,
+                                    'monto' => $residuo,
+                                    'mes' =>  $primer_pago+($numeroMeses-1),
+                                    'tipo' => 2]);
+                                }else{
+                                    Pagos::create(
+                                    ['id_usuario'  => $request->id,
+                                    'id_nivel' => $request->horario,
+                                    'fecha_pago' => $today,
+                                    'estatus' => 1,
+                                    'monto' => 500,
+                                    'mes' =>  $primer_pago+$i,
+                                    'tipo' => 2]);      
+                                }
 
-                        }                                                       
+                            }                                                       
+                        }
                     }
-                }
+                }//fin metodo propuesto
             }
         }
         else{
@@ -772,7 +776,6 @@ class UserController extends Controller
             $numeroinf = 1;
         }
         
-
         if($numeroinf != 0){
             $mp = Carbon::parse($info->fecha_pago);
             $mes_pago = $mp->format('m');
@@ -789,23 +792,88 @@ class UserController extends Controller
             $estatus = 2;
         }
 
-        //pagar primer mes si solo pago inscripcion detecta si algun dato tipo colegiatura
+      //pagar primer mes si solo pago inscripcion detecta si algun dato tipo colegiatura
       if($numeroinf != 0){
          // si cuando paga es el mismo mes
          if($info->mes == $mesactual){
-            //y ya esta pagado crea registros de siguiente mes
+            //y ya esta pagado crea registros de siguiente mes correspondiente
             if($info->estatus == 1){
-                Pagos::create(
-                ['id_usuario'  => $id,
-                    'id_nivel' => $info->id_nivel,
-                    'fecha_pago' => $today,
-                    'estatus' => $estatus,
-                    'monto' => $abono,
-                    'mes' => $hoy->format('m')+1,
-                    'tipo' => 2]);
-                 return back();
+                //si abonado es igual actualiza a 1
+                if(($abono)==$costoN){
+                        Pagos::create(
+                        ['id_usuario'  => $info->id_usuario,
+                        'id_nivel' => $info->id_nivel,
+                        'fecha_pago' => $today,
+                        'estatus' => $estatus,
+                        'monto' => $abono,
+                        'mes' => $info->mes+1,
+                        'tipo' => 2]);
+                    return back();
+                }else
+                // si el abono es menor crea con estatus 2
+                 if(($abono)<$costoN){
+                    Pagos::create(
+                        ['id_usuario'  => $info->id_usuario,
+                        'id_nivel' => $info->id_nivel,
+                        'fecha_pago' => $today,
+                        'estatus' => $estatus,
+                        'monto' => $abono,
+                        'mes' => $info->mes+1,
+                        'tipo' => 2]);
+                    return back();
+                }else
+                 // si abono es mayor crea a sts 1 y la diferencia crea registro del siguiente mes
+                 if ($abono>$costoN) {
+                
+                    if(is_int($abono/$costoN) == true){
+                        $mesesApagar = $abono/$costoN;
+                        $meses_corridos = $info->mes + 1;
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $aux = 0;
+
+                            Pagos::create(
+                            ['id_usuario'  => $info->id_usuario,
+                            'id_nivel' => $info->id_nivel,
+                            'fecha_pago' => $today,
+                            'estatus' => 1,
+                            'monto' => 500,
+                            'mes' =>  $meses_corridos + $i,
+                            'tipo' => 2]);
+                            $aux++;
+                        }
+                    }else{
+                        
+                        $mesesApagarC= explode(".", $abono/$costoN);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $abono%$costoN;
+                                Pagos::create(
+                                ['id_usuario'  => $info->id_usuario,
+                                'id_nivel' => $info->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $info->mes+$numeroMeses,
+                                'tipo' => 2]);
+                            }else{
+                                Pagos::create(
+                                ['id_usuario'  => $info->id_usuario,
+                                'id_nivel' => $info->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $info->mes+$i+1,
+                                'tipo' => 2]);      
+                            }
+                        }
+                    }
+                }
+                return back();
             }// si no esta pagado hace condiciones
-            else{
+            else{ 
+        //////////////////////////////////////////////              
                 //si el monto que tenia mas el abonado es igual actualiza a 1
                 if(($abono+$info->monto)==$costoN){
 
@@ -837,31 +905,146 @@ class UserController extends Controller
                     $pag = Pagos::find($info->id);
                     $pag->update($pagoupdate);
 
-                    Pagos::create(
-                    ['id_usuario'  => $id,
-                        'id_nivel' => $info->id_nivel,
-                        'fecha_pago' => $today,
-                        'estatus' => 2,
-                        'monto' => ($abono+$info->monto)-$costoN,
-                        'mes' => $hoy->format('m')+1,
-                        'tipo' => 2]);
+                    $faltante = $costoN - $info->monto;
+                    $abonado2 = $abono - $faltante;
+                    if(is_int($abonado2/$costoN) == true){
+                        $mesesApagar = $abonado2/$costoN;
+                        $meses_corridos = $info->mes + 1;
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $aux = 0;
 
+                            Pagos::create(
+                            ['id_usuario'  => $info->id_usuario,
+                            'id_nivel' => $info->id_nivel,
+                            'fecha_pago' => $today,
+                            'estatus' => 1,
+                            'monto' => 500,
+                            'mes' =>  $meses_corridos + $i,
+                            'tipo' => 2]);
+                            $aux++;
+                        }
+                    }else{
+                        
+                        $mesesApagarC= explode(".", $abonado2/$costoN);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        //si abonado 2 es menor ala colegitura solo se agrega el reg del lo restante si no agrega registros de meses +
+                        if($abonado2<$costoN){
+                            $residuo = $abonado2%$costoN;
+                            Pagos::create(
+                            ['id_usuario'  => $info->id_usuario,
+                            'id_nivel' => $info->id_nivel,
+                            'fecha_pago' => $today,
+                            'estatus' => 2,
+                            'monto' => $abonado2,
+                            'mes' =>  $info->mes+$numeroMeses,
+                            'tipo' => 2]);
+                        }else{
+                            for ($i=0; $i < $numeroMeses; $i++) { 
+                                if($i == ($numeroMeses-1)){
+                                    $residuo = $abonado2%$costoN;
+                                    Pagos::create(
+                                    ['id_usuario'  => $info->id_usuario,
+                                    'id_nivel' => $info->id_nivel,
+                                    'fecha_pago' => $today,
+                                    'estatus' => 2,
+                                    'monto' => $residuo,
+                                    'mes' =>  $info->mes+$numeroMeses,
+                                    'tipo' => 2]);
+                                }else{
+                                    Pagos::create(
+                                    ['id_usuario'  => $info->id_usuario,
+                                    'id_nivel' => $info->id_nivel,
+                                    'fecha_pago' => $today,
+                                    'estatus' => 1,
+                                    'monto' => 500,
+                                    'mes' =>  $info->mes+$i+1,
+                                    'tipo' => 2]);      
+                                }
+                            }
+                        }
+                                                                                   
+                    }
                 }
                 return back();
             }
+            ///////////////////////////////////////
          }// si no es del mismo mes crea la siguiente dependiente del mes
          else{
             if($mes_pago == $mesactual && $mes_pago != $info->mes){
                 if($info->estatus == 1){
-                     Pagos::create(
-                        ['id_usuario'  => $id,
-                        'id_nivel' => $info->id_nivel,
-                        'fecha_pago' => $today,
-                        'estatus' => $estatus,
-                        'monto' => $abono,
-                        'mes' => $info->mes+1,
-                        'tipo' => 2]);
+                    //si abonado es igual actualiza a 1
+                    if(($abono)==$costoN){
+                            Pagos::create(
+                            ['id_usuario'  => $info->id_usuario,
+                            'id_nivel' => $info->id_nivel,
+                            'fecha_pago' => $today,
+                            'estatus' => $estatus,
+                            'monto' => $abono,
+                            'mes' => $info->mes+1,
+                            'tipo' => 2]);
                         return back();
+                    }else
+                    // si el abono es menor crea con estatus 2
+                     if(($abono)<$costoN){
+                        Pagos::create(
+                            ['id_usuario'  => $info->id_usuario,
+                            'id_nivel' => $info->id_nivel,
+                            'fecha_pago' => $today,
+                            'estatus' => $estatus,
+                            'monto' => $abono,
+                            'mes' => $info->mes+1,
+                            'tipo' => 2]);
+                        return back();
+                    }else
+                     // si abono es mayor crea a sts 1 y la diferencia crea registro del siguiente mes
+                     if ($abono>$costoN) {
+                    
+                        if(is_int($abono/$costoN) == true){
+                            $mesesApagar = $abono/$costoN;
+                            $meses_corridos = $info->mes + 1;
+                            for ($i=0; $i < $mesesApagar ; $i++) { 
+                                $aux = 0;
+
+                                Pagos::create(
+                                ['id_usuario'  => $info->id_usuario,
+                                'id_nivel' => $info->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $meses_corridos + $i,
+                                'tipo' => 2]);
+                                $aux++;
+                            }
+                        }else{
+                            
+                            $mesesApagarC= explode(".", $abono/$costoN);
+                            $numeroMeses = $mesesApagarC[0]+1;
+                            
+                            for ($i=0; $i < $numeroMeses; $i++) { 
+                                if($i == ($numeroMeses-1)){
+                                    $residuo = $abonado2%$costoN;
+                                    Pagos::create(
+                                    ['id_usuario'  => $info->id_usuario,
+                                    'id_nivel' => $info->id_nivel,
+                                    'fecha_pago' => $today,
+                                    'estatus' => 2,
+                                    'monto' => $residuo,
+                                    'mes' =>  $info->mes+$numeroMeses,
+                                    'tipo' => 2]);
+                                }else{
+                                    Pagos::create(
+                                    ['id_usuario'  => $info->id_usuario,
+                                    'id_nivel' => $info->id_nivel,
+                                    'fecha_pago' => $today,
+                                    'estatus' => 1,
+                                    'monto' => 500,
+                                    'mes' =>  $info->mes+$i+1,
+                                    'tipo' => 2]);      
+                                }
+                            }
+                        }
+                    }
+                    return back();
                 }else{//
                     //si el monto que tenia mas el abonado es igual actualiza a 1
                     if(($abono+$info->monto)==$costoN){
@@ -894,21 +1077,71 @@ class UserController extends Controller
                         $pag = Pagos::find($info->id);
                         $pag->update($pagoupdate);
 
-                        Pagos::create(
-                        ['id_usuario'  => $id,
-                            'id_nivel' => $info->id_nivel,
-                            'fecha_pago' => $today,
-                            'estatus' => 2,
-                            'monto' => ($abono+$info->monto)-$costoN,
-                            'mes' => $info->mes+1,
-                            'tipo' => 2]);
+                        $faltante = $costoN - $info->monto;
+                        $abonado2 = $abono - $faltante;
+                        if(is_int($abonado2/$costoN) == true){
+                            $mesesApagar = $abonado2/$costoN;
+                            $meses_corridos = $info->mes + 1;
+                            for ($i=0; $i < $mesesApagar ; $i++) { 
+                                $aux = 0;
 
+                                Pagos::create(
+                                ['id_usuario'  => $info->id_usuario,
+                                'id_nivel' => $info->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $meses_corridos + $i,
+                                'tipo' => 2]);
+                                $aux++;
+                            }
+                        }else{
+                            
+                            $mesesApagarC= explode(".", $abonado2/$costoN);
+                            $numeroMeses = $mesesApagarC[0]+1;
+                            //si abonado 2 es menor ala colegitura solo se agrega el reg del lo restante si no agrega registros de meses +
+                            if($abonado2<$costoN){
+                                $residuo = $abonado2%$costoN;
+                                Pagos::create(
+                                ['id_usuario'  => $info->id_usuario,
+                                'id_nivel' => $info->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 2,
+                                'monto' => $abonado2,
+                                'mes' =>  $info->mes+$numeroMeses,
+                                'tipo' => 2]);
+                            }else{
+                                for ($i=0; $i < $numeroMeses; $i++) { 
+                                    if($i == ($numeroMeses-1)){
+                                        $residuo = $abonado2%$costoN;
+                                        Pagos::create(
+                                        ['id_usuario'  => $info->id_usuario,
+                                        'id_nivel' => $info->id_nivel,
+                                        'fecha_pago' => $today,
+                                        'estatus' => 2,
+                                        'monto' => $residuo,
+                                        'mes' =>  $info->mes+$numeroMeses,
+                                        'tipo' => 2]);
+                                    }else{
+                                        Pagos::create(
+                                        ['id_usuario'  => $info->id_usuario,
+                                        'id_nivel' => $info->id_nivel,
+                                        'fecha_pago' => $today,
+                                        'estatus' => 1,
+                                        'monto' => 500,
+                                        'mes' =>  $info->mes+$i+1,
+                                        'tipo' => 2]);      
+                                    }
+                                }
+                            }
+                                                                                       
+                        }
                     }
-                    return back();
+                    return back();                   
                 }//
 
             }else{
-                //pago mes normal correspondiente
+            //pago mes normal correspondiente
                 Pagos::create(
                     ['id_usuario'  => $id,
                     'id_nivel' => $info->id_nivel,
@@ -919,31 +1152,157 @@ class UserController extends Controller
                     'tipo' => 2]);
                     return back();
             }
-
          }
       }else{
         //si no crea registro del primer mes de colegiatura
         //si el curso ya empezo y paga un mes despues o dependiendo guarda el mes que entra
         if($primer_pago >= $mesactual){
-            Pagos::create(
-            ['id_usuario'  => $id,
-            'id_nivel' => $info2->id_nivel,
-            'fecha_pago' => $today,
-            'estatus' => $estatus,
-            'monto' => $abono,
-            'mes' => $primer_pago,
-            'tipo' => 2]);
-            return back();
+            if(($abono)==$costoN){
+                Pagos::create(
+                ['id_usuario'  => $info2->id_usuario,
+                'id_nivel' => $info2->id_nivel,
+                'fecha_pago' => $today,
+                'estatus' => $estatus,
+                'monto' => $abono,
+                'mes' => $primer_pago,
+                'tipo' => 2]);
+                return back();
+            }else
+                // si el abono es menor crea con estatus 2
+                if(($abono)<$costoN){
+                Pagos::create(
+                    ['id_usuario'  => $info2->id_usuario,
+                    'id_nivel' => $info2->id_nivel,
+                    'fecha_pago' => $today,
+                    'estatus' => $estatus,
+                    'monto' => $abono,
+                    'mes' => $primer_pago,
+                    'tipo' => 2]);
+                    return back();
+                }else
+                 // si abono es mayor crea a 1 y la diferencia crea registro del siguiente mes
+                 if (($abono)>$costoN) {
+                    
+                    if(is_int($abono/$costoN) == true){
+                        $mesesApagar = $abono/$costoN;
+                        $meses_corridos = $info2->mes;
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $aux = 0;
+
+                            Pagos::create(
+                            ['id_usuario'  => $info2->id_usuario,
+                            'id_nivel' => $info2->id_nivel,
+                            'fecha_pago' => $today,
+                            'estatus' => 1,
+                            'monto' => 500,
+                            'mes' =>  $meses_corridos + $i,
+                            'tipo' => 2]);
+                            $aux++;
+                        }
+                    }else{
+                        
+                        $mesesApagarC= explode(".", $abono/$costoN);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $abono%$costoN;
+                                Pagos::create(
+                                ['id_usuario'  => $info2->id_usuario,
+                                'id_nivel' => $info2->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $info2->mes+($numeroMeses-1),
+                                'tipo' => 2]);
+                            }else{
+                                Pagos::create(
+                                ['id_usuario'  => $info2->id_usuario,
+                                'id_nivel' => $info2->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $info2->mes+$i,
+                                'tipo' => 2]);      
+                            }
+                        }
+                    }
+                }
+                return back();
+
         }else{
-            Pagos::create(
-            ['id_usuario'  => $id,
-            'id_nivel' => $info2->id_nivel,
-            'fecha_pago' => $today,
-            'estatus' => $estatus,
-            'monto' => $abono,
-            'mes' => $mesactual,
-            'tipo' => 2]);
-            return back();
+            if(($abono)==$costoN){
+                Pagos::create(
+                ['id_usuario'  => $info2->id_usuario,
+                'id_nivel' => $info2->id_nivel,
+                'fecha_pago' => $today,
+                'estatus' => $estatus,
+                'monto' => $abono,
+                'mes' => $mesactual,
+                'tipo' => 2]);
+                return back();
+            }else
+                // si el abono es menor crea con estatus 2
+                if(($abono)<$costoN){
+                Pagos::create(
+                    ['id_usuario'  => $info2->id_usuario,
+                    'id_nivel' => $info2->id_nivel,
+                    'fecha_pago' => $today,
+                    'estatus' => $estatus,
+                    'monto' => $abono,
+                    'mes' => $mesactual,
+                    'tipo' => 2]);
+                    return back();
+                }else
+                 // si abono es mayor crea a 1 y la diferencia crea registro del siguiente mes
+                 if (($abono)>$costoN) {
+                    
+                    if(is_int($abono/$costoN) == true){
+                        $mesesApagar = $abono/$costoN;
+                        $meses_corridos = $info2->mes;
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $aux = 0;
+
+                            Pagos::create(
+                            ['id_usuario'  => $info2->id_usuario,
+                            'id_nivel' => $info2->id_nivel,
+                            'fecha_pago' => $today,
+                            'estatus' => 1,
+                            'monto' => 500,
+                            'mes' =>  $meses_corridos + $i,
+                            'tipo' => 2]);
+                            $aux++;
+                        }
+                    }else{
+                        
+                        $mesesApagarC= explode(".", $abono/$costoN);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $abonado2%$costoN;
+                                Pagos::create(
+                                ['id_usuario'  => $info2->id_usuario,
+                                'id_nivel' => $info2->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $info2->mes+$numeroMeses,
+                                'tipo' => 2]);
+                            }else{
+                                Pagos::create(
+                                ['id_usuario'  => $info2->id_usuario,
+                                'id_nivel' => $info2->id_nivel,
+                                'fecha_pago' => $today,
+                                'estatus' => 1,
+                                'monto' => 500,
+                                'mes' =>  $info2->mes+$i,
+                                'tipo' => 2]);      
+                            }
+                        }
+                    }
+                }
+                return back();
         }
       }
     }
