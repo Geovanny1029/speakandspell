@@ -32,12 +32,17 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#" style="color: white;">Sistema de administracion de usuarios</a>
+      <a class="navbar-brand" href="#" style="color: white;">Sistema de administracion de Alumnos</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name}} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
+              <li>               
+                <a href="#" class="shortcut" data-toggle="modal" data-target="#ChangeUser" onclick="fun_ChangeUser('{{ Auth::user()->id}}')" id="editaUser" value="{{route('users.changeU')}}">
+                  <span class="shortcut-label">Cambio Usuario</span> 
+                </a>
+              </li>            
               <li><a href="{{ url('/logout') }}" onclick="event.preventDefault();    document.getElementById('logout-form').submit();"><span class="icon-bar"></span>Salir</a>
                 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                   {{ csrf_field() }}
@@ -47,6 +52,7 @@
         </li>
       </ul>
   </div>
+  @include('usuarios.modals.CambioUser')
 </nav>
 {{-- <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">

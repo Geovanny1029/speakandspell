@@ -36,7 +36,7 @@ class LoginController extends Controller
             $cumpleañeros = "";
             for ($i=0; $i <  $cuantos; $i++) { 
                 $valor ="<td>".substr($alumnos[$i]->nacimiento,0,-8)."</td>";
-                $cumpleañeros .= "<tr><td style = 'text-align:left'><b>".$alumnos[$i]->nombre.$alumnos[$i]->am."</b></td>".$valor."<tr>";
+                $cumpleañeros .= "<tr><td style = 'text-align:left'><b>".$alumnos[$i]->nombre." ".$alumnos[$i]->am."</b></td>".$valor."<tr>";
             }
             
             $tabla = "<table class='table table-striped'><thead class='thead-dark'><th>NOMBRE</th><th>DIA</th></thead><tbody>".$cumpleañeros."</tbody></table>";

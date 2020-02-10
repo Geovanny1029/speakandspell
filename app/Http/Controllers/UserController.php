@@ -57,6 +57,9 @@ class UserController extends Controller
     }
 
     public function corte(){
+
+        $listaN = Nivel::groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
+        $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
         return view('usuarios.corte');
     }
 
@@ -682,6 +685,22 @@ class UserController extends Controller
         return back();
     }
 
+
+//actualiza usuario de login
+   public function actualizaUser(Request $request){
+
+        $id = $request->change_id;
+        $data = User::find($id);
+        $data->nombre_completo= strtoupper($request->edit_nombre_user);
+        $data->email = strtoupper($request->edit_email);
+        $data->name = strtoupper($request->edit_user);
+        $data->password = bcrypt($request->edit_contraseña);
+        $data->backub_contraseña = strtoupper($request->edit_contraseña);
+        $data->save();
+
+        return redirect()->route('login');
+    }
+
     public function view(Request $request)
         {
             if($request->ajax()){
@@ -706,6 +725,15 @@ class UserController extends Controller
             if($request->ajax()){
                 $id = $request->id;
                 $info = Nivel::find($id);
+                return response()->json($info);
+            }
+        }
+
+        public function viewU(Request $request)
+        {
+            if($request->ajax()){
+                $id = $request->id;
+                $info = User::find($id);
                 return response()->json($info);
             }
         }
@@ -1305,5 +1333,9 @@ class UserController extends Controller
                 return back();
         }
       }
+    }
+
+    public function ChangeUser(){
+        return view('usuarios.CambioUsuario');
     }
 }

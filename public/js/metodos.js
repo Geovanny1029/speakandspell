@@ -40,6 +40,27 @@ function fun_edit(id)
       });
     }
 
+
+//vista editar usuario
+function fun_ChangeUser(id)
+    {
+      var view_url = 'http://localhost:8000/usersChangeView';
+    
+      $.ajax({
+        url: view_url,
+        type:"GET", 
+        data: {"id":id}, 
+        success: function(result){
+          console.log(result);
+          $("#edit_nombre_user").val(result.nombre_completo);
+          $("#edit_email").val(result.email);
+          $("#edit_user").val(result.name);
+          $("#edit_contraseña").val(result.backub_contraseña);
+          $("#change_id").val(result.id);
+        }
+      });
+    }
+
 //vista id de alumno
 function fun_id_alum(id)
     {

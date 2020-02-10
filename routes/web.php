@@ -76,6 +76,8 @@ Route::post('altaNivel',[
 ]);
 
 
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 //dar baja alumno
@@ -91,10 +93,16 @@ Route::get('user/{id}/pagos',[
 ]);
 
 
-//modal edit usuario
+//modal edit alumno
 	Route::get('userse',[
 			'uses' => 'UserController@view',
 			'as'   => 'users.view'
+		]);
+
+//modal edit user
+	Route::get('usersChangeView',[
+			'uses' => 'UserController@viewU',
+			'as'   => 'users.changeU'
 		]);
 
 //modal edit nivel
@@ -108,6 +116,12 @@ Route::get('user/{id}/pagos',[
 		Route::post('usersu',[
 			'uses' => 'UserController@actualiza',
 			'as'   => 'users.actualiza'
+		]);
+
+// actualiza user
+		Route::post('userChange',[
+			'uses' => 'UserController@actualizaUser',
+			'as'   => 'users.CambioUsuario'
 		]);
 
 // actualiza nivel
