@@ -43,7 +43,9 @@ class UserController extends Controller
     }
 
     public function listaxnivel(){
-        return view('usuarios.listaxnivel');
+        $listaN = Nivel::groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
+        $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
+        return view('usuarios.listarxnivel')->with('listaN',$listaN)->with('listaH',$listaH);
     }
 
 
@@ -1337,5 +1339,45 @@ class UserController extends Controller
 
     public function ChangeUser(){
         return view('usuarios.CambioUsuario');
+    }
+
+    public function cortecaja(Request $request){
+         if($request->ajax()){
+                $fecha = $request->fecha;
+                $info = Pagos::where('fecha_pago',"=",$fecha)->get();
+            
+            $info->each(function($info){
+                        $info->alumnop;
+                        $info->nivelp;
+                    });
+
+
+                return response()->json($info);
+            }
+    }
+
+    public function listaxnivel1(Request $request){
+         if($request->ajax()){
+                $horario = $request->horario;
+                $info = Alumnos::where('nivel',"=",$horario)->get();
+            
+            $info->each(function($info){
+                        $info->nivelAl;
+                    });
+
+
+                return response()->json($info);
+            }
+    }
+
+    public function listarpdf($id){
+        $info = Alumnos::where('nivel',"=",$id)->get();
+            
+        $info->each(function($info){
+                        $info->nivelAl;
+                    });
+        $pdf = PDF::loadView('pdf.listarxnivel',['info'=>$info]);
+
+        return $pdf->stream(); 
     }
 }

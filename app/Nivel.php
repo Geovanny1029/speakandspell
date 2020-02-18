@@ -24,4 +24,8 @@ class Nivel extends Model
         return $this->hasMany('App\Alumnos'); 
     }   	
 
+    public function pagos(){
+
+        return $this->hasMany('App\Pagos'); 
+    }   
 }

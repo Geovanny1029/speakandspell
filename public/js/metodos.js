@@ -187,6 +187,25 @@ function fun_edit_nivel(id)
     });
   });
 
+
+//select dinamico listar alumno horario nivel
+  $(document).ready(function(){
+    $("#nivellist").change(function(){
+      var nivel = $(this).val();
+      $.get('user/horario/'+nivel, function(data){
+//esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+        console.log(data);
+          var producto_select = '<option value="">Seleccione Horario</option>'
+            for (var i=0; i<data.length;i++)
+              producto_select+='<option value="'+data[i].id+'">'+data[i].horario+'</option>';
+
+            $("#horariolist").html(producto_select);
+
+      });
+    });
+  });
+
+//casilla Familiar directo
   $(document).ready(function(){  
     $("#familiard").change(function() {  
         if($("#familiard").is(':checked')) {  
@@ -197,3 +216,75 @@ function fun_edit_nivel(id)
     });  
   
   });  
+
+  //vista editar nivel
+function muestra()
+    {
+      var fecha = $("#fechaCorte").val();
+
+     var view_url = 'http://localhost:8000/corteC';
+      $.ajax({
+        url: view_url,
+        type:"GET", 
+        data: {"fecha":fecha}, 
+        success: function(result){
+          // console.log(resultado);
+          var resultado = result.length;
+
+          html = "";
+          if(resultado != 0){
+            html += "<table  class='table table-striped' id='tablacorte'> <thead><th><center>Matricula</center></th> <th><center>Alumno</center></th> <th><center>Concepto</center></th> <th><center>Cantidad</center></th> </thead> <tbody>";
+            var pago = 0;
+            for(i=0;i<result.length;i++){
+              pago = pago + result[i].monto;
+              if(result[i].tipo == 1){var tipo = "INSCRIPCION";}else{var tipo = "COLEGIATURA";}
+              var nombreCompleto = result[i].alumnop.nombre+" "+result[i].alumnop.ap+" "+result[i].alumnop.am;
+              html+="<tr><td>"+result[i].alumnop.id+"</td> <td>"+nombreCompleto+"</td> <td>"+tipo+"</td> <td> $"+result[i].monto+"</td></tr>";
+              
+            }
+            html+="<tr><td></td> <td></td> <td></td> <td></td></tr> <tr><td></td> <td></td> <td><b>Total:</b></td> <td><b>$"+pago+"</b></td></tr>";
+          }else{
+            html+= "<h2>No se encontro ningun Registro</h2>";
+          }
+
+          html+="</tbody> </table>";
+        $("#corte").html(html);
+
+        }
+      });
+    }
+
+
+  //vista editar nivel
+function muestralista()
+    {
+      var horario = $("#horariolist").val();
+
+     var view_url = 'http://localhost:8000/ListarUser';
+      $.ajax({
+        url: view_url,
+        type:"GET", 
+        data: {"horario":horario}, 
+        success: function(result){
+          // console.log(resultado);
+          var resultado = result.length;
+
+          html = "";
+          if(resultado != 0){
+             html+="<div class = 'row'> <a href='/nivellista/"+horario+"' class='btn btn-success' >Generar Lista</a></div>";
+            html += "<table  class='table table-striped' id='tablalistaxnivel'> <thead><th><center>Matricula</center></th> <th><center>Nombre(s)</center></th> <th><center>Apellido Paterno</center></th> <th><center>Appelido Materno</center></th> </thead> <tbody>";
+            var pago = 0;
+            for(i=0;i<result.length;i++){
+              html+="<tr><td>"+result[i].id+"</td> <td>"+result[i].nombre+"</td> <td>"+result[i].ap+"</td> <td> "+result[i].am+"</td></tr>";
+            }
+          }else{
+            html+= "<h2>No se encontro ningun Registro</h2>";
+          }
+
+          html+="</tbody> </table>";
+         
+        $("#listarNivel").html(html);
+
+        }
+      });
+    }

@@ -16,7 +16,8 @@ Route::get('/', function () {
 });
 
 Route::resource('user','UserController');
-Route::get('/login', 'LoginController@login')->name('login');
+Route::get('/login', 'LoginController@login')->name('
+	');
 Auth::routes();
 
 //menu de opciones index
@@ -99,6 +100,19 @@ Route::get('user/{id}/pagos',[
 			'as'   => 'users.view'
 		]);
 
+
+//corte de caja
+	Route::get('corteC',[
+			'uses' => 'UserController@cortecaja',
+			'as'   => 'users.corte'
+		]);
+
+//listar usuarios x nivel
+	Route::get('ListarUser',[
+			'uses' => 'UserController@listaxnivel1',
+			'as'   => 'users.listaxnivel'
+		]);
+
 //modal edit user
 	Route::get('usersChangeView',[
 			'uses' => 'UserController@viewU',
@@ -128,4 +142,10 @@ Route::get('user/{id}/pagos',[
 		Route::post('nivelu',[
 			'uses' => 'UserController@actualizan',
 			'as'   => 'nivel.actualiza'
+		]);
+
+// ruta para generar lista en PDf
+		Route::get('nivellista/{id}',[
+			'uses' => 'UserController@listarpdf',
+			'as'   => 'nivel.listarpdf'
 		]);
