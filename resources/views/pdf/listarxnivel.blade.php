@@ -9,22 +9,20 @@
 <body>
 	<center><h4>Lista de Alumnos del Nivel cual</h4></center>
     <table class="table table-striped" style='width:100%;'>
-         <thead>
+         <tr>
             <th>Matricula</th>
             <th>Nombre(s)</th>
             <th>Apellido Paterno</th>
             <th>Apellido Materno</th>
-         </thead>
-          <tbody>
-            @foreach($info as $alumno)
+         </tr>
+          @foreach($info as $alumno)
             <tr>
               <td> {{$alumno->id}} </td>
               <td> {{$alumno->nombre}} </td>
               <td> {{$alumno->ap}}</td>
               <td>{{$alumno->am}}</td>
             </tr>
-            @endforeach
-          </tbody>
+          @endforeach
      </table> 
 </body>
 </html>

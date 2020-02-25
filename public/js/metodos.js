@@ -271,7 +271,7 @@ function muestralista()
 
           html = "";
           if(resultado != 0){
-             html+="<div class = 'row'> <a href='/nivellista/"+horario+"' class='btn btn-success' >Generar Lista</a></div>";
+             html+="<div class = 'row'> <a href='/nivellista/"+horario+"' data-lity class='btn btn-success' >Generar Lista</a></div>";
             html += "<table  class='table table-striped' id='tablalistaxnivel'> <thead><th><center>Matricula</center></th> <th><center>Nombre(s)</center></th> <th><center>Apellido Paterno</center></th> <th><center>Appelido Materno</center></th> </thead> <tbody>";
             var pago = 0;
             for(i=0;i<result.length;i++){
