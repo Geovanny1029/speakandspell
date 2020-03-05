@@ -94,5 +94,29 @@
 			</div>
 		</div>
 
+		@if($colegiatura == null || $colegiatura == "")
+		@else
+			<div class="contenidop">
+				<div style="border-style: solid;  margin:5px;padding: 5px">
+					<div class="cabecera">
+						<div class="cabecera1">
+							<center><b>Escuela de Ingles</b> <br> 
+							Calle 29 No. 108 x 72 y 74, Progreso, Yuc. Tel. (969) 935 1608<br>
+							Ficha de Inscripcion</center>
+						</div>
+					</div>
+					Porgreso Yucatan a    bueno por ${{$colegiatura}}
+					<div class="contenido" >
+						<center>
+					Recibi de  la cantidad de: ${{$colegiatura}} ({{$letras}}) Pesos
+						</center>
+					</div>
+					
+			</div>
+			</div>
+
+
+		@endif
+
 </body>
 </html>

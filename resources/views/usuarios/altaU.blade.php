@@ -24,70 +24,91 @@
                       {!! Form::label('matricula', 'Matricula') !!} 
                       {!! Form::text('id',$ultimo,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'matricula', 'required',' readonly'=>' readonly' ] ) !!}
                     </div>
-                  </div>
+                  </div> 
                   <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       {!! Form::label('nombre', 'Nombre(s)') !!} 
-                      {!! Form::text('nombre',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Nombre(s)', 'required' ] ) !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-user"></i></span>
+                      {!! Form::text('nombre',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Nombre(s)', 'required' ] ) !!}</div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       {!! Form::label('apellido_paterno','Apellido Paterno') !!} 
                       {!! Form::text('apellido_paterno',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Apellido Paterno', 'required' ] ) !!}
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       {!! Form::label('Apellido_materno', 'Apellido Materno') !!} 
                       {!! Form::text('apellido_materno',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Apellido Materno', 'required' ] ) !!}
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       {!! Form::label('nacimiento', 'Nacimiento') !!} 
-                      {!! Form::text('nacimiento',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Nacimiento', 'required' ] ) !!}
-                    </div>
-                    <div class="form-group col-md-4">
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-calendar"></i></span>
+                      {!! Form::date('nacimiento',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Nacimiento', 'required' ] ) !!}</div>
+                    </div>                    
+                  </div><br>
+                  <div class="row">
+
+                    <div class="form-group col-md-3">
                       {!! Form::label('direccion', 'Direccion') !!} 
-                      {!! Form::text('direccion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Direccion', 'required' ] ) !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-home"></i></span>
+                      {!! Form::text('direccion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Direccion', 'required' ] ) !!}</div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       {!! Form::label('ciudad', 'Ciudad') !!} 
                       {!! Form::text('ciudad',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Ciudad', 'required' ] ) !!}
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       {!! Form::label('ocupacion', 'Ocupacion') !!} 
-                      {!! Form::text('ocupacion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Ocupacion', 'required' ] ) !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-user-md"></i></span>
+                      {!! Form::text('ocupacion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Ocupacion', 'required' ] ) !!}</div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       {!! Form::label('estudios', 'Estudios') !!} 
-                      {!! Form::text('estudios',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Estudios', 'required' ] ) !!}
-                    </div>
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-book"></i></span>
+                      {!! Form::text('estudios',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Estudios', 'required' ] ) !!}</div>
+                    </div>                    
+                  </div><hr>
+                  <div class="row">
+
                     <div class="form-group col-md-4">
                       {!! Form::label('Nivel', 'Nivel') !!} 
-                      {!! Form::select('nivel',$listaN,null,['class' => 'form-control','id'=>'nivel']) !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-bar-chart"></i></span>
+                      {!! Form::select('nivel',$listaN,null,['class' => 'form-control','id'=>'nivel']) !!}</div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       {!! Form::label('horario', 'Horario') !!} 
-                      {!! Form::select('horario',$listaH,null,['class' => 'form-control','id'=>'horario']) !!}
-                    </div>
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-calendar-empty"></i></span>
+                      {!! Form::select('horario',['selecciona'=>'Seleccione Horario'],null,['class' => 'form-control','id'=>'horario']) !!}</div>
+                    </div>                    
                   </div>
+
 
                   <hr>
                   <h6>Telefonos</h6>
                   <div class="row">
                     <div class="form-group col-md-4">
-                      {!! Form::label('casa', 'Casa') !!} 
-                      {!! Form::text('casa',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Casa' ] ) !!}
+                      {!! Form::label('casa', 'Casa') !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-home"></i></span> 
+                      {!! Form::text('casa',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Casa' ] ) !!}</div>
                     </div>
                     <div class="form-group col-md-4">
                       {!! Form::label('celular', 'Celular') !!} 
-                      {!! Form::text('celular',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Celular' ] ) !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-mobile-phone"></i></span>
+                      {!! Form::text('celular',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Celular' ] ) !!}</div>
                     </div>
                     <div class="form-group col-md-4">
                       {!! Form::label('oficina', 'Oficina') !!} 
-                      {!! Form::text('oficina',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Oficina' ] ) !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-phone"></i></span>
+                      {!! Form::text('oficina',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'Oficina' ] ) !!}</div>
                     </div>                    
                   </div>
                   <hr>
@@ -98,12 +119,16 @@
                       {!! Form::checkbox('familiard', '1',null,['class'=>'familiar','id'=>'familiard']) !!}
                     </div>                       
                     <div class="form-group col-md-4" id="labelinscripcion" style="display: inline-block">
-                      {!! Form::label('Inscripcion', 'inscripcion') !!} 
-                      {!! Form::text('inscripcion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => '$' ] ) !!}
+                      {!! Form::label('Inscripcion', 'inscripcion') !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> $</span> 
+                      {!! Form::number('inscripcion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' ] ) !!}</div>
                     </div>
                     <div class="form-group col-md-4">
                       {!! Form::label('Colegiatura', 'Colegiatura') !!} 
-                      {!! Form::text('colegiatura',null,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => '$' ] ) !!}
+                       <div class="input-group">
+                      <span class="input-group-addon"> $</span>
+                      {!! Form::number('colegiatura',null,['class' => 'form-control','style' => 'text-transform:uppercase;' ] ) !!}</div>
                     </div> 
                                      
                   </div>                     

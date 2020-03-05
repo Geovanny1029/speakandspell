@@ -23,3 +23,17 @@ td.pago2{
    border-collapse: collapse;
   padding: 0.1em;
 }	 
+
+hr {
+  page-break-after: always;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+	.contenidop{
+	width: 100%;
+	height: 78%;
+	padding-top: 20px;
+	font-size: 14px;
+}

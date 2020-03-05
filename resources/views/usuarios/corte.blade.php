@@ -22,7 +22,9 @@
                   <div class="form-group row">
                     {!! Form::label('edit_nombre_user', 'Selecciona una Fecha',['class' => 'col-sm-2 col-form-label']) !!} 
                     <div class="col-sm-3"> 
-                        {{ Form::date('deadline', \Carbon\Carbon::now()->format('Y-m-d'),['class' => 'form-control', 'id'=>'fechaCorte']) }}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-calendar"></i></span>
+                        {{ Form::date('deadline', \Carbon\Carbon::now()->format('Y-m-d'),['class' => 'form-control', 'id'=>'fechaCorte']) }}</div>
                     </div>
                     <div class="col-sm-2"> 
                        {!! Form::submit('Buscar',[ 'class' => 'btn btn-primary','onclick' => 'muestra()']) !!} 

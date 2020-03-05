@@ -22,14 +22,16 @@
                   <div class="form-group row">
                     {!! Form::label('NivelLists', 'Selecciona Nivel',['class' => 'col-sm-2 col-form-label']) !!} 
                     <div class="col-sm-3"> 
-                 
-                      {!! Form::select('nivellist',$listaN,null,['class' => 'form-control','id'=>'nivellist']) !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="shortcut-icon icon-bar-chart"></i></span>
+                      {!! Form::select('nivellist',$listaN,null,['class' => 'form-control','id'=>'nivellist']) !!}</div>
                     </div>
 
                  {!! Form::label('HorarioList', 'Selecciona Horario',['class' => 'col-sm-2 col-form-label']) !!} 
                     <div class="col-sm-3"> 
-                      
-                      {!! Form::select('horariolists',$listaH,null,['class' => 'form-control','id'=>'horariolist']) !!}
+                      <div class="input-group">
+                      <span class="input-group-addon"><i class="shortcut-icon icon-calendar-empty"></i></span>
+                      {!! Form::select('horariolists',$listaH,null,['class' => 'form-control','id'=>'horariolist']) !!}</div>
                     </div>
                     <div class="col-sm-2"> 
                        {!! Form::submit('Buscar',[ 'class' => 'btn btn-primary','onclick' => 'muestralista()']) !!} 
