@@ -93,28 +93,39 @@
 				  Firma del padre o tutor
 			</div>
 		</div>
+	</div>
 
 		@if($colegiatura == null || $colegiatura == "")
-		@else
+		@else<br>
+		<hr>
 			<div class="contenidop">
 				<div style="border-style: solid;  margin:5px;padding: 5px">
-					<div class="cabecera">
+					<div class="cabecera" >
 						<div class="cabecera1">
 							<center><b>Escuela de Ingles</b> <br> 
-							Calle 29 No. 108 x 72 y 74, Progreso, Yuc. Tel. (969) 935 1608<br>
-							Ficha de Inscripcion</center>
-						</div>
+							Calle 29 No. 108 x 72 y 74,<br> Progreso, Yucatan, Mexico.
+							</center><br>
+							<div style="float: left; padding: 1em">Porgreso Yucatan a dia mes año  </div>
+							<div style="float: right; padding: 1em">bueno por ${{$colegiatura}}</div>
+						</div><br>
 					</div>
-					Porgreso Yucatan a    bueno por ${{$colegiatura}}
-					<div class="contenido" >
+
+					              
+					<div class="contenido" style="border-style: solid;">
 						<center>
-					Recibi de  la cantidad de: ${{$colegiatura}} ({{$letras}}) Pesos
+					Recibi de {{$user->nombre}} {{$user->ap}} {{$user->am}}  la cantidad de: ${{$colegiatura}} (son: {{$letras}} Pesos, 00/100 mon. nal) por concepto del mes de 
 						</center>
 					</div>
-					
-			</div>
-			</div>
 
+					<div>
+						<div class="right"><center>Recibi</center>
+
+						<center>Prof. David Mendez Morales<br>
+						Director "SPEAK and SPELL"</center>
+						</div>
+					</div>
+				</div>
+			</div>
 
 		@endif
 
