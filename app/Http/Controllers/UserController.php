@@ -605,6 +605,7 @@ class UserController extends Controller
 
 
     public function listaNivel(){
+
         $niveles = Nivel::orderBy('id','asc')->get();
         return view('usuarios.listaN')->with('niveles',$niveles);
     }
@@ -614,11 +615,19 @@ class UserController extends Controller
     }
 
     public function altaNivel(Request $request){
+
+        $nacimeinto =date_create($request->fecha_inicio);
+        $finicio = date_format($nacimeinto,"d/m/Y");
+
+        $nacimeinto2 =date_create($request->fecha_fin);
+        $ffin= date_format($nacimeinto2,"d/m/Y");
+
+
         $nivel = new Nivel($request->all());
         $nivel->nombre = strtoupper($request->nombre);
         $nivel->horario = $request->horario;
-        $nivel->finicio = $request->fecha_inicio;
-        $nivel->ffin = $request->fecha_fin;
+        $nivel->finicio = $finicio;
+        $nivel->ffin = $ffin;
         $nivel->costo = $request->costo;
         $nivel->save();
 
@@ -1368,7 +1377,7 @@ class UserController extends Controller
     public function listaxnivel1(Request $request){
          if($request->ajax()){
                 $horario = $request->horario;
-                $info = Alumnos::where('nivel',"=",$horario)->get();
+                $info = Alumnos::where('nivel',"=",$horario)->where('activo','=',1)->get();
             
             $info->each(function($info){
                         $info->nivelAl;

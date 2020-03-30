@@ -31,6 +31,11 @@ class LoginController extends Controller
             $mes = strtoupper($fechacre->formatLocalized('%B'));
 
             $alumnos = Alumnos::whereraw('`activo` = 1 AND MONTH(STR_TO_DATE(`nacimiento`, "%d/%m/%Y")) = '.$mesnum)->orderby('nacimiento','asc')->get();
+
+            $niveles = Nivel::whereraw('CURDATE() >= STR_TO_DATE(`ffin`, "%d/%m/%Y")')->get();
+            $vigencias = count($niveles);
+            if($vigencias == 0){$vencidos = "<br>";}else{$vencidos= "<h4><span class='label label-danger'>Hay ".$vigencias." Niveles que ya vencieron</span></h4> <br> <h4><span class='label label-danger'>verificalos en el modulo de niveles</span></h4> ";}
+
             $cuantos = count($alumnos);
             $fecha = "Cumpleañeros del mes de: ".$mes.":";
             $cumpleañeros = "";
@@ -39,9 +44,10 @@ class LoginController extends Controller
                 $cumpleañeros .= "<tr><td style = 'text-align:left'><b>".$alumnos[$i]->nombre." ".$alumnos[$i]->am."</b></td>".$valor."<tr>";
             }
             
-            $tabla = "<table class='table table-striped'><thead class='thead-dark'><th>NOMBRE</th><th>DIA</th></thead><tbody>".$cumpleañeros."</tbody></table>";
+            $tabla = "<table class='table table-striped'><thead class='thead-dark'><th>NOMBRE</th><th>DIA</th></thead><tbody>".$cumpleañeros."</tbody></table>".$vencidos;
             // $cumple = nl2br($cumpleañeros);
             alert()->html($fecha,$tabla,'')->persistent('Close');
+
 
                    return redirect()->route('user.menu');
              

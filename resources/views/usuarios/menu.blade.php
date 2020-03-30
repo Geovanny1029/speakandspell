@@ -18,7 +18,7 @@
                   <span class="shortcut-label">Pagos</span>
                 </a>
                 <a href="{{route('user.corte')}}" class="shortcut"> 
-                  <i class="shortcut-icon icon-comment"></i>
+                  <i class="shortcut-icon icon icon-desktop"></i>
                   <span class="shortcut-label">Corte</span> 
                 </a>
 

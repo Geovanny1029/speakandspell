@@ -113,6 +113,14 @@ Route::get('user/{id}/pagos',[
 			'as'   => 'users.listaxnivel'
 		]);
 
+
+//listar deudores
+	Route::get('ListarDeudores',[
+			'uses' => 'UserController@ListaDeudores',
+			'as'   => 'users.listadeudores'
+		]);
+
+
 //modal edit user
 	Route::get('usersChangeView',[
 			'uses' => 'UserController@viewU',

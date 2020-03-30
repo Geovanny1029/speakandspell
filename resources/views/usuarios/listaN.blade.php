@@ -19,6 +19,7 @@
             <th>Fecha Inicio</th>
             <th>Fecha Finalizacion</th>
             <th>Costo</th>
+            <th>Vigencia</th>
             <th>Accion</th>
           </thead>
           <tbody>
@@ -30,6 +31,22 @@
               <td> {{$nivel->finicio}} </td>
               <td> {{$nivel->ffin}}</td>
               <td> {{$nivel->costo}}</td>
+              <td>
+                <?php 
+                  $date = str_replace("/","-", $nivel->ffin);
+                  $d=Carbon\Carbon::parse($date);
+                  $e=$d->format("Y-m-d");
+
+                  $tod = Carbon\Carbon::now();
+                  $hoy = $tod->format("Y-m-d");
+
+                  if($e <= $hoy){?>
+                      <span class="label label-danger">FINALIZADO</label><?php
+                  }else{ ?>
+                     <span class="label label-info">VIGENTE</label> <?php
+                  }
+                ?>
+              </td>
               <td><button class="btn btn-warning" data-toggle="modal" data-target="#editNModal" onclick="fun_edit_nivel('{{$nivel->id}}')" id="editarN" value="{{route('nivel.view')}}">Editar </button></td>
             </tr>
             @endforeach
