@@ -120,6 +120,12 @@ Route::get('user/{id}/pagos',[
 			'as'   => 'users.listadeudores'
 		]);
 
+//listar deudores datos
+	Route::get('ListarxDeudores',[
+			'uses' => 'UserController@ListaDeudores1',
+			'as'   => 'users.listadeudores1'
+		]);
+
 
 //modal edit user
 	Route::get('usersChangeView',[

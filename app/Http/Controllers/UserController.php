@@ -48,6 +48,11 @@ class UserController extends Controller
         return view('usuarios.listarxnivel')->with('listaN',$listaN)->with('listaH',$listaH);
     }
 
+    public function listaDeudores(){
+        
+        return view('usuarios.listadeudores');
+    }
+
 
     public function pagos(){
         $alumnos = Alumnos::orderBy('id','asc')->where('activo','1')->get();

@@ -2,7 +2,7 @@
 @section('content')
 
             <div class="widget-header"> 
-              <center><h3>Listado de Usuarios</h3></center>
+              <center><h3>Listado de Alumnos</h3></center>
             </div>
             <div class="widget-content">
               <div class="shortcuts">
@@ -18,7 +18,7 @@
                     </div> 
                   </div>
 
-                Lista de usuarios activos 
+                Lista de alumnos activos 
               </div><br>
         <table class="table table-striped" id="tablaasignaturas">
           <thead>

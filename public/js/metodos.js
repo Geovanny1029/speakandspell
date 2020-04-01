@@ -288,3 +288,38 @@ function muestralista()
         }
       });
     }
+
+
+//vista deudores
+function muestralistadeu()
+    {
+      var mes = $("#nivellist").val();
+
+     var view_url = 'http://localhost:8000/ListarxDeudores';
+      $.ajax({
+        url: view_url,
+        type:"GET", 
+        data: {"mes":mes}, 
+        success: function(result){
+          // console.log(resultado);
+          var resultado = result.length;
+
+          html = "";
+          if(resultado != 0){
+             html+="<div class = 'row'> <a href='/nivellista/"+horario+"' data-lity class='btn btn-success' >Generar Lista</a></div>";
+            html += "<table  class='table table-striped' id='tablalistaxnivel'> <thead><th><center>Matricula</center></th> <th><center>Nombre(s)</center></th> <th><center>Apellido Paterno</center></th> <th><center>Appelido Materno</center></th> </thead> <tbody>";
+            var pago = 0;
+            for(i=0;i<result.length;i++){
+              html+="<tr><td>"+result[i].id+"</td> <td>"+result[i].nombre+"</td> <td>"+result[i].ap+"</td> <td> "+result[i].am+"</td></tr>";
+            }
+          }else{
+            html+= "<h2>No se encontro ningun Registro</h2>";
+          }
+
+          html+="</tbody> </table>";
+         
+        $("#listarNivel").html(html);
+
+        }
+      });
+    }

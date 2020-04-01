@@ -19,7 +19,7 @@
                     <i class="shortcut-icon icon icon-calendar-empty"></i>
                     <span class="shortcut-label">Listar</span>
                   </a>
-                  <a href="{{route('user.listaxnivel')}}" class="shortcut">
+                  <a href="{{route('users.listadeudores')}}" class="shortcut">
                     <i class="shortcut-icon icon icon-money"></i>
                     <span class="shortcut-label">Deudores</span>
                   </a>                  

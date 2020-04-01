@@ -10,7 +10,7 @@
                     <a href="{{route('user.menu')}}" class="btn btn-success" style="width: 100%">INICIO</a>
                     </div>
                   </div> 
-                Lista de usuarios inactivos 
+                Lista de alumnos inactivos 
               </div>
         <table class="table table-striped" id="tablaasignaturas">
           <thead>

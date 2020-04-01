@@ -2,7 +2,7 @@
 @section('content')
 
             <div class="widget-header"> 
-              <center><h3>Listar alumnos</h3></center>
+              <center><h3>Listar Alumnos deudores</h3></center>
             </div>
             <div class="widget-content">
               <div class="shortcuts">
@@ -20,26 +20,21 @@
 
                 <div class="row">
                   <div class="form-group row">
-                    {!! Form::label('NivelLists', 'Selecciona Nivel',['class' => 'col-sm-2 col-form-label']) !!} 
+                    {!! Form::label('mes', 'Mes',['class' => 'col-sm-2 col-form-label']) !!} 
                     <div class="col-sm-3"> 
                       <div class="input-group">
                       <span class="input-group-addon"> <i class="shortcut-icon icon-bar-chart"></i></span>
-                      {!! Form::select('nivellist',$listaN,null,['class' => 'form-control','id'=>'nivellist']) !!}</div>
+                      {!! Form::select('nivellist',['01' => 'Enero', '02' => 'Febrero','03'=>'Marzo','04'=>'Abril','05'=>'Mayo','06'=>'Junio','07'=>'Julio','08'=>'Agosto','09'=>'Septiembre','10'=>'Octubre','11'=>'Noviembre','12'=>'Diciembre'],"Seleccione un Mes",['class' => 'form-control','id'=>'nivellistd']) !!}</div>
                     </div>
 
-                 {!! Form::label('HorarioList', 'Selecciona Horario',['class' => 'col-sm-2 col-form-label']) !!} 
-                    <div class="col-sm-3"> 
-                      <div class="input-group">
-                      <span class="input-group-addon"><i class="shortcut-icon icon-calendar-empty"></i></span>
-                      {!! Form::select('horariolists',$listaH,null,['class' => 'form-control','id'=>'horariolist']) !!}</div>
-                    </div>
+
                     <div class="col-sm-2"> 
-                       {!! Form::submit('Buscar',[ 'class' => 'btn btn-primary','onclick' => 'muestralista()']) !!} 
+                       {!! Form::submit('Buscar',[ 'class' => 'btn btn-primary','onclick' => 'muestralistadeu()]) !!} 
                     </div>
                   </div>
                 </div> 
                 <div>
-                  <div id="listarNivel"></div>
+                  <div id="listarDeudores"></div>
                 </div>              
             </div>
 @endsection
