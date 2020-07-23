@@ -80,16 +80,25 @@ function fun_id_alum(id)
           var tipo = result.pagos.tipo;
           var mes_inicio = result.mes_finicio;
           var mes_final = result.mes_fin;
-
+          var insc = result.pagosins.estatus;
           // si el ultimo registro es igual a final de mes del curso 
           if(mes_final == result.pagos.mes && pago == 1 ){
             $("#showpago1").hide();
             $("#showpago2").show();
             $("#pago_completo").text("EL alumno ha pagado completo el curso");
           }else
-          {//si el tipo es colegiatura
+          {
+
+          //si debe inscripcion
+          if(insc == 2){
+              $("#showpagoinsc").show();
+              $("#pag_deuda_insc").text("saldo: "+(500-result.pagosins.monto));
+              
+           }else{
+              $("#showpagoinsc").hide();
+           }
+          //si el tipo es colegiatura
             if(tipo == 2){
-             
               //si tiene pagado el ultimo mes pone fecha siguiente
               if(pago == 1){
                 mes = mes(result.pagos.mes+1);
@@ -169,6 +178,18 @@ function fun_edit_nivel(id)
     });
   });
 
+
+//select dinamico para agregar max y min en colegiatura e inscripcion
+  $(document).ready(function(){
+    $("#horario").change(function(){
+      var nivel = $(this).val();
+      $.get('horariomax/'+nivel, function(data){
+//esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+        console.log(data);
+           $("#colegio").attr('max',data);
+      });
+    });
+  });
 
 //select dinamico edit usuario horario nivel
   $(document).ready(function(){

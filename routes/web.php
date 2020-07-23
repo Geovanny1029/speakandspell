@@ -29,6 +29,9 @@ Route::get('menu',[
 //opcion de nivel horario
 Route::get('user/horario/{id}','UserController@gethorario');
 
+//opcion de nivel horario
+Route::get('user/horariomax/{id}','UserController@gethorariomax');
+
 //lista inactivos
 Route::get('inactivos',[
 			'uses' => 'UserController@inactivos',

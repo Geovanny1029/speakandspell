@@ -122,13 +122,13 @@
                       {!! Form::label('Inscripcion', 'inscripcion') !!}
                       <div class="input-group">
                       <span class="input-group-addon"> $</span> 
-                      {!! Form::number('inscripcion',null,['class' => 'form-control','style' => 'text-transform:uppercase;' ] ) !!}</div>
+                      {!! Form::number('inscripcion',null,['class' => 'form-control','style' => 'text-transform:uppercase;','id'=>'inscripcion','min'=>"1",'max'=>'500' ] ) !!}</div>
                     </div>
                     <div class="form-group col-md-4">
                       {!! Form::label('Colegiatura', 'Colegiatura') !!} 
                        <div class="input-group">
                       <span class="input-group-addon"> $</span>
-                      {!! Form::number('colegiatura',null,['class' => 'form-control','style' => 'text-transform:uppercase;' ] ) !!}</div>
+                      {!! Form::number('colegiatura',null,['class' => 'form-control','style' => 'text-transform:uppercase;','id'=>'colegio','min'=>'1' ] ) !!}</div>
                     </div> 
                                      
                   </div>                     
