@@ -17,11 +17,11 @@
                <b>Nivel:</b> <label id="pag_nivel_alum"></label><br>
 
                <div id="showpagoinsc" style="display: none;">
-                  <b>Inscripcion:</b><label id="pag_deuda_insc"></label><br>
-                  {!! Form::text('debeinsc',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'debeinsc', 'required' ] ) !!}                    
+                  <b>Debe Inscripcion:</b><label id="pag_deuda_insc"></label><br>
+                  {!! Form::text('debeinsc',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'debeinsc' ] ) !!}                    
                </div>
 
-               <b>Mes a pagar:</b><label id="pag_mes_alum"></label><br>
+               <b>Mes a pagar: </b><label id="pag_mes_alum"></label><br>
                  {!! Form::text('pago',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'pago', 'required' ] ) !!}
                </div>
 

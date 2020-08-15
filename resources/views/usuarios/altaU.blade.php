@@ -20,7 +20,7 @@
                 {!! Form::open(['route' => 'user.store', 'method' => 'POST' ,'files'=>true]) !!}
 
                   <div class="row">
-                    <div class="form-group col-md-1">
+                    <div class="form-group col-md-12">
                       {!! Form::label('matricula', 'Matricula') !!} 
                       {!! Form::text('id',$ultimo,['class' => 'form-control','style' => 'text-transform:uppercase;' , 'placeholder' => 'matricula', 'required',' readonly'=>' readonly' ] ) !!}
                     </div>

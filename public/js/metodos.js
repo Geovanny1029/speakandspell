@@ -75,31 +75,39 @@ function fun_id_alum(id)
           $("#id_alum").val(result.info.id);
           $("#pag_nom_alum").text(result.info.nombre+" "+result.info.ap);
           $("#pag_nivel_alum").text(result.nivel.nombre);
-
-          var pago = result.pagos.estatus;
-          var tipo = result.pagos.tipo;
+  
           var mes_inicio = result.mes_finicio;
           var mes_final = result.mes_fin;
+          var mes_hoy = result.mes_hoy;
           var insc = result.pagosins.estatus;
-          // si el ultimo registro es igual a final de mes del curso 
-          if(mes_final == result.pagos.mes && pago == 1 ){
-            $("#showpago1").hide();
-            $("#showpago2").show();
-            $("#pago_completo").text("EL alumno ha pagado completo el curso");
-          }else
-          {
 
-          //si debe inscripcion
-          if(insc == 2){
-              $("#showpagoinsc").show();
-              $("#pag_deuda_insc").text("saldo: "+(500-result.pagosins.monto));
+          //pago inscripcion if si debe inscripcion de lo contrario no asoma campo
+            if(insc == 2){
+                $("#showpagoinsc").show();
+                $("#pag_deuda_insc").text("saldo: "+(500-result.pagosins.monto));
               
-           }else{
+            }else{
               $("#showpagoinsc").hide();
-           }
+            }
+
+          // pagos colegiatura si no se encuentra ningun registro de pago de colegiatura se paga el primer mes
+          if(result.pagos == null){
+            if(mes_inicio<mes_hoy){var mespago = mes_hoy;}else{var mespago = mes_inicio;}
+              mes = mes(mespago);
+              $("#showpago1").show();
+              $("#showpago2").hide();
+              $("#pag_mes_alum").text(mes);
+          }else{
+            var pago = result.pagos.estatus;
+            // si el ultimo registro es igual a final de mes del curso 
+            if(mes_final == result.pagos.mes && pago == 1 ){
+              $("#showpago1").hide();
+              $("#showpago2").show();
+              $("#pago_completo").text("EL alumno ha pagado completo el curso");
+            }else
+            {
           //si el tipo es colegiatura
-            if(tipo == 2){
-              //si tiene pagado el ultimo mes pone fecha siguiente
+            //si tiene pagado el ultimo mes pone fecha siguiente
               if(pago == 1){
                 mes = mes(result.pagos.mes+1);
                  $("#showpago1").show();
@@ -112,14 +120,10 @@ function fun_id_alum(id)
                  $("#showpago2").hide();
                  $("#pag_mes_alum").text("Debe "+(result.nivel.costo-result.pagos.monto)+"$ SALDO DEL MES DE "+mes);
               }  
-            }else{
-              //si no paga mes ya que el ultimo registro que agarro es inscripcion
-              mes = mes(mes_inicio);
-              $("#showpago1").show();
-              $("#showpago2").hide();
-              $("#pag_mes_alum").text(mes);
-            }
+
+            }            
           }
+
         }
       });
     }

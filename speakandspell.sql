@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-07-2020 a las 00:38:19
+-- Tiempo de generación: 13-08-2020 a las 23:35:37
 -- Versión del servidor: 10.1.35-MariaDB
 -- Versión de PHP: 7.2.9
 
@@ -204,7 +204,8 @@ INSERT INTO `alumnos` (`id`, `nombre`, `ap`, `am`, `nacimiento`, `direccion`, `c
 (648, 'ABIEL', 'SABADU', 'ER', '12/09/1992', 'CALLE 45 X 78 Y 80', 'PROGRESO', 'ESTUDIANTE', 'PREPA', '168', '12345', '12345', '12345', '0', NULL),
 (649, 'GERGE', 'BUSH', 'NAT', '13/08/1878', 'DIRECCIO 1', 'NEW YORK', 'PRESIDENTE', 'LICENCIATURA', '171', '123456', '123456', '', '0', NULL),
 (650, 'GEOVANNY RICARDO', 'PEREZ', 'TUN', '21/08/1991', 'CALLE 45 X 78 Y 80', 'PROGRESO', 'PROFESIONISTA', 'LICENCIATURA', '171', '9370938903', '4565 7534 44', '3393093\'09', '0', NULL),
-(651, 'AMLO', 'ZAZ', 'CUACH', '21/08/1991', 'CALLE 45 X 78 Y 80', 'PROGRESO', 'FACTURISTA', 'LICENCIATURA', '159', '9370938903', '', '', '1', NULL);
+(651, 'AMLO', 'ZAZ', 'CUACH', '21/08/1991', 'CALLE 45 X 78 Y 80', 'PROGRESO', 'FACTURISTA', 'LICENCIATURA', '160', '9370938903', '4565 7534 44', '', '1', NULL),
+(652, 'ANGEL SOLIS UREñA', 'COBOS', 'PAREDES', '21/08/1992', 'CALLE 45 X 78 Y 80', 'PROGRESO', 'FACTURISTA', 'LICENCIATURA', '159', '9370938903', '', '', '1', NULL);
 
 -- --------------------------------------------------------
 
@@ -320,7 +321,10 @@ INSERT INTO `pagos` (`id`, `id_usuario`, `id_nivel`, `fecha_pago`, `estatus`, `m
 (81, 650, 171, '2020-01-22', 1, 500, 4, 2),
 (82, 650, 171, '2020-01-22', 1, 500, 5, 2),
 (83, 650, 171, '2020-01-22', 1, 500, 6, 2),
-(113, 651, 159, '2020-07-23', 2, 250, 7, 1);
+(117, 651, 160, '2020-08-13', 1, 500, 8, 1),
+(118, 652, 159, '2020-08-13', 2, 200, 8, 1),
+(124, 651, 160, '2020-08-13', 2, 250, 8, 2),
+(125, 651, 160, '2020-08-13', 2, 750, 8, 2);
 
 -- --------------------------------------------------------
 
@@ -409,7 +413,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=652;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=653;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -427,7 +431,7 @@ ALTER TABLE `niveles`
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
