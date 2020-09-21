@@ -34,7 +34,7 @@ class LoginController extends Controller
 
             $niveles = Nivel::whereraw('CURDATE() >= STR_TO_DATE(`ffin`, "%d/%m/%Y")')->get();
             $vigencias = count($niveles);
-            if($vigencias == 0){$vencidos = "<br>";}else{$vencidos= "<h4><span class='label label-danger'>Hay ".$vigencias." Niveles que ya vencieron</span></h4> <br> <h4><span class='label label-danger'>verificalos en el modulo de niveles</span></h4> ";}
+            if($vigencias == 0){$vencidos = "<br>";}else{$vencidos= "<h4><span class='label label-danger'>Hay ".$vigencias." Niveles que ya vencieron</span></h4> <br> <h4><span class='label label-danger'>verificalos en el modulo de niveles</span></h4><a href='/listaNivel' class='btn btn-danger'>revisar</a>";}
 
             $cuantos = count($alumnos);
             $fecha = "Cumpleañeros del mes de: ".$mes.":";

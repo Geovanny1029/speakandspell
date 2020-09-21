@@ -7,6 +7,7 @@ Use App\Alumnos;
 use App\User;
 use App\Nivel;
 use App\Pagos;
+use App\Pagos_estatus;
 use Carbon\Carbon;
 use DB;
 use PDF;
@@ -25,8 +26,8 @@ class UserController extends Controller
     {
 
         $alumnos = Alumnos::orderBy('id','asc')->where('activo','1')->get();
-        $listaN = Nivel::groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
-        $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
+        $listaN = Nivel::where('activo',1)->groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
+        $listaH = Nivel::where('activo',1)->orderBY('horario','ASC')->pluck('horario','id');
 
         $alumnos->each(function($alumnos){
             $alumnos->nivelAl;
@@ -43,8 +44,8 @@ class UserController extends Controller
     }
 
     public function listaxnivel(){
-        $listaN = Nivel::groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
-        $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
+        $listaN = Nivel::where('activo',1)->groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
+        $listaH = Nivel::where('activo',1)->orderBY('horario','ASC')->pluck('horario','id');
         return view('usuarios.listarxnivel')->with('listaN',$listaN)->with('listaH',$listaH);
     }
 
@@ -55,18 +56,22 @@ class UserController extends Controller
 
 
     public function pagos(){
-        $alumnos = Alumnos::orderBy('id','asc')->where('activo','1')->get();
+        $pagos = Pagos_estatus::where('estatus_c',0)->get();
 
-        $alumnos->each(function($alumnos){
-            $alumnos->nivelAl;
+       
+
+        $pagos->each(function($pagos){
+            $pagos->pagosp;
         });
-        return view('usuarios.pagos')->with('alumnos',$alumnos);
+
+   
+        return view('usuarios.pagos')->with('pagos',$pagos);
     }
 
     public function corte(){
 
-        $listaN = Nivel::groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
-        $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
+        $listaN = Nivel::where('activo',1)->groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
+        $listaH = Nivel::where('activo',1)->orderBY('horario','ASC')->pluck('horario','id');
         return view('usuarios.corte');
     }
 
@@ -85,8 +90,8 @@ class UserController extends Controller
     {
         $matricula = DB::table('alumnos')->orderBy('id', 'DESC')->first();
         $ultimo = $matricula->id+1;
-        $listaN = Nivel::groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
-        $listaH = Nivel::orderBY('horario','ASC')->pluck('horario','id');
+        $listaN = Nivel::where('activo',1)->groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
+        $listaH = Nivel::where('activo',1)->orderBY('horario','ASC')->pluck('horario','id');
          return view('usuarios.altaU')->with('listaN',$listaN)->with('listaH',$listaH)->with('ultimo',$ultimo);
     }
 
@@ -133,6 +138,14 @@ class UserController extends Controller
             $user->save();
 
 
+
+///crea el alumno postyerior crea en la tabla de estatus de alumnos por nivel
+             $alumxnivel = new Pagos_estatus();
+             $alumxnivel->id_usuario = $user->id;
+             $alumxnivel->id_nivel = $request->horario;
+             $alumxnivel->estatus_c = 0;
+             $alumxnivel->save();
+
             $hoy = Carbon::now();
             $today = $hoy->format('Y-m-d');
             $monthactual = $hoy->format('m');
@@ -155,6 +168,7 @@ class UserController extends Controller
             $ffin = Carbon::createFromFormat($fin, $end);
 
             $primer_pago = Carbon::createFromFormat('d/m/Y', $nivel->finicio)->format('m');
+            $ultimo_pago = Carbon::createFromFormat('d/m/Y', $nivel->ffin)->format('m');
 
             $meses = $finicio->diffInMonths($ffin) + 1;
 
@@ -177,18 +191,18 @@ class UserController extends Controller
     //si se marca casilla familair directo
     if($request->familiard == 1){
          $this->inscripcion(500,$monthactual,$today,$request->id,$request->horario );
-         $this->abono($abono,$monthactual,$today,$request->id,$request->horario, $CostoC,$primer_pago,$colegiatura);
+        if($abono == null){
+        }else{$this->abono($abono,$monthactual,$today,$request->id,$request->horario, $CostoC,$primer_pago,$ultimo_pago,$colegiatura);}
     }else{
         // si inscripcion y colegiatura estan vacios
         if($inscripcionR == null){
-             $this->inscripcion(0,$monthactual,$today,$request->id,$request->horario);
+            $this->inscripcion(0,$monthactual,$today,$request->id,$request->horario);
         }else{
         $this->inscripcion($inscripcionR,$monthactual,$today,$request->id,$request->horario);
-            //si no se captura colegiatura
-            if($abono == null){
-            }else{$this->abono($abono,$monthactual,$today,$request->id,$request->horario, $CostoC,$primer_pago,$colegiatura); }
-        
         }
+        //si no se captura colegiatura
+        if($abono == null){
+        }else{$this->abono($abono,$monthactual,$today,$request->id,$request->horario, $CostoC,$primer_pago,$ultimo_pago,$colegiatura); }
     }
 /////////////////////////////////////////////////////////////////////////// pago anterior 
         //pagos inscripcion y colegiatura
@@ -631,7 +645,7 @@ class UserController extends Controller
 
     public function listaNivel(){
 
-        $niveles = Nivel::orderBy('id','asc')->get();
+        $niveles = Nivel::where('activo',1)->orderBy('id','asc')->get();
         return view('usuarios.listaN')->with('niveles',$niveles);
     }
 
@@ -654,6 +668,7 @@ class UserController extends Controller
         $nivel->finicio = $finicio;
         $nivel->ffin = $ffin;
         $nivel->costo = $request->costo;
+        $nivel->activo = 1;
         $nivel->save();
 
         return view('usuarios.menu');
@@ -750,10 +765,12 @@ class UserController extends Controller
         {
             if($request->ajax()){
                 $id = $request->id;
+                $nivela = $request->nivel; 
                 $info = Alumnos::where('id',$id)->first();
                 $nivel = Nivel::find($info->nivel);
-                $pagos = Pagos::where('id_usuario',$info->id)->where('tipo','<>','1')->orderBy('id','desc')->first();
-                $pagosins = Pagos::where('id_usuario',$info->id)->where('tipo',1)->orderBy('id','desc')->first();
+                $pagos = Pagos::where('id_usuario',$info->id)->where('tipo','<>','1')->where('id_nivel',$nivela)->orderBy('id','desc')->first();
+
+                $pagosins = Pagos::where('id_usuario',$info->id)->where('tipo',1)->where('id_nivel',$nivela)->orderBy('id','desc')->first();
                 $now = Carbon::now();
                 $mes_hoy = $now->format('m');
                 // $mes_fi = Carbon::parse($nivel->ffin);
@@ -764,7 +781,26 @@ class UserController extends Controller
                 $mes_fin = Carbon::createFromFormat('d/m/Y', $nivel->ffin)->format('m');
 
 
-                return response()->json(array('info'=>$info,'nivel'=>$nivel,'pagos'=>$pagos,'pagosins'=>$pagosins,'mes_fin'=>$mes_fin,'mes_finicio'=>$mes_finicio,'mes_hoy'=>$mes_hoy));
+                //calculando meses de nivel
+                $start = date($nivel->finicio);
+                $inicio = 'd/m/Y';
+
+                $end = date($nivel->ffin);
+                $fin = 'd/m/Y';
+
+                $finicio = Carbon::createFromFormat($inicio, $start);
+                $ffin = Carbon::createFromFormat($fin, $end);
+
+                $meses = $finicio->diffInMonths($ffin) + 1;
+
+                $CostoCurso = $meses*$nivel->costo;
+
+                $pagoacum = Pagos::where('id_usuario',$info->id)->where('tipo','<>','1')->where('id_nivel',$nivela)->sum('monto');
+
+
+                $diferenciapago = $CostoCurso - $pagoacum;
+
+                return response()->json(array('info'=>$info,'nivel'=>$nivel,'pagos'=>$pagos,'pagosins'=>$pagosins,'mes_fin'=>$mes_fin,'mes_finicio'=>$mes_finicio,'mes_hoy'=>$mes_hoy,'diferenciapago'=>$diferenciapago));
             }
         }
 
@@ -773,6 +809,15 @@ class UserController extends Controller
             if($request->ajax()){
                 $id = $request->id;
                 $info = Nivel::find($id);
+                return response()->json($info);
+            }
+        }
+
+    public function lastpago(Request $request)
+        {
+            if($request->ajax()){
+                $id = $request->id;
+                $info = Pagos::find($id);
                 return response()->json($info);
             }
         }
@@ -788,15 +833,26 @@ class UserController extends Controller
 
     public function gethorario($id){
               
-                return $horario = Nivel::where('nombre','like',$id)->get();
+                return $horario = Nivel::where('activo',1)->where('nombre','like',$id)->get();
               
     }
 
     public function gethorariomax($id){
               
+            $hoy = Carbon::now();
+            $today = $hoy->format('Y-m-d');
+            $monthactual = $hoy->format('m');
+            $newDate = date("d/m/Y", strtotime($today));
             $horario = Nivel::find($id);
-            $start = date($horario->finicio);
-            $inicio = 'd/m/Y';
+            $primer_pago = Carbon::createFromFormat('d/m/Y', $horario->finicio)->format('m');
+            if($monthactual <= $primer_pago ){
+                $start = date($horario->finicio);
+                $inicio = 'd/m/Y';              
+            }else{
+                $start = date($newDate);
+                $inicio = 'd/m/Y';                   
+            }
+
 
             $end = date($horario->ffin);
             $fin = 'd/m/Y';
@@ -832,15 +888,19 @@ class UserController extends Controller
 
         //sacar sus pagos
         $pagos = Pagos::where('id_usuario',$alumno->id)->where('id_nivel',$alumno->nivel)->get();
-
+        $pagos_estatus =  Pagos_estatus::where('id_usuario',$alumno->id)->where('id_nivel',$alumno->nivel)->first();
         //fechas de inicio y fin 
         $ini = Nivel::where('id',$alumno->nivel)->first();
         $mesinicio = date_create($ini->finicio);
         $mesi = date_format($mesinicio,'m');
 
         $mesfin = date_create($ini->ffin);
+
+        $listaN = Nivel::where('activo',1)->groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
+        $listaH = Nivel::where('activo',1)->orderBY('horario','ASC')->pluck('horario','id');
+
        
-         return view('usuarios.pagosal')->with('alumno',$alumno)->with('pagos',$pagos)->with('mesi',$mesi)->with('mesf',$mesf);
+         return view('usuarios.pagosal')->with('alumno',$alumno)->with('pagos',$pagos)->with('mesi',$mesi)->with('pagos_estatus',$pagos_estatus)->with('listaN',$listaN)->with('listaH',$listaH);
     }
 
     public function pagomesalum(Request $request){
@@ -855,8 +915,24 @@ class UserController extends Controller
         $infoa = Alumnos::where('id',$id)->first();
         $nivel = Nivel::find($infoa->nivel);
         $costoN = $nivel->costo;
+        $Pagoinscripcion = Pagos::where('id_usuario',$infoa->id)->where('id_nivel',$infoa->nivel)->where('tipo',1)->first();
+        $Pagocolegiatura = Pagos::where('id_usuario',$infoa->id)->where('id_nivel',$infoa->nivel)->where('tipo',2)->orderBy('id','desc')->first();
+        $montoInscripcion = $Pagoinscripcion->monto;
+        if($Pagocolegiatura != null){
+            $montoColegiatura = $Pagocolegiatura->monto;
+            $idPagoColegiatura = $Pagocolegiatura->id;
+            $idEstatusp = $Pagocolegiatura->estatus;
+            $ultimoM = $Pagocolegiatura->mes;
+        }else{
+            $montoColegiatura = null;
+            $idPagoColegiatura = null;
+            $idEstatusp = null;
+            $ultimoM = null;
+        }
+        $idPagoInscripcion = $Pagoinscripcion->id;
         $primer_pago = Carbon::createFromFormat('d/m/Y', $nivel->finicio)->format('m');
 
+        $ultimo_pago = Carbon::createFromFormat('d/m/Y', $nivel->ffin)->format('m');
 
         //calculando meses de nivel
         $start = date($nivel->finicio);
@@ -903,11 +979,12 @@ class UserController extends Controller
 ///////////////////////////////////////////////////////// pago nuevo
 
         if($inscripcionR== null){}else{
-        $this->inscripcion($inscripcionR,$mesactual,$today,$id,$nivel->id);
+        $this->inscripcionupdate($inscripcionR,$montoInscripcion,$idPagoInscripcion,$mesactual,$today,$id,$nivel->id);
             //si no se captura colegiatura
          }
-        
-        $this->abono($abono,$mesactual,$today,$id,$nivel->id,$CostoC,$primer_pago,$costoN); 
+
+        $this->abonoupdate($abono,$montoColegiatura,$idPagoColegiatura,$idEstatusp,$mesactual,$ultimoM,$today,$id,$nivel->id,$CostoC,$primer_pago,$ultimo_pago,$costoN);
+
        
         
         
@@ -1491,6 +1568,26 @@ public function basico($numero) {
         } else return $decenas[$n - $x].' y '. $this->basico($x);
     }
 
+
+    public function funcmes($mes){
+        if($mes>12){
+            if($mes==13){$mesf = 1;}else
+            if($mes == 14){$mesf = 2;}else
+            if($mes == 15){$mesf = 3;}else
+            if($mes == 16){$mesf = 4;}else
+            if($mes == 17){$mesf = 5;}else
+            if($mes == 18){$mesf = 6;}else
+            if($mes == 19){$mesf = 7;}else
+            if($mes == 20){$mesf = 8;}else
+            if($mes == 21){$mesf = 9;}else                                        
+            if($mes == 22){$mesf = 10;}else
+            if($mes == 23){$mesf = 11;}else
+            if($mes == 24){$mesf = 12;}  
+        }else{
+            $mesf = $mes;
+        }
+        return $mesf;
+    }
     public function centenas($n) {
         $cientos = array (100 =>'cien',200 =>'doscientos',300=>'trecientos',
         400=>'cuatrocientos', 500=>'quinientos',600=>'seiscientos',
@@ -1546,11 +1643,10 @@ public function basico($numero) {
     }
 
 
-    public function abono($numero,$mes,$fecha,$user,$hora,$costoc,$inicioc,$colegiatura){
+    public function abono($numero,$mes,$fecha,$user,$hora,$costoc,$inicioc,$finc,$colegiatura){
         $monto = $numero;
         $inicio = $inicioc;
         if($mes <= $inicio){$pagomes = $inicio; }else{$pagomes = $mes;}
-        
         //si el abono es menor al costo total del curso
         if($monto <= $costoc){
             //si el abono es menor a la colegiatura mensual
@@ -1567,8 +1663,16 @@ public function basico($numero) {
                 //si el abono es entero 
                         if(is_int($monto/$colegiatura) == true){
                             $mesesApagar = $monto/$colegiatura;
+                            $pagoupdate = array('estatus_c' => 1);
 
                             for ($i=0; $i < $mesesApagar ; $i++) { 
+                        //si el ultimo pago es igual al final del curso actualiza la tabla de cursos_detalle a 1
+                                $final = $this->funcmes($pagomes+$i);
+                                if($finc == $final ){
+                                    $pag = Pagos_estatus::where('id_usuario',$user)->where('id_nivel',$hora)->first();
+                                    $pag->update($pagoupdate);
+                                }
+
                                 $aux = 0;
                                 Pagos::create(
                                 ['id_usuario'  => $user,
@@ -1576,7 +1680,7 @@ public function basico($numero) {
                                 'fecha_pago' => $fecha,
                                 'estatus' => 1,
                                 'monto' => 500,
-                                'mes' =>  $inicio+$i,
+                                'mes' => $this->funcmes($pagomes+$i),
                                 'tipo' => 2]);
                                 $aux++;
                             }
@@ -1594,7 +1698,7 @@ public function basico($numero) {
                                     'fecha_pago' => $fecha,
                                     'estatus' => 2,
                                     'monto' => $residuo,
-                                    'mes' =>  $inicio+($numeroMeses-1),
+                                    'mes' =>  $this->funcmes($pagomes+($numeroMeses-1)),
                                     'tipo' => 2]);
                                 } else{
                                     Pagos::create(
@@ -1603,7 +1707,7 @@ public function basico($numero) {
                                     'fecha_pago' => $fecha,
                                     'estatus' => 1,
                                     'monto' => 500,
-                                    'mes' =>  $inicio+$i,
+                                    'mes' =>  $this->funcmes($pagomes+$i),
                                     'tipo' => 2]);      
                                 }
 
@@ -1628,7 +1732,7 @@ public function basico($numero) {
                                 'fecha_pago' => $fecha,
                                 'estatus' => 1,
                                 'monto' => 500,
-                                'mes' =>  $inicio+$i,
+                                'mes' =>  $this->funcmes($pagomes+$i),
                                 'tipo' => 2]);
                                 $aux++;
                             }
@@ -1646,7 +1750,7 @@ public function basico($numero) {
                                     'fecha_pago' => $fecha,
                                     'estatus' => 2,
                                     'monto' => $residuo,
-                                    'mes' =>  $inicio+($numeroMeses-1),
+                                    'mes' =>  $this->funcmes($pagomes+($numeroMeses-1)),
                                     'tipo' => 2]);
                                 } else{
                                     Pagos::create(
@@ -1655,7 +1759,7 @@ public function basico($numero) {
                                     'fecha_pago' => $fecha,
                                     'estatus' => 1,
                                     'monto' => 500,
-                                    'mes' =>  $inicio+$i,
+                                    'mes' =>  $this->funcmes($pagomes+$i),
                                     'tipo' => 2]);      
                                 }
 
@@ -1694,4 +1798,348 @@ public function basico($numero) {
                 );
         }
     }// fin funcion inscripcion
+
+    public function inscripcionupdate($numero,$monto,$idp,$mes,$fecha,$user,$hora){
+        $total = $monto + $numero;
+        if($total == 500){$estatus = 1;}else{$estatus=2;}
+        $usuario = $user;
+        $horario = $hora;
+
+        $pagoupdate = array(
+        'fecha_pago' => $fecha,
+        'estatus'=>$estatus,
+        'monto' => $total);
+
+        $pag = Pagos::find($idp);
+        $pag->update($pagoupdate);
+        return back();
+    }// fin funcion inscripcion update
+
+    public function abonoupdate($numero,$monto,$idp,$estatusp,$mes,$ultimomesp,$fecha,$user,$hora,$costoc,$inicioc,$finc,$colegiatura){
+
+
+        if($numero == $colegiatura){$estatus = 1;}else{$estatus = 2;}
+    //realiza comparaciones con el ultimo registro de pago tipo colegiatura si ya se encuentra pagado estatus 1 crea el siguiente de lo contrario actualiza
+
+        if($estatusp != null){
+            if($estatusp == 1){
+                //si abonado es igual actualiza a 1
+                if(($numero)==$colegiatura){
+                        Pagos::create(
+                        ['id_usuario'  => $user,
+                        'id_nivel' => $hora,
+                        'fecha_pago' => $fecha,
+                        'estatus' => $estatus,
+                        'monto' => $numero,
+                        'mes' => $this->funcmes($ultimomesp+1),
+                        'tipo' => 2]);
+                    return back();
+                }else
+                // si el abono es menor crea con estatus 2
+                 if(($numero)<$colegiatura){
+                    Pagos::create(
+                        ['id_usuario'  => $user,
+                        'id_nivel' => $hora,
+                        'fecha_pago' => $fecha,
+                        'estatus' => $estatus,
+                        'monto' => $numero,
+                        'mes' => $this->funcmes($ultimomesp+1),
+                        'tipo' => 2]);
+                    return back();
+                }else
+                 // si abono es mayor crea a sts 1 y la diferencia crea registro del siguiente mes
+                 if ($numero>$colegiatura) {
+                
+                    if(is_int($numero/$colegiatura) == true){
+                        $mesesApagar = $numero/$colegiatura;
+                        $meses_corridos = $ultimomesp + 1;
+                        $pagoupdate = array('estatus_c' => 1);
+
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            $final = $this->funcmes($meses_corridos+$i);
+                            if($finc == $final ){
+                                $pag = Pagos_estatus::where('id_usuario',$user)->where('id_nivel',$hora)->first();
+                                $pag->update($pagoupdate);
+                            }
+                            $aux = 0;
+                            Pagos::create(
+                            ['id_usuario'  => $user,
+                            'id_nivel' => $hora,
+                            'fecha_pago' => $fecha,
+                            'estatus' => 1,
+                            'monto' => $colegiatura,
+                            'mes' =>  $this->funcmes($meses_corridos + $i),
+                            'tipo' => 2]);
+                            $aux++;
+                        }
+                    }else{
+                        
+                        $mesesApagarC= explode(".", $numero/$colegiatura);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $numero%$colegiatura;
+                                Pagos::create(
+                                ['id_usuario'  => $user,
+                                'id_nivel' => $hora,
+                                'fecha_pago' => $fecha,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $this->funcmes($ultimomesp+$numeroMeses),
+                                'tipo' => 2]);
+                            }else{
+                                Pagos::create(
+                                ['id_usuario'  => $user,
+                                'id_nivel' => $hora,
+                                'fecha_pago' => $fecha,
+                                'estatus' => 1,
+                                'monto' => $colegiatura,
+                                'mes' =>  $this->funcmes($ultimomesp+$i+1),
+                                'tipo' => 2]);      
+                            }
+                        }
+                    }
+                }
+                return back();
+            }// si no esta pagado hace condiciones
+            else{ 
+
+        //////////////////////////////////////////////              
+                //si el monto que tenia mas el abonado es igual actualiza a 1
+                if(($numero+$monto)==$colegiatura){
+
+                    $pagoupdate = array(
+                    'fecha_pago' => $fecha,
+                    'estatus'=>1,
+                    'monto' => ($numero+$monto));
+
+                    $pag = Pagos::find($idp);
+                    $pag->update($pagoupdate);
+                    return back();
+                }else
+                // si el monto que tenia mas el abonado es menor actualiza monto
+                 if(($numero+$monto)<$colegiatura){
+                    $pagoupdate = array(
+                    'fecha_pago' => $fecha,
+                    'monto' => ($numero+$monto));
+
+                    $pag = Pagos::find($idp);
+                    $pag->update($pagoupdate);
+                    return back();
+                }else
+                 // si el monto que tenia mas el abonado es mayor actualiza a 1 y la diferencia crea registro del siguiente mes
+                 if (($numero+$monto)>$colegiatura) {
+
+                   $pagoupdate = array(
+                    'fecha_pago' => $fecha,
+                    'estatus'=>1,
+                    'monto' => $colegiatura);
+                 
+                    $pag = Pagos::find($idp);
+                    $pag->update($pagoupdate);
+
+                    $faltante = $colegiatura - $monto;
+                    $abonado2 = $numero - $faltante;
+                    if(is_int($abonado2/$colegiatura) == true){
+                        $mesesApagar = $abonado2/$colegiatura;
+                        $meses_corridos = $ultimomesp + 1;
+                        $pagoupdate = array('estatus_c' => 1);
+                        for ($i=0; $i < $mesesApagar ; $i++) {
+                            $final = $this->funcmes($meses_corridos+$i);
+                            if($finc == $final ){
+                                $pag = Pagos_estatus::where('id_usuario',$user)->where('id_nivel',$hora)->first();
+                                $pag->update($pagoupdate);
+                            }                         
+                            $aux = 0;
+                            Pagos::create(
+                            ['id_usuario'  => $user,
+                            'id_nivel' => $hora,
+                            'fecha_pago' => $fecha,
+                            'estatus' => 1,
+                            'monto' => $colegiatura,
+                            'mes' =>  $this->funcmes($meses_corridos + $i),
+                            'tipo' => 2]);
+                            $aux++;
+                        }
+                    }else{
+                        
+                        $mesesApagarC= explode(".", $abonado2/$colegiatura);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        //si abonado 2 es menor ala colegitura solo se agrega el reg del lo restante si no agrega registros de meses +
+                        if($abonado2<$colegiatura){
+                            $residuo = $abonado2%$colegiatura;
+                            Pagos::create(
+                            ['id_usuario'  => $user,
+                            'id_nivel' => $hora,
+                            'fecha_pago' => $fecha,
+                            'estatus' => 2,
+                            'monto' => $abonado2,
+                            'mes' =>  $this->funcmes($ultimomesp+$numeroMeses),
+                            'tipo' => 2]);
+                        }else{
+                            for($i=0; $i < $numeroMeses; $i++) { 
+                                if($i == ($numeroMeses-1)){
+                                    $residuo = $abonado2%$colegiatura;
+                                    Pagos::create(
+                                    ['id_usuario'  => $user,
+                                    'id_nivel' => $hora,
+                                    'fecha_pago' => $fecha,
+                                    'estatus' => 2,
+                                    'monto' => $residuo,
+                                    'mes' =>  $this->funcmes($ultimomesp+$numeroMeses),
+                                    'tipo' => 2]);
+                                }else{
+                                    Pagos::create(
+                                    ['id_usuario'  => $user,
+                                    'id_nivel' => $hora,
+                                    'fecha_pago' => $fecha,
+                                    'estatus' => 1,
+                                    'monto' => $colegiatura,
+                                    'mes' =>  $this->funcmes($ultimomesp+$i+1),
+                                    'tipo' => 2]);      
+                                }
+                            }
+                        }
+                                                                                   
+                    }
+                }
+                return back();
+            }
+        }else{
+        //si no crea registro del primer mes de colegiatura
+        //si el curso ya empezo y paga un mes despues o dependiendo guarda el mes que entra
+          if($mes <= $inicioc){$pagomes = $inicioc; }else{$pagomes = $mes;}
+            if(($numero)==$colegiatura){
+                Pagos::create(
+                ['id_usuario'  => $user,
+                'id_nivel' => $hora,
+                'fecha_pago' => $fecha,
+                'estatus' => $estatus,
+                'monto' => $numero,
+                'mes' => $this->funcmes($pagomes),
+                'tipo' => 2]);
+                return back();
+            }else
+                // si el abono es menor crea con estatus 2
+                if(($numero)<$colegiatura){
+                Pagos::create(
+                    ['id_usuario'  => $user,
+                    'id_nivel' => $hora,
+                    'fecha_pago' => $fecha,
+                    'estatus' => $estatus,
+                    'monto' => $numero,
+                    'mes' => $this->funcmes($pagomes),
+                    'tipo' => 2]);
+                    return back();
+                }else
+                 // si abono es mayor crea a 1 y la diferencia crea registro del siguiente mes
+                 if (($numero)>$colegiatura) {
+                    
+                    if(is_int($numero/$colegiatura) == true){
+                        $mesesApagar = $numero/$colegiatura;
+                        $meses_corridos = $pagomes;
+                        $pagoupdate = array('estatus_c' => 1);
+                        for ($i=0; $i < $mesesApagar ; $i++) { 
+                            
+                            $final = $this->funcmes($meses_corridos+$i);
+                            if($finc == $final ){
+                                $pag = Pagos_estatus::where('id_usuario',$user)->where('id_nivel',$hora)->first();
+                                $pag->update($pagoupdate);
+                            }
+
+                            $aux = 0;
+                            Pagos::create(
+                            ['id_usuario'  => $user,
+                            'id_nivel' => $hora,
+                            'fecha_pago' => $fecha,
+                            'estatus' => 1,
+                            'monto' => $colegiatura,
+                            'mes' =>  $this->funcmes($meses_corridos + $i),
+                            'tipo' => 2]);
+                            $aux++;
+                        }
+                    }else{
+                        
+                        $mesesApagarC= explode(".", $numero/$colegiatura);
+                        $numeroMeses = $mesesApagarC[0]+1;
+                        
+                        for ($i=0; $i < $numeroMeses; $i++) { 
+                            if($i == ($numeroMeses-1)){
+                                $residuo = $numero%$colegiatura;
+                                Pagos::create(
+                                ['id_usuario'  => $user,
+                                'id_nivel' => $hora,
+                                'fecha_pago' => $fecha,
+                                'estatus' => 2,
+                                'monto' => $residuo,
+                                'mes' =>  $this->funcmes($pagomes+($numeroMeses-1)),
+                                'tipo' => 2]);
+                            }else{
+                                Pagos::create(
+                                ['id_usuario'  => $user,
+                                'id_nivel' => $hora,
+                                'fecha_pago' => $fecha,
+                                'estatus' => 1,
+                                'monto' => $colegiatura,
+                                'mes' =>  $this->funcmes($pagomes+$i),
+                                'tipo' => 2]);      
+                            }
+                        }
+                    }
+                }
+            }
+
+        return back();
+    }// fin funcion abono update
+
+
+//listado de alumnos activos e inactivos
+    public function listado($id){
+        $info = Alumnos::where('activo',"=",$id)->get();
+            
+        $info->each(function($info){
+                        $info->nivelAl;
+                    });
+        if($id == 1){$estatus = "Activos";}else{$estatus = "Inactivos";}
+        $pdf = PDF::loadView('pdf.listaalumno',['info'=>$info,'estatus'=>$estatus]);
+
+        return $pdf->stream(); 
+    }
+
+
+    //funcion cambio de usuario a otro nivel en modulo de usuario
+    public function cambionivel(Request $request){
+        if($request->ajax()){
+        $alumno = $request->alumno;
+        $nivel = $request->nivel;
+
+
+        $fecniv=Nivel::find($nivel);
+        $primer_pago = Carbon::createFromFormat('d/m/Y', $fecniv->finicio)->format('m');
+
+        $alum = Alumnos::find($alumno); 
+        $alum->nivel = $nivel;
+        $alum->save();
+
+        $newregistro = new Pagos_estatus();
+        $newregistro->id_usuario=$alumno;
+        $newregistro->id_nivel=$nivel;
+        $newregistro->estatus_c=0;
+        $newregistro->save();
+
+
+        $pagoins = new Pagos();
+        $pagoins->id_usuario=$alumno;
+        $pagoins->id_nivel=$nivel;
+        $pagoins->fecha_pago=null;
+        $pagoins->estatus=2;
+        $pagoins->monto=0;
+        $pagoins->mes=$primer_pago;
+        $pagoins->tipo=1;
+        $pagoins->save();
+
+    }
+    }
+
 }

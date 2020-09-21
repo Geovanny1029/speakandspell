@@ -28,14 +28,14 @@
             <th>Pagar</th>
           </thead>
           <tbody>
-            @foreach($alumnos as $alumno)
+            @foreach($pagos as $pago)
             <tr>
 
-              <td> {{$alumno->id}}   </td>
-              <td> {{$alumno->nombre}} {{$alumno->ap}} {{$alumno->am}} </td>
-              <td> {{$alumno->nivel}} </td>
+              <td> {{$pago->alumnop->id}} </td>
+              <td> {{$pago->alumnop->nombre}} {{$pago->alumnop->ap}} {{$pago->alumnop->am}}</td>
+              <td> {{$pago->nivelp->nombre}} </td>
               <td>
-               <button class="btn btn-info" data-toggle="modal" data-target="#modalpago" onclick="fun_id_alum('{{$alumno->id}}')" id="id_al" value="{{route('users.view')}}">Pagar </button>
+               <button class="btn btn-info" data-toggle="modal" data-target="#modalpago" onclick="fun_id_alum('{{$pago->id_usuario}}','{{$pago->id_nivel}}')" id="id_al" value="{{route('users.view')}}">Pagar </button>
               </td>
             </tr>
             @endforeach

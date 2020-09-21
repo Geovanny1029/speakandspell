@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
     <title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
 <link rel="stylesheet" href="{{asset('css/login/lity.css')}}">
 <link href="{{asset('css/perfil/bootstrap.min.css')}}" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="{{asset('css/perfil/style.css')}}">
@@ -18,39 +22,85 @@
             <form method="post">
                 <div class="row">
                     <div class="col-md-12">
-                        <center>Informacion</center>
+                        <center>Informacion de Pagos</center>
                         Alumno: {{$alumno->nombre}}<br>
-                        Nivel: {{$alumno->nivel}}<br>
+                        Nivel: {{$alumno->nivelal->nombre}}<br>
+                        Horario: {{$alumno->nivelal->horario}}<br>
+
+
+
+                        Estado de pagos:
+                        @if($pagos_estatus->estatus_c == 1)
+                          <h5>EL Alumno ha Pagado Todo El Curso</h5>
+                              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalcambionivel">
+                                Cambiar de Nivel
+                              </button>
+                        @else
+                        @endif
                         <br>
+                  <table class="table table-striped" id="tablaasignaturas">
+                      <thead>
+                        <th>Fecha Pago</th>
+                        <th>Estatus</th>
+                        <th>Monto</th>
+                        <th>Mes</th>
+                        <th>Tipo</th>
+                        <th>Accion</th>
+                      </thead>
+                      <tbody>
+                      @foreach($pagos as $pago)
+                      <tr>
 
-                        Estado de pagos:<br>
-                        @foreach($pagos as $pago)
+                        <td> {{$pago->fecha_pago}} </td>
+                        <td> 
+                          @if($pago->estatus == 1)
+                            PAGADO
+                          @else 
+                            PENDIENTE 
+                          @endif 
+                        </td>
+                        <td> {{$pago->monto}} </td>
+                        <td> {{$pago->mes}} </td>
+                        <td>
                           @if($pago->tipo == 1)
-                          inscripcion
-                          @elseif($pago->tipo == 2)
-                          colegiatura
+                            INSCRIPCION
                           @else
+                            COLEGIATURA
                           @endif
-                         {{$pago->tipo}}<br>
-                        @endforeach
+                        </td>
+                        <td>
 
-      <?php
-       $mes = [];
-        for ($i=$mesi; $i <= $mesf ; $i++) { 
-           echo $mes[$i];
-         } 
-      ?>
+                          @if($pagos->last()->id == $pago->id)
+                            @if($pagos_estatus->estatus_c == 1)
+                              N/A
+                             @else 
+                              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editNModalpe" onclick="cambiarpago('{{$pago->id}}')" id="editarPagolast">
+                                Editar
+                              </button>
+                            @endif
+                          @else
+                            N/A
+                          @endif
+                          
+                        </td>
+                      </tr>
+                    @endforeach
+                    </tbody>
+                    @include('usuarios.modals.cambiarnivel')
+                    @include('usuarios.modals.pagosedit')
+                  </table>       
+
+
                     </div>
-                </div>
-                <div class="row">
-                    
                 </div>
             </form>           
         </div>
 
-<script src="{{ URL::asset('js/perfil/jquery.min.js')}}"></script>
+<script src="{{ URL::asset('js/login/jquery-3.4.0.min.js')}}"></script>
 <script src="{{ URL::asset('js/lity.js')}}"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="{{ URL::asset('js/metodos.js')}}"></script>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>

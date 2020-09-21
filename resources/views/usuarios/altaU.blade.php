@@ -78,7 +78,7 @@
                       {!! Form::label('Nivel', 'Nivel') !!} 
                       <div class="input-group">
                       <span class="input-group-addon"> <i class="shortcut-icon icon-bar-chart"></i></span>
-                      {!! Form::select('nivel',$listaN,null,['class' => 'form-control','id'=>'nivel']) !!}</div>
+                      {!! Form::select('nivel',$listaN,null,['class' => 'form-control','id'=>'nivel','placeholder'=>'selecciona']) !!}</div>
                     </div>
                     <div class="form-group col-md-4">
                       {!! Form::label('horario', 'Horario') !!} 

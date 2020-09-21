@@ -14,7 +14,8 @@ class Nivel extends Model
    		'horario',
    		'finicio',
    		'ffin',
-   		'costo',   
+   		'costo',
+      'activo',   
    	];
 
     public $timestamps = false;
@@ -28,4 +29,9 @@ class Nivel extends Model
 
         return $this->hasMany('App\Pagos'); 
     }   
+
+    public function pagosp(){
+
+        return $this->hasMany('App\Pagos_estatus'); 
+    }  
 }

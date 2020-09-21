@@ -62,19 +62,26 @@ function fun_ChangeUser(id)
     }
 
 //vista id de alumno
-function fun_id_alum(id)
+function fun_id_alum(id,nivel)
     {
       var view_url = 'http://localhost:8000/userse';
     
       $.ajax({
         url: view_url,
         type:"GET", 
-        data: {"id":id}, 
+        data: {"id":id,"nivel":nivel}, 
         success: function(result){
           //console.log(result);
           $("#id_alum").val(result.info.id);
           $("#pag_nom_alum").text(result.info.nombre+" "+result.info.ap);
           $("#pag_nivel_alum").text(result.nivel.nombre);
+          mes1 = "";
+          if(result.pagosins.monto == 0){data = 500;}else{data = 500-result.pagosins.monto;}
+          $("#debeinsc").attr('max',data);
+          $("#pago").attr('max',result.diferenciapago);
+          $("#debeinsc").val("");
+          $("#pago").val("");
+          
   
           var mes_inicio = result.mes_finicio;
           var mes_final = result.mes_fin;
@@ -92,38 +99,40 @@ function fun_id_alum(id)
 
           // pagos colegiatura si no se encuentra ningun registro de pago de colegiatura se paga el primer mes
           if(result.pagos == null){
-            if(mes_inicio<mes_hoy){var mespago = mes_hoy;}else{var mespago = mes_inicio;}
-              mes = mes(mespago);
+            if(mes_inicio<=mes_hoy){var mespago = mes_hoy;}else{var mespago = mes_inicio;}
+              mes1 = mes(mespago);
               $("#showpago1").show();
               $("#showpago2").hide();
-              $("#pag_mes_alum").text(mes);
+              $("#btnpagar").show()
+              $("#pag_mes_alum").text(mes1);
           }else{
             var pago = result.pagos.estatus;
             // si el ultimo registro es igual a final de mes del curso 
             if(mes_final == result.pagos.mes && pago == 1 ){
               $("#showpago1").hide();
               $("#showpago2").show();
+              $("#btnpagar").hide();
               $("#pago_completo").text("EL alumno ha pagado completo el curso");
             }else
             {
           //si el tipo es colegiatura
             //si tiene pagado el ultimo mes pone fecha siguiente
               if(pago == 1){
-                mes = mes(result.pagos.mes+1);
+                mes1 = mes(result.pagos.mes+1);
                  $("#showpago1").show();
                  $("#showpago2").hide();
-                 $("#pag_mes_alum").text(mes);
+                  $("#btnpagar").show();
+                 $("#pag_mes_alum").text(mes1);
               }else// si no debe colegiatura y le dice cuanto debe
               {
-                mes = mes(result.pagos.mes);
+                mes1 = mes(result.pagos.mes);
                 $("#showpago1").show();
                  $("#showpago2").hide();
-                 $("#pag_mes_alum").text("Debe "+(result.nivel.costo-result.pagos.monto)+"$ SALDO DEL MES DE "+mes);
+                 $("#btnpagar").show();
+                 $("#pag_mes_alum").text("Debe "+(result.nivel.costo-result.pagos.monto)+"$ SALDO DEL MES DE "+mes1);
               }  
-
             }            
           }
-
         }
       });
     }
@@ -142,7 +151,19 @@ function mes($id){
   if($id == 9){return "SEPTIEMBRE";}else
   if($id == 10){return "OCTUBRE";}else
   if($id == 11){return "NOVIEMBRE";}else
-  if($id == 12){return "DICIEMBRE";}
+  if($id == 12){return "DICIEMBRE";}else
+  if($id == 13){return "ENERO";}else
+  if($id == 14){return "FEBRERO";}else
+  if($id == 15){return "MARZO";}else
+  if($id == 16){return "ABRIL";}else
+  if($id == 17){return "MAYO";}else
+  if($id == 18){return "JUNIO";}else
+  if($id == 19){return "JULIO";}else
+  if($id == 20){return "AGOSTO";}else
+  if($id == 21){return "SEPTIEMBRE";}else
+  if($id == 22){return "OCTUBRE";}else
+  if($id == 23){return "NOVIEMBRE";}else
+  if($id == 24){return "DICIEMBRE";}
 }
 //vista editar nivel
 function fun_edit_nivel(id)
@@ -165,6 +186,22 @@ function fun_edit_nivel(id)
       });
     }
 
+//vista editar ultimo pago por equivocacion
+function cambiarpago(id)
+    {
+      $.ajax({
+        url: '/lastpago',
+        type:"GET", 
+        data: {"id":id}, 
+        success: function(result){
+          //console.log(result);
+          $("#lastpagoup").val(result.monto);
+
+        }
+      });
+    }
+
+
 //select dinamico alta usuario horario nivel
   $(document).ready(function(){
     $("#nivel").change(function(){
@@ -181,6 +218,25 @@ function fun_edit_nivel(id)
       });
     });
   });
+
+//select dinamico alta usuario horario nivel
+  $(document).ready(function(){
+    $("#nivelc").change(function(){
+      var nivel = $(this).val();
+      $.get('/user/horario/'+nivel, function(data){
+//esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+        console.log(data);
+          var producto_select = '<option value="">Seleccione Horario</option>'
+            for (var i=0; i<data.length;i++)
+              producto_select+='<option value="'+data[i].id+'">'+data[i].horario+'</option>';
+
+            $("#horarioc").html(producto_select);
+
+      });
+    });
+  });
+
+
 
 
 //select dinamico para agregar max y min en colegiatura e inscripcion
@@ -348,3 +404,30 @@ function muestralistadeu()
         }
       });
     }
+
+$("#cambiodenivel").click(function() {
+
+event.preventDefault();
+var nivel = $("#horarioc").val();
+var alumno = $("#nam_id").val();
+
+    $.ajax({
+        url: '/userchangelevel',
+        data: {"nivel": nivel, "alumno": alumno },
+        type: 'post',
+        beforeSend: function (xhr) { // Add this line
+        xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
+        }, 
+        success: function()
+        {
+          alert("its work")
+            $('.modal-box').text(result).fadeIn(700, function() 
+            {
+                setTimeout(function() 
+                {
+                    $('.modal-box').fadeOut();
+                }, 2000);
+            });
+        }
+    });
+});

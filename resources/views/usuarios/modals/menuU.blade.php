@@ -19,6 +19,10 @@
                     <i class="shortcut-icon icon icon-minus-sign-alt"></i>
                     <span class="shortcut-label">Baja Alumno</span>
                   </a>
+                  <a href="{{route('user.listaxnivel')}}" class="shortcut">
+                    <i class="shortcut-icon icon icon-calendar-empty"></i>
+                    <span class="shortcut-label">Listar</span>
+                  </a>
                 </div>
           </div>
         </div> 

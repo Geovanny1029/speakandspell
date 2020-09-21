@@ -18,11 +18,11 @@
 
                <div id="showpagoinsc" style="display: none;">
                   <b>Debe Inscripcion:</b><label id="pag_deuda_insc"></label><br>
-                  {!! Form::text('debeinsc',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'debeinsc' ] ) !!}                    
+                  {!! Form::number('debeinsc',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'debeinsc','min'=>'1' ] ) !!}                    
                </div>
 
                <b>Mes a pagar: </b><label id="pag_mes_alum"></label><br>
-                 {!! Form::text('pago',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'pago', 'required' ] ) !!}
+                 {!! Form::number('pago',null,['class' => 'form-control','style' => 'text-transform:uppercase;', 'placeholder' => '$','id' => 'pago','min'=>'', 'required' ] ) !!}
                </div>
 
                <div class="form-group col-md-12" id="showpago2" style="display: none;">
@@ -32,7 +32,7 @@
            
               <div class="row">
                 <div class="form-group col-md-2">
-                 {!! Form::submit('pagar',[ 'class' => 'btn btn-primary']) !!} 
+                 {!! Form::submit('pagar',['class' => 'btn btn-primary','id'=>'btnpagar']) !!} 
                  <input type="hidden" id="id_alum" name="id_alum">
                 </div>
               </div>

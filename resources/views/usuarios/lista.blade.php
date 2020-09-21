@@ -2,7 +2,7 @@
 @section('content')
 
             <div class="widget-header"> 
-              <center><h3>Listado de Alumnos</h3></center>
+              <center><h3>Listado de Alumnos Activos</h3></center>
             </div>
             <div class="widget-content">
               <div class="shortcuts">
@@ -17,14 +17,15 @@
                     </ul>
                     </div> 
                   </div>
-
-                Lista de alumnos activos 
+                  <a href="/listaAlumno/1" data-lity class='btn btn-primary'>Generar Lista</a><br>
+            
               </div><br>
         <table class="table table-striped" id="tablaasignaturas">
           <thead>
             <th>Matricula</th>
             <th>Nombre completo</th>
             <th>Nivel</th>
+            <th>Horario</th>
             <th>Accion</th>
           </thead>
           <tbody>
@@ -33,7 +34,8 @@
 
               <td> {{$alumno->id}}   </td>
               <td> {{$alumno->nombre}} {{$alumno->ap}} {{$alumno->am}} </td>
-              <td> {{$alumno->nivel}} </td>
+              <td> {{$alumno->nivelal->nombre}} </td>
+              <td> {{$alumno->nivelal->horario}} </td>
               <td>
                 <div class="dropdown">
                   <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

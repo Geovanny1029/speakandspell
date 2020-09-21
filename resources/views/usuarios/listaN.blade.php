@@ -14,6 +14,7 @@
               </div><br>
         <table class="table table-striped" id="tablaniveles">
           <thead>
+            <th>Id</th>
             <th>Nivel</th>
             <th>Horario</th>
             <th>Fecha Inicio</th>
@@ -25,7 +26,7 @@
           <tbody>
             @foreach($niveles as $nivel)
             <tr>
-
+              <td>{{ $nivel->id }}</td>
               <td> {{$nivel->nombre}} </td>
               <td> {{$nivel->horario}} </td>
               <td> {{$nivel->finicio}} </td>

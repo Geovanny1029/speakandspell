@@ -1,7 +1,7 @@
 @extends('usuarios.index')
 @section('content')
             <div class="widget-header"> 
-              <center><h3>Listado de Usuarios</h3></center>
+              <center><h3>Listado de Usuarios Inactivos</h3></center>
             </div>
             <div class="widget-content">
               <div class="shortcuts">
@@ -10,7 +10,7 @@
                     <a href="{{route('user.menu')}}" class="btn btn-success" style="width: 100%">INICIO</a>
                     </div>
                   </div> 
-                Lista de alumnos inactivos 
+                 <a href="/listaAlumno/0" data-lity class='btn btn-primary'>Generar Lista</a><br><br>
               </div>
         <table class="table table-striped" id="tablaasignaturas">
           <thead>
@@ -24,10 +24,12 @@
             <tr>
 
               <td> {{$alumno->id}} </td>
-              <td> {{$alumno->nombre}} </td>
+              <td> {{$alumno->nombre}} {{$alumno->ap}} {{$alumno->am}}  </td>
               <td> {{$alumno->nivel}} </td>
               <td>
-                perfil
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editNModalpe">
+                               Reincorporar
+                </button>
               </td>
             </tr>
             @endforeach

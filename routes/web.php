@@ -30,6 +30,9 @@ Route::get('menu',[
 Route::get('user/horario/{id}','UserController@gethorario');
 
 //opcion de nivel horario
+Route::get('listaAlumno/{id}','UserController@listado');
+
+//opcion de nivel horario
 Route::get('user/horariomax/{id}','UserController@gethorariomax');
 
 //lista inactivos
@@ -143,10 +146,23 @@ Route::get('user/{id}/pagos',[
 		]);
 
 
+//modal edit last pago
+	Route::get('/lastpago',[
+			'uses' => 'UserController@lastpago',
+			'as'   => 'nivel.lastpago'
+		]);
+
+
 // actualiza alumno
 		Route::post('usersu',[
 			'uses' => 'UserController@actualiza',
 			'as'   => 'users.actualiza'
+		]);
+
+// cambio de usuario a otro nivel
+		Route::post('/userchangelevel',[
+			'uses' => 'UserController@cambionivel',
+			'as'   => 'users.cambionivel'
 		]);
 
 // actualiza user
