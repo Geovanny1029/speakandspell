@@ -165,6 +165,12 @@ Route::get('user/{id}/pagos',[
 			'as'   => 'users.cambionivel'
 		]);
 
+// editar ultimo pago por equivocacion
+		Route::post('/editlastpago',[
+			'uses' => 'UserController@editlastpago',
+			'as'   => 'users.editlastpago'
+		]);
+
 // actualiza user
 		Route::post('userChange',[
 			'uses' => 'UserController@actualizaUser',

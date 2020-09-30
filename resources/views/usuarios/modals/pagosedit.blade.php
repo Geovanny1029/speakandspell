@@ -14,12 +14,15 @@
    
     <label>Ultimo pago</label>
     <input type="text" id="lastpagoup" name="lastpagoup">
+    <input type="hidden" id="id_alumlastp" name="id_alumlastp">
+    <input type="hidden" id="id_st" name="id_st" value="{{$alumno->id}}">
+    <input type="hidden" id="id_costocr" name="id_costocr" value="{{$colegiatura}}">
   </fieldset>
 </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Actualizar</button>
+        <button type="button" id="editlastpago" class="btn btn-primary">Actualizar</button>
       </div>
     </div>
   </div>

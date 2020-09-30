@@ -195,7 +195,9 @@ function cambiarpago(id)
         data: {"id":id}, 
         success: function(result){
           //console.log(result);
-          $("#lastpagoup").val(result.monto);
+          $("#lastpagoup").val(result.info.monto);
+          $("#id_alumlastp").val(result.info.id);
+          $("#lastpagoup").attr('max',result.maxp.costo);
 
         }
       });
@@ -410,7 +412,11 @@ $("#cambiodenivel").click(function() {
 event.preventDefault();
 var nivel = $("#horarioc").val();
 var alumno = $("#nam_id").val();
+var cursoanterior = $("#cursoanter").val();
 
+  if(cursoanterior == nivel){
+    alert("El alumno ya termino este nivel selecciona otro");
+  }else{
     $.ajax({
         url: '/userchangelevel',
         data: {"nivel": nivel, "alumno": alumno },
@@ -418,16 +424,42 @@ var alumno = $("#nam_id").val();
         beforeSend: function (xhr) { // Add this line
         xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
         }, 
-        success: function()
+        success: function(result)
         {
-          alert("its work")
-            $('.modal-box').text(result).fadeIn(700, function() 
-            {
-                setTimeout(function() 
-                {
-                    $('.modal-box').fadeOut();
-                }, 2000);
-            });
+          alert(result);
+          $('#modalcambionivel').modal('hide');
+           location.reload(true);
         }
     });
+  }
+
+});
+
+
+$("#editlastpago").click(function() {
+
+event.preventDefault();
+var montopago = $("#lastpagoup").val();
+var lastpago = $("#id_alumlastp").val();
+var colegiatura = $("#id_costocr").val();
+
+  if(montopago <= colegiatura){
+    $.ajax({
+        url: '/editlastpago',
+        data: {"lastpago": lastpago,"montopago":montopago},
+        type: 'post',
+        beforeSend: function (xhr) { // Add this line
+        xhr.setRequestHeader('X-CSRF-Token', $('[name="_token"]').val());
+        }, 
+        success: function(result)
+        {
+          alert(result);
+          $('#editNModalpe').modal('hide');
+           location.reload(true);
+        }
+    });
+  }else{
+    alert("El monto debe ser menor o igual a: "+colegiatura);
+  }
+
 });

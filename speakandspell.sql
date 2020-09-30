@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 22-09-2020 a las 01:46:07
--- Versión del servidor: 10.1.35-MariaDB
--- Versión de PHP: 7.2.9
+-- Servidor: localhost
+-- Tiempo de generación: 30-09-2020 a las 08:19:37
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -203,7 +203,7 @@ INSERT INTO `alumnos` (`id`, `nombre`, `ap`, `am`, `nacimiento`, `direccion`, `c
 (647, 'SANDY', 'QUINTANA', 'VILLANUEVA', '12/09/1890', 'CALLE 45 X 12 Y 14', 'PROGRESO', 'RECURSOS HUMANOS', 'LICENCIATURA', '171', '12324', '2323234', '', '0', NULL),
 (648, 'ABIEL', 'SABADU', 'ER', '12/09/1992', 'CALLE 45 X 78 Y 80', 'PROGRESO', 'ESTUDIANTE', 'PREPA', '168', '12345', '12345', '12345', '0', NULL),
 (649, 'GERGE', 'BUSH', 'NAT', '13/08/1878', 'DIRECCIO 1', 'NEW YORK', 'PRESIDENTE', 'LICENCIATURA', '171', '123456', '123456', '', '0', NULL),
-(650, 'AMLO', 'ZAZ', 'CUACH', '21/08/1191', 'CALLE 45 X 78 Y 80', 'PROGRESO', 'FACTURISTA', 'LICENCIATURA', '159', '9370938903', '4565 7534 44', '', '1', NULL);
+(650, 'AMLO', 'ZAZ', 'CUACH', '21/08/1991', 'CALLE 13 V 45 Y 56', 'MERIDA', 'ESTUDIANTE', 'LICENCIATURA', '159', '9992 03 04 50', '', '', '1', NULL);
 
 -- --------------------------------------------------------
 
@@ -250,7 +250,7 @@ CREATE TABLE `niveles` (
 
 INSERT INTO `niveles` (`id`, `nombre`, `horario`, `finicio`, `ffin`, `costo`, `activo`) VALUES
 (159, 'VERANOPRINCIPIANTE', '09 A.M. A 10 A.M.', '08/10/2020', '23/03/2021', 500, 1),
-(160, 'VERANOPRINCIPIANTE', '07 p.m. a 08 p.m.', '08/07/2019', '30/03/2020', 1000, 0),
+(160, 'VERANOPRINCIPIANTE', '07 p.m. a 08 p.m.', '02/02/2020', '30/06/2021', 500, 1),
 (161, 'TEMPORALES', '07 a.m. a 08 a.m.', '08/07/2019', '23/08/2019', 1, 0),
 (162, 'VERANOCONOCIMIENTO', '08 a.m. a 09 a.m.', '08/07/2019', '23/08/2019', 1000, 0),
 (163, 'VERANOCONOCIMIENTO', '08 p.m. a 09 p.m.', '08/07/2019', '23/08/2019', 1000, 0),
@@ -314,8 +314,13 @@ INSERT INTO `pagos` (`id`, `id_usuario`, `id_nivel`, `fecha_pago`, `estatus`, `m
 (30, 649, 171, '2020-01-21', 1, 500, 4, 2),
 (31, 649, 171, '2020-01-21', 1, 500, 5, 2),
 (32, 649, 171, '2020-01-21', 1, 500, 6, 2),
-(331, 650, 159, '2020-09-21', 1, 500, 9, 1),
-(332, 650, 159, '2020-09-21', 2, 350, 10, 2);
+(345, 650, 159, '2020-09-29', 1, 500, 9, 1),
+(346, 650, 159, '2020-09-29', 1, 500, 10, 2),
+(347, 650, 159, '2020-09-29', 1, 500, 11, 2),
+(348, 650, 159, '2020-09-29', 1, 500, 12, 2),
+(349, 650, 159, '2020-09-29', 1, 500, 1, 2),
+(353, 650, 159, '2020-09-30', 1, 500, 2, 2),
+(354, 650, 159, '2020-09-30', 1, 500, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -335,7 +340,7 @@ CREATE TABLE `pagos_estatus` (
 --
 
 INSERT INTO `pagos_estatus` (`id`, `id_usuario`, `id_nivel`, `estatus_c`) VALUES
-(11, 650, 159, 0);
+(13, 650, 159, 0);
 
 -- --------------------------------------------------------
 
@@ -448,13 +453,13 @@ ALTER TABLE `niveles`
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=333;
+  MODIFY `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=355;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos_estatus`
 --
 ALTER TABLE `pagos_estatus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

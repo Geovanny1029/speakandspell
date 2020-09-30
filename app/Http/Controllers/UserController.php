@@ -818,7 +818,7 @@ class UserController extends Controller
             if($request->ajax()){
                 $id = $request->id;
                 $info = Pagos::find($id);
-                return response()->json($info);
+                $maxp = Nivel::find($info->id_nivel);                return response()->json(array('info'=>$info,'maxp'=>$maxp));
             }
         }
 
@@ -885,7 +885,6 @@ class UserController extends Controller
     {
         //sacar id alumno
         $alumno = Alumnos::find($id);
-
         //sacar sus pagos
         $pagos = Pagos::where('id_usuario',$alumno->id)->where('id_nivel',$alumno->nivel)->get();
         $pagos_estatus =  Pagos_estatus::where('id_usuario',$alumno->id)->where('id_nivel',$alumno->nivel)->first();
@@ -895,12 +894,12 @@ class UserController extends Controller
         $mesi = date_format($mesinicio,'m');
 
         $mesfin = date_create($ini->ffin);
-
+        $colegiatura = $ini->costo;
         $listaN = Nivel::where('activo',1)->groupBy('nombre')->orderBY('nombre','ASC')->pluck('nombre','nombre');
         $listaH = Nivel::where('activo',1)->orderBY('horario','ASC')->pluck('horario','id');
 
        
-         return view('usuarios.pagosal')->with('alumno',$alumno)->with('pagos',$pagos)->with('mesi',$mesi)->with('pagos_estatus',$pagos_estatus)->with('listaN',$listaN)->with('listaH',$listaH);
+         return view('usuarios.pagosal')->with('alumno',$alumno)->with('pagos',$pagos)->with('mesi',$mesi)->with('pagos_estatus',$pagos_estatus)->with('listaN',$listaN)->with('listaH',$listaH)->with('colegiatura',$colegiatura);
     }
 
     public function pagomesalum(Request $request){
@@ -2140,6 +2139,45 @@ public function basico($numero) {
         $pagoins->save();
 
     }
+    }
+
+    //funcion cambio de usuario a otro nivel en modulo de usuario
+    public function editlastpago(Request $request){
+        if($request->ajax()){
+
+            $lastpago = $request->lastpago;
+            $montopago = $request->montopago;
+
+
+            $updatep = Pagos::find($lastpago);
+            $nivel= Nivel::find($updatep->id_nivel);
+
+            if($montopago<=$nivel->costo){
+                if($montopago==$nivel->costo){
+                    $updatep->monto = $montopago;
+                    $updatep->estatus=1;
+                    $updatep->save();
+                }else{
+                    $updatep->monto = $montopago;
+                    $updatep->save();
+                }
+            }
+
+
+            $finalpago = Carbon::createFromFormat('d/m/Y', $nivel->ffin)->format('m');
+
+            if($finalpago == $updatep->mes){
+                $consultae = Pagos_estatus::where('id_usuario',$updatep->id_usuario)->where('id_nivel',$updatep->id_nivel)->firts();
+                $actualizafin= Pagos_estatus::find($consultae->id);
+                $actualizafin->estatus_c=1;
+                $$actualizafin->save();
+
+            }else{}
+
+            $info = "Se Actualizo el pago correctamente";
+
+            return response()->json($info);
+        }
     }
 
 }

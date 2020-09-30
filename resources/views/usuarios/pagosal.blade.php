@@ -33,7 +33,7 @@
                         @if($pagos_estatus->estatus_c == 1)
                           <h5>EL Alumno ha Pagado Todo El Curso</h5>
                               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalcambionivel">
-                                Cambiar de Nivel
+                                Opciones para el Alumno
                               </button>
                         @else
                         @endif
