@@ -1832,6 +1832,13 @@ public function basico($numero) {
                         'monto' => $numero,
                         'mes' => $this->funcmes($ultimomesp+1),
                         'tipo' => 2]);
+
+                        $final = $this->funcmes($ultimomesp+1);
+                        $pagoupdate = array('estatus_c' => 1);
+                            if($finc == $final){
+                                $pag = Pagos_estatus::where('id_usuario',$user)->where('id_nivel',$hora)->first();
+                                $pag->update($pagoupdate);
+                            }
                     return back();
                 }else
                 // si el abono es menor crea con estatus 2
@@ -1915,6 +1922,13 @@ public function basico($numero) {
 
                     $pag = Pagos::find($idp);
                     $pag->update($pagoupdate);
+
+                    $final = $this->funcmes($ultimomesp);
+                    $pagoupdatefin = array('estatus_c' => 1);
+                        if($finc == $final){
+                            $pag = Pagos_estatus::where('id_usuario',$user)->where('id_nivel',$hora)->first();
+                            $pag->update($pagoupdatefin);
+                        }
                     return back();
                 }else
                 // si el monto que tenia mas el abonado es menor actualiza monto
@@ -2151,28 +2165,24 @@ public function basico($numero) {
 
             $updatep = Pagos::find($lastpago);
             $nivel= Nivel::find($updatep->id_nivel);
+            $finalpago = Carbon::createFromFormat('d/m/Y', $nivel->ffin)->format('m');
 
             if($montopago<=$nivel->costo){
                 if($montopago==$nivel->costo){
                     $updatep->monto = $montopago;
                     $updatep->estatus=1;
                     $updatep->save();
+                    if($finalpago == $updatep->mes){
+                        $consultae = Pagos_estatus::where('id_usuario',$updatep->id_usuario)->where('id_nivel',$updatep->id_nivel)->first();
+                        $actualizafin= Pagos_estatus::find($consultae->id);
+                        $actualizafin->estatus_c=1;
+                        $actualizafin->save();
+                    }else{}
                 }else{
                     $updatep->monto = $montopago;
                     $updatep->save();
                 }
             }
-
-
-            $finalpago = Carbon::createFromFormat('d/m/Y', $nivel->ffin)->format('m');
-
-            if($finalpago == $updatep->mes){
-                $consultae = Pagos_estatus::where('id_usuario',$updatep->id_usuario)->where('id_nivel',$updatep->id_nivel)->firts();
-                $actualizafin= Pagos_estatus::find($consultae->id);
-                $actualizafin->estatus_c=1;
-                $$actualizafin->save();
-
-            }else{}
 
             $info = "Se Actualizo el pago correctamente";
 

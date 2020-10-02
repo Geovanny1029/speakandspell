@@ -27,13 +27,14 @@
               <td> {{$alumno->nombre}} {{$alumno->ap}} {{$alumno->am}}  </td>
               <td> {{$alumno->nivel}} </td>
               <td>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editNModalpe">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalreincorporar">
                                Reincorporar
                 </button>
               </td>
             </tr>
             @endforeach
           </tbody>
+          @include('usuarios.modals.inactivos')
         </table>              
             </div>
 @endsection
