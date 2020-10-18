@@ -2,56 +2,50 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Nivel;
+use App\Traits\Levels;
+use App\Traits\Students;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Traits\Birthday;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller {
-	use AuthenticatesUsers, Birthday;
+class LoginController extends Controller
+{
+    use AuthenticatesUsers, Students,Levels;
 
-	public function login(Request $request) {
-		$credentials = request(['name','password']);
-
-		if(!auth()->attempt($credentials)){
-			return view('auth.login');
-		}
-
-        $alumnos = $this->BirthdayListbyMonth(now()->format('m'));
-
-        $niveles = $this->ExpiredLevel();
-
-        $html    = view('Components.AlertBirthday',compact('alumnos','niveles'));
-
-        alert()->html(
-        	"Cumpleañeros de ".now()->formatLocalized('%B')." : ",
-        	$html->render(),
-        	''
-        )->persistent('Close');
-
-        return redirect()->route('user.menu');        
-    }//fin de funcion login
-
-    
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('guest', ['except' =>['logout','login'] ]);
+        $this->middleware('guest', ['except' => ['logout', 'login','index']]);
+        setlocale(LC_TIME, 'es_Es.utf8');
+    }
+
+    public function index(Request $request){
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = request(['name', 'password']);
+
+        if (!auth()->attempt($credentials)) {
+            return view('auth.login');
+        }
+
+        $html    = view('Components.AlertBirthday', array(
+            'alumnos' => $this->BirthdayListbyMonth(now()->format('m')),
+            'niveles' => $this->ExpiredLevels()
+        ));
+
+        alert()->html(
+            "Cumpleañeros de " . now()->formatLocalized('%B') . " : ",
+            $html->render(),
+            ''
+        )->persistent('Close');
+
+        return redirect()->route('user.menu');
     }
 }
