@@ -8,33 +8,33 @@ class Alumnos extends Model
 {
 	protected $table = "alumnos";
 
-	protected $fillable= [
-   		'id',
-   		'nombre',
-   		'ap',
-   		'am',
-   		'nacimiento', 
-   		'direccion',
-   		'ciudad',
-   		'ocupacion',
-   		'estudios',
-   		'nivel',
-   		'casa',
-   		'oficina',
-   		'celular',
-   		'activo',
-         'ruta_foto',   		   		 
-   	];
-         public $timestamps = false;
-         
-   		public function nivelAl(){
+	protected $fillable = [
+		'id',
+		'nombre',
+		'ap',
+		'am',
+		'nacimiento',
+		'direccion',
+		'ciudad',
+		'ocupacion',
+		'estudios',
+		'nivel',
+		'casa',
+		'oficina',
+		'celular',
+		'activo',
+		'ruta_foto',
+	];
 
-        return $this->belongsTo('App\Nivel','nivel'); 
-    }
+	public $timestamps = false;
 
-        public function pago(){
+	public function nivelAl()
+	{
+		return $this->belongsTo('App\Nivel', 'nivel');
+	}
 
-        return $this->hasMany('App\Pagos'); 
-    }   
-
+	public function pago()
+	{
+		return $this->hasMany('App\Pagos');
+	}
 }
