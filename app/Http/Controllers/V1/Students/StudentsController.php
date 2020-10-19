@@ -25,9 +25,17 @@ class StudentsController extends Controller
     public function create(Request $request)
     {
         $ultimo = $this->NextID();
-        $listaN = $this->LevelsList()->pluck('nombre', 'nombre');
-        $listaH = $this->Schedule()->pluck('horario', 'id');
 
-        return view('usuarios.altaU',compact('ultimo', 'listaN', 'listaH'));
+        return view('Students.create',compact('ultimo'));
+    }
+
+    public function store(Request $request)
+    {
+        dd(new Alumnos($request->all()));
+    }
+
+    public function edit(Request $request, Alumnos $student)
+    {
+        return view('Students.update',compact('student'));
     }
 }

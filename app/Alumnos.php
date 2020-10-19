@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Alumnos extends Model
@@ -25,6 +26,42 @@ class Alumnos extends Model
 		'activo',
 		'ruta_foto',
 	];
+
+	public function setNombreAttribute($value)
+	{
+		$this->attributes['nombre'] = Str::upper($value);
+	}
+
+	public function setApAttribute($value)
+	{
+		$this->attributes['ap'] = Str::upper($value);
+	}
+
+	public function setAmAttribute($value)
+	{
+		$this->attributes['am'] = Str::upper($value);
+	}
+
+	public function setDireccionAttribute($value)
+	{
+		$this->attributes['direccion'] = Str::upper($value);
+	}
+
+	public function setCiudadAttribute($value)
+	{
+		$this->attributes['ciudad'] = Str::upper($value);
+	}
+
+	public function setOcupacionAttribute($value)
+	{
+		$this->attributes['ocupacion'] = Str::upper($value);
+	}
+
+	public function setEstudiosAttribute($value)
+	{
+		$this->attributes['estudios'] = Str::upper($value);
+	}
+	
 
 	public $timestamps = false;
 
