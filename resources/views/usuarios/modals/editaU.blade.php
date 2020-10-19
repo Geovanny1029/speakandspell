@@ -1,6 +1,6 @@
 <!-- Add Modal start -->
     <div class="modal fade" id="editModal" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialog-md">
       
         <!-- Modal content-->
         <div class="modal-content">

@@ -5,40 +5,44 @@ $.ajaxSetup({
 });
 
 //vista editar usuario
-function fun_edit(id)
-    {
-      var view_url = 'http://localhost:8000/userse';
+function fun_edit(url)
+{
+    $("#modaleditstudent").load(url, () =>{
+        // $('.date').datepicker({ dateFormat: 'dd-mm-yy' });
+        $("#editstudent").modal('show');      
+    });
+      // var view_url = 'http://localhost:8000/userse';
     
-      $.ajax({
-        url: view_url,
-        type:"GET", 
-        data: {"id":id}, 
-        success: function(result){
-          //console.log(result);
-          $("#edit_nombre").val(result.info.nombre);
-          $("#edit_am").val(result.info.am);
-          $("#edit_ap").val(result.info.ap);
-          $("#edit_nacimiento").val(result.info.nacimiento);
-          $("#edit_direccion").val(result.info.direccion);
-          $("#edit_ciudad").val(result.info.ciudad);
-          $("#edit_ocupacion").val(result.info.ocupacion);
-          $("#edit_estudios").val(result.info.estudios);
-          $("#edit_nivel").val(result.nivel.nombre);
-          $("#edit_horario").val(result.info.nivel);
-          $("#edit_descuento").val(result.info.descuento);
-          $("#edit_casa").val(result.info.casa);
-          $("#edit_oficina").val(result.info.oficina);
-          $("#edit_celular").val(result.info.celular);
-          $("#edit_id").val(result.info.id);
-          $ruta = result.info.ruta_foto;
-          if($ruta == "" || $ruta == null){
-             $("#edit_f").text("Alta Foto");
-          }else{
-             $("#edit_f").text("Cambiar Foto"+result.info.ruta_foto);
-          }
-        }
-      });
-    }
+      // $.ajax({
+      //   url: view_url,
+      //   type:"GET", 
+      //   data: {"id":id}, 
+      //   success: function(result){
+      //     //console.log(result);
+      //     $("#edit_nombre").val(result.info.nombre);
+      //     $("#edit_am").val(result.info.am);
+      //     $("#edit_ap").val(result.info.ap);
+      //     $("#edit_nacimiento").val(result.info.nacimiento);
+      //     $("#edit_direccion").val(result.info.direccion);
+      //     $("#edit_ciudad").val(result.info.ciudad);
+      //     $("#edit_ocupacion").val(result.info.ocupacion);
+      //     $("#edit_estudios").val(result.info.estudios);
+      //     $("#edit_nivel").val(result.nivel.nombre);
+      //     $("#edit_horario").val(result.info.nivel);
+      //     $("#edit_descuento").val(result.info.descuento);
+      //     $("#edit_casa").val(result.info.casa);
+      //     $("#edit_oficina").val(result.info.oficina);
+      //     $("#edit_celular").val(result.info.celular);
+      //     $("#edit_id").val(result.info.id);
+      //     $ruta = result.info.ruta_foto;
+      //     if($ruta == "" || $ruta == null){
+      //        $("#edit_f").text("Alta Foto");
+      //     }else{
+      //        $("#edit_f").text("Cambiar Foto"+result.info.ruta_foto);
+      //     }
+      //   }
+      // });
+}
 
 
 //vista editar usuario

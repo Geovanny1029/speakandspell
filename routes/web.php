@@ -28,8 +28,13 @@ Route::middleware('auth')->prefix('students')->namespace('V1\Students')->group(f
 
 	Route::get('/', 'StudentsController@index');
 
-	Route::get('/create', 'StudentsController@create');
-	
+	Route::get('/create', 'StudentsController@create')->name('student.create');
+
+	Route::post('/store', 'StudentsController@store')->name('student.store');
+
+	Route::get('/{student}/edit', 'StudentsController@edit')->name('student.edit');
+
+	Route::put('/update', 'StudentsController@update')->name('student.update');
 });
 
 
