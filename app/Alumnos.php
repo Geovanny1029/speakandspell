@@ -27,6 +27,8 @@ class Alumnos extends Model
 		'ruta_foto',
 	];
 
+	public $timestamps = false;
+
 	public function setNombreAttribute($value)
 	{
 		$this->attributes['nombre'] = Str::upper($value);
@@ -62,8 +64,14 @@ class Alumnos extends Model
 		$this->attributes['estudios'] = Str::upper($value);
 	}
 	
+	public function getCompleteName()
+	{
+		return "{$this->nombre} {$this->ap} {$this->am}";
+	}
 
-	public $timestamps = false;
+	public function FileName($ext){
+		return "{$this->id}_{$this->nombre}_{$this->ap}_{$this->am}.$ext";
+	}	
 
 	public function nivelAl()
 	{

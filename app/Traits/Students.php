@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+use DB;
+use File;
+use Storage;
 use App\Alumnos;
 
 trait Students
@@ -28,5 +31,38 @@ trait Students
 	public function NextID()
 	{
 		return Alumnos::latest('id')->first()->id + 1;
+	}
+
+	public function StudentsWithLevels($active, $schedule, $level){
+		$students = Alumnos::select(
+				'alumnos.id as id',
+				DB::raw('CONCAT(alumnos.nombre," ",ap," ",am) as nombre'),
+				'niveles.horario as horario',
+				'niveles.nombre as nivel'
+			)
+			->leftjoin('niveles', 'niveles.id', 'alumnos.nivel')
+			->where('alumnos.activo', $active);
+
+		if ($schedule) {
+			$students->where('niveles.horario', $schedule);
+		}
+
+		if ($level) {
+			$students->where('niveles.nombre', $level);
+		}
+
+		return $students;
+	}
+
+	public function StudentAvatar($file,$student)
+	{
+		$name = $student->FileName($file->getClientOriginalExtension());
+		$root = "/fotos/$name";
+
+		$student->update(['ruta_foto' => $root]);
+
+		Storage::put($name, File::get($file));
+
+		return $root;
 	}
 }

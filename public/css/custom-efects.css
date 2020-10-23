@@ -1,0 +1,68 @@
+.shortcuts {
+	text-align: center;	
+}
+
+.shortcuts .shortcut { 
+    width: 20%;
+	display: inline-block;
+	padding: 12px 0;
+	margin: 0 .9% 1em;
+	vertical-align: top;	
+	
+	text-decoration: none;
+	
+	background: #f9f6f1;
+	
+	border-radius: 5px;
+	
+	margin: 15px;
+	-webkit-transition: margin 0.5s ease-out;
+	-moz-transition: margin 0.5s ease-out;
+	-ms-transition: margin 0.5s ease-out;
+	transition: margin 0.5s ease-out;
+
+}
+
+.shortcuts .shortcut .shortcut-icon {
+	margin-top: .25em;
+	margin-bottom: .25em;
+	
+	font-size: 50px;
+	color: #545454;
+
+}
+
+.shortcuts .shortcut:hover {
+	background: #e3342f;
+	margin-top: 2px;
+	box-shadow: 0 0 12px;
+}
+
+.shortcuts .shortcut:hover span{
+    color: #fff;
+    font-size: 18px;
+}
+
+.shortcuts .shortcut:hover .shortcut-icon {
+	color: #fff;
+
+}
+
+.shortcuts .shortcut-label {
+	display: block;
+	font-weight: 400;
+	color: #545454;
+}
+
+@media (max-width: 979px) {
+	
+	.shortcuts .shortcut {
+		width: 31%;
+	}
+}
+
+@media (max-width: 480px) { 	
+	.shortcuts .shortcut {
+		width: 48%;
+	}
+}

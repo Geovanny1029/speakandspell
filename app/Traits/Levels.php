@@ -11,12 +11,12 @@ trait Levels
         return Nivel::whereraw('CURDATE() >= STR_TO_DATE(`ffin`, "%d/%m/%Y")')->get();
     }
 
-    public static function LevelsList()
+    public function LevelsList()
     {
         return Nivel::where('activo', 1)->groupBy('nombre')->orderBY('nombre', 'ASC')->get();
     }
 
-    public static function Schedule()
+    public function horary()
     {
         return Nivel::where('activo', 1)->orderBY('horario', 'ASC')->get();
     }

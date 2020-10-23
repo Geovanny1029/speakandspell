@@ -1,40 +1,50 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
 	return view('index');
 });
 
 Route::resource('user', 'UserController');
 
-Route::prefix('/login')->namespace('Auth')->group(function () {
+Route::namespace('Auth')->group(function () {
 
-	Route::get('/', 'LoginController@index')->name('login');
+	Route::get('/login', 'LoginController@index')->name('login');
 
-	Route::post('/', 'LoginController@login');
+	Route::post('/login', 'LoginController@login');
+
+	Route::post('/logout', 'LoginController@logout')->name('logout');
+	
 });
 
-Route::middleware('auth')->prefix('students')->namespace('V1\Students')->group(function () {
 
-	Route::get('/', 'StudentsController@index');
+Route::middleware('auth')->group(function()
+{
 
-	Route::get('/create', 'StudentsController@create')->name('student.create');
+	Route::get('/home', 'HomeController@index')->name('home');
 
-	Route::post('/store', 'StudentsController@store')->name('student.store');
+	Route::namespace('V1\Students')->group(function(){
 
-	Route::get('/{student}/edit', 'StudentsController@edit')->name('student.edit');
+		Route::get('/pdf/students', 'PdfController@index')->name('students.pdf');
 
-	Route::put('/update', 'StudentsController@update')->name('student.update');
+		Route::prefix('students')->group(function () {
+
+			Route::get('/', 'StudentsController@index')->name('students');
+
+			Route::get('/create', 'StudentsController@create')->name('student.create');
+
+			Route::post('/store', 'StudentsController@store')->name('student.store');
+
+			Route::get('/{student}', 'StudentsController@show')->name('student.show');
+
+			Route::get('/{student}/edit', 'StudentsController@edit')->name('student.edit');
+
+			Route::put('/{student}', 'StudentsController@update')->name('student.update');
+
+			Route::post('/datatable', 'DataTableController@index')->name('student.datatable');
+		});
+
+	});
+
 });
 
 
@@ -100,7 +110,7 @@ Route::post('altaNivel', [
 
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 //dar baja alumno
 Route::get('user/{id}/destroy', [

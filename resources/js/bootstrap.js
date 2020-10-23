@@ -8,9 +8,12 @@ window._ = require('lodash');
 
 try {
     window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
+    $ = window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+
+    var dt = require('datatables.net')(window, $);
+    
 } catch (e) {}
 
 /**
@@ -36,6 +39,8 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
