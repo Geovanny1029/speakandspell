@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\V1\Students;
 
-use App\Alumnos;
+use File;
+use Storage;
 use App\Nivel;
+use App\Alumnos;
 use App\Traits\Levels;
 use App\Traits\Students;
 use Illuminate\Http\Request;
@@ -16,11 +18,9 @@ class StudentsController extends Controller
     public function index(Request $request)
     {
         $alumnos = $this->StudentsActive('nivelAl');
-        $listaN  = $this->LevelsList()->pluck('nombre', 'nombre');
-        $listaH  = $this->Schedule()->pluck('horario', 'id');
-
-        return view('usuarios.lista', compact('alumnos', 'listaN', 'listaH'));
-    }
+        
+        return view('Students.index', compact('alumnos'));
+    }    
 
     public function create(Request $request)
     {
@@ -30,12 +30,36 @@ class StudentsController extends Controller
     }
 
     public function store(Request $request)
+    {     
+        $student = new Alumnos($request->all());
+        $student->save();
+
+        if(isset($request->avatar)){
+            $file = $request->file('avatar');
+            $this->StudentAvatar($file,$student);
+        }
+        toast("Bienvenido {$student->getCompleteName()}", 'success');
+
+        return redirect()->route('students');
+    }
+
+    public function show(Request $request, Alumnos $student)
     {
-        dd(new Alumnos($request->all()));
+        $nivel  = $student->nivelAl()->where('activo', 1)->first();
+
+        return view('Students.show', compact('student', 'nivel'));
     }
 
     public function edit(Request $request, Alumnos $student)
     {
         return view('Students.update',compact('student'));
+    }
+
+    public function update(Request $request, Alumnos $student)
+    {
+        if($request->ajax())
+        {
+            return response()->json($student->update($request->all()));
+        }
     }
 }

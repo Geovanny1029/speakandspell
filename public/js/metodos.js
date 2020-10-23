@@ -1,14 +1,19 @@
 $.ajaxSetup({
 	headers: {
 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	        }
+	}
 });
+
+
+var prueba = "hola";
+console.log(prueba);
 
 //vista editar usuario
 function fun_edit(url)
 {
     $("#modaleditstudent").load(url, () =>{
         // $('.date').datepicker({ dateFormat: 'dd-mm-yy' });
+        console.log($("#editstudent"));
         $("#editstudent").modal('show');      
     });
       // var view_url = 'http://localhost:8000/userse';
@@ -210,6 +215,8 @@ function cambiarpago(id)
 
 //select dinamico alta usuario horario nivel
   $(document).ready(function(){
+    var prueba = "hola";
+    console.log(prueba);
     $("#nivel").change(function(){
       var nivel = $(this).val();
       $.get('horario/'+nivel, function(data){

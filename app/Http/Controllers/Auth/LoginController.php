@@ -41,11 +41,18 @@ class LoginController extends Controller
         ));
 
         alert()->html(
-            "Cumpleañeros de " . now()->formatLocalized('%B') . " : ",
+            "Cumpleañeros de " . ucwords(now()->formatLocalized('%B')) . " : ",
             $html->render(),
             ''
         )->persistent('Close');
 
-        return redirect()->route('user.menu');
+        return redirect()->route('home');
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        return redirect('/');
     }
 }

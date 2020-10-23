@@ -6,12 +6,16 @@
 	<tbody>
 		@if(count($alumnos) > 0)
 			@foreach($alumnos as $alumno)
-				<td> {{ $alumno->nombre }} </td>
-				<td> {{ substr($alumno->nacimiento,0,8) }} </td>
+				<tr>
+					<td> {{ $alumno->nombre }} </td>
+					<td> {{ substr($alumno->nacimiento,0,8) }} </td>
+				</tr>				
 			@endforeach
 		@else
-			<td>
-			<td>
+			<tr>
+				<td>
+				<td>
+			</tr>			
 		@endif
 	</tbody>
 </table>
