@@ -15,7 +15,7 @@ class Nivel extends Model
    		'finicio',
    		'ffin',
    		'costo',
-      'activo',   
+        'activo',   
    	];
 
     public $timestamps = false;

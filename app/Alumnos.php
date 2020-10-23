@@ -2,39 +2,84 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Alumnos extends Model
 {
 	protected $table = "alumnos";
 
-	protected $fillable= [
-   		'id',
-   		'nombre',
-   		'ap',
-   		'am',
-   		'nacimiento', 
-   		'direccion',
-   		'ciudad',
-   		'ocupacion',
-   		'estudios',
-   		'nivel',
-   		'casa',
-   		'oficina',
-   		'celular',
-   		'activo',
-         'ruta_foto',   		   		 
-   	];
-         public $timestamps = false;
-         
-   		public function nivelAl(){
+	protected $fillable = [
+		'id',
+		'nombre',
+		'ap',
+		'am',
+		'nacimiento',
+		'direccion',
+		'ciudad',
+		'ocupacion',
+		'estudios',
+		'nivel',
+		'casa',
+		'oficina',
+		'celular',
+		'activo',
+		'ruta_foto',
+	];
 
-        return $this->belongsTo('App\Nivel','nivel'); 
-    }
+	public $timestamps = false;
 
-        public function pago(){
+	public function setNombreAttribute($value)
+	{
+		$this->attributes['nombre'] = Str::upper($value);
+	}
 
-        return $this->hasMany('App\Pagos'); 
-    }   
+	public function setApAttribute($value)
+	{
+		$this->attributes['ap'] = Str::upper($value);
+	}
 
+	public function setAmAttribute($value)
+	{
+		$this->attributes['am'] = Str::upper($value);
+	}
+
+	public function setDireccionAttribute($value)
+	{
+		$this->attributes['direccion'] = Str::upper($value);
+	}
+
+	public function setCiudadAttribute($value)
+	{
+		$this->attributes['ciudad'] = Str::upper($value);
+	}
+
+	public function setOcupacionAttribute($value)
+	{
+		$this->attributes['ocupacion'] = Str::upper($value);
+	}
+
+	public function setEstudiosAttribute($value)
+	{
+		$this->attributes['estudios'] = Str::upper($value);
+	}
+	
+	public function getCompleteName()
+	{
+		return "{$this->nombre} {$this->ap} {$this->am}";
+	}
+
+	public function FileName($ext){
+		return "{$this->id}_{$this->nombre}_{$this->ap}_{$this->am}.$ext";
+	}	
+
+	public function nivelAl()
+	{
+		return $this->belongsTo('App\Nivel', 'nivel');
+	}
+
+	public function pago()
+	{
+		return $this->hasMany('App\Pagos');
+	}
 }

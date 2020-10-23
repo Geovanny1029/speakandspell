@@ -1,1 +1,6 @@
-
+.env
+/node_modules
+/vendor
+/.vscode
+package-lock.json
+/public/fotos
