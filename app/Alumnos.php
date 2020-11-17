@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alumnos extends Model
 {
-	protected $table = "alumnos";
+	protected $table = "students";
 
 	protected $fillable = [
-		'id',
 		'nombre',
 		'ap',
 		'am',
@@ -27,7 +26,7 @@ class Alumnos extends Model
 		'ruta_foto',
 	];
 
-	public $timestamps = false;
+	// public $timestamps = false;
 
 	public function setNombreAttribute($value)
 	{
@@ -75,7 +74,13 @@ class Alumnos extends Model
 
 	public function nivelAl()
 	{
-		return $this->belongsTo('App\Nivel', 'nivel');
+		return $this->belongsTo('App\Nivel', 'nivel')->with('levelSchedule');
+	}
+
+	public function getSchedule()
+	{
+		$nivel = Nivel::find($this->nivel);
+		return isset($nivel) ? $nivel->horario : null;
 	}
 
 	public function pago()

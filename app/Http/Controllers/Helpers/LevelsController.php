@@ -17,6 +17,6 @@ class LevelsController extends Controller
 
     public function Schedule()
     {
-        return $this->horary()->pluck('horario', 'horario');
+        return $this->horary()->pluck('schedule', 'id');
     }
 }

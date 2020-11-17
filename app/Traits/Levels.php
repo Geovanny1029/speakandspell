@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Nivel;
+use App\Models\Schedule;
 
 trait Levels
 {
@@ -13,11 +14,16 @@ trait Levels
 
     public function LevelsList()
     {
-        return Nivel::where('activo', 1)->groupBy('nombre')->orderBY('nombre', 'ASC')->get();
+        return Nivel::where('active', 1)->groupBy('nombre')->orderBY('nombre', 'ASC')->get();
     }
 
     public function horary()
     {
-        return Nivel::where('activo', 1)->orderBY('horario', 'ASC')->get();
+        return Schedule::orderBY('schedule', 'ASC')->get();
+    }
+
+    public function LevelswithSchedule($active)
+    {
+        return Nivel::where('active', $active)->with('levelSchedule');
     }
 }

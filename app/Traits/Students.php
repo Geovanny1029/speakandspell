@@ -12,7 +12,7 @@ trait Students
 	public function BirthdayListbyMonth($month)
 	{
 		return Alumnos::where('activo', 1)
-			->whereraw('MONTH(STR_TO_DATE(nacimiento, "%d/%m/%Y")) = ' . $month)
+			->whereMonth('nacimiento', $month)
 			->orderby('nacimiento', 'asc')
 			->get();
 	}
@@ -35,20 +35,20 @@ trait Students
 
 	public function StudentsWithLevels($active, $schedule, $level){
 		$students = Alumnos::select(
-				'alumnos.id as id',
-				DB::raw('CONCAT(alumnos.nombre," ",ap," ",am) as nombre'),
-				'niveles.horario as horario',
-				'niveles.nombre as nivel'
-			)
-			->leftjoin('niveles', 'niveles.id', 'alumnos.nivel')
-			->where('alumnos.activo', $active);
+			'id',
+			DB::raw('CONCAT(students.nombre," ",ap," ",am) as nombre'),
+			'nivel'
+		)
+		->with('nivelAl:id,horario,nombre')
+		->where('activo', $active)
+		->get();
 
 		if ($schedule) {
-			$students->where('niveles.horario', $schedule);
+			$students = collect($students->toArray())->where('nivel_al.level_schedule.id', $schedule);
 		}
 
 		if ($level) {
-			$students->where('niveles.nombre', $level);
+			$students = collect($students->toArray())->where('nivel_al.nombre', $level);
 		}
 
 		return $students;
