@@ -12,11 +12,11 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css');
 
-mix.js('resources/js/datatable.js','public/js')
-   .sass('resources/sass/datatable.scss', 'public/css');
+mix.js('resources/js/datatable.js', 'public/js')
+    .sass('resources/sass/datatable.scss', 'public/css');
 
-mix.js('resources/js/students.js','public/js');
+mix.js('resources/js/students/index.js', 'public/js/students.js');
 
-mix.sass('resources/sass/bootstrap.scss', 'public/css');
+mix.js('resources/js/levels/index.js', 'public/js/levels.js');

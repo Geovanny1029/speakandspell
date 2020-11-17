@@ -13,13 +13,14 @@ class TablaNiveles extends Migration
      */
     public function up()
     {
-        Schema::create('niveles', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->string('horario');
-            $table->string('finicio');
-            $table->string('ffin');
+            $table->integer('horario');
+            $table->date('finicio');
+            $table->date('ffin');
             $table->integer('costo');
+            $table->integer('active')->default(1);
         });
     }
 
@@ -30,6 +31,6 @@ class TablaNiveles extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('niveles');
+        Schema::dropIfExists('levels');
     }
 }

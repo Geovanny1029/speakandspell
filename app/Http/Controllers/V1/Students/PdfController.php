@@ -17,7 +17,7 @@ class PdfController extends Controller
         $level    = isset($request->nivel) ? $request->nivel : null;
         $active   = isset($request->activo) ? $request->activo : 0;
 
-        $students = $this->StudentsWithLevels($active, $schedule, $level)->get();   
+        $students = $this->StudentsWithLevels($active, $schedule, $level);   
 
         $pdf = PDF::loadView('Students.pdf', compact('students','level', 'schedule'));
         return $pdf->stream();
