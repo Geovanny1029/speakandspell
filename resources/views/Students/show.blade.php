@@ -23,14 +23,14 @@
                                 {{$student->nombre}} {{$student->ap}}
                             </h5>
                             <h6>
-                                Nivel : {{ isset($nivel) ? $nivel->nombre : ''}}
+                                Nivel : {{ isset($schedule) ? $schedule->schedule : ''}}
                             </h6>
                             <h6>
                                 Duracion : {{
                                     isset($nivel)
-                                    ? now()->createFromFormat('d/m/Y',$nivel->finicio)
+                                    ? now()->parse($nivel->finicio)
                                         ->diffInMonths(
-                                            now()->createFromFormat('d/m/Y',$nivel->ffin)
+                                            now()->parse($nivel->ffin)
                                         ) + 1
                                     : 0
                                 }} Meses
@@ -100,7 +100,7 @@
                                         <label>Edad:</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>{{ now()->diffInYears(now()->createFromFormat('d/m/Y',$student->nacimiento)) }} Años</p>
+                                        <p>{{ now()->diffInYears(now()->parse($student->nacimiento)) }} Años</p>
                                     </div>
                                 </div>
                             </div>

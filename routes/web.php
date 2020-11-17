@@ -8,42 +8,65 @@ Route::resource('user', 'UserController');
 
 Route::namespace('Auth')->group(function () {
 
-	Route::get('/login', 'LoginController@index')->name('login');
+    Route::get('/login', 'LoginController@index')->name('login');
 
-	Route::post('/login', 'LoginController@login');
+    Route::post('/login', 'LoginController@login');
 
-	Route::post('/logout', 'LoginController@logout')->name('logout');
+    Route::post('/logout', 'LoginController@logout')->name('logout');
 	
 });
 
 
 Route::middleware('auth')->group(function()
 {
-
+    
 	Route::get('/home', 'HomeController@index')->name('home');
 
-	Route::namespace('V1\Students')->group(function(){
+	Route::namespace('V1')->group(function(){
 
-		Route::get('/pdf/students', 'PdfController@index')->name('students.pdf');
+		Route::namespace('Students')->group(function () {
 
-		Route::prefix('students')->group(function () {
+			Route::get('/pdf/students', 'PdfController@index')->name('students.pdf');
 
-			Route::get('/', 'StudentsController@index')->name('students');
+			Route::prefix('students')->group(function () {
 
-			Route::get('/create', 'StudentsController@create')->name('student.create');
+				Route::get('/', 'StudentsController@index')->name('students');
 
-			Route::post('/store', 'StudentsController@store')->name('student.store');
+				Route::get('/create', 'StudentsController@create')->name('student.create');
 
-			Route::get('/{student}', 'StudentsController@show')->name('student.show');
+				Route::post('/store', 'StudentsController@store')->name('student.store');
 
-			Route::get('/{student}/edit', 'StudentsController@edit')->name('student.edit');
+				Route::get('/{student}', 'StudentsController@show')->name('student.show');
 
-			Route::put('/{student}', 'StudentsController@update')->name('student.update');
+				Route::get('/{student}/edit', 'StudentsController@edit')->name('student.edit');
 
-			Route::post('/datatable', 'DataTableController@index')->name('student.datatable');
+				Route::put('/{student}', 'StudentsController@update')->name('student.update');
+
+				Route::post('/datatable', 'DataTableController@index')->name('student.datatable');
+				
+			});
+
 		});
 
-	});
+		Route::namespace('Levels')->prefix('levels')->group(function () {
+
+			Route::get('/', 'LevelsController@index')->name('levels');
+
+			Route::get('/{level}', 'LevelsController@show')->name('level.show');
+
+			Route::post('/store', 'LevelsController@store')->name('level.store');
+
+			Route::post('/datatable','DataTableController@index')->name('level.datatable');
+
+		});
+
+		Route::namespace('Schedule')->prefix('schedule')->group(function (){
+
+			Route::post('/store', 'ScheduleController@store')->name('schedule.store');
+
+		});
+
+	});	
 
 });
 

@@ -18,7 +18,7 @@ class DataTableController extends Controller
         $active   = isset($request->activo) ? $request->activo : 0;
 
         return datatables()
-            ->eloquent(
+            ->collection(
                 $this->StudentsWithLevels($active, $schedule, $level)
             )->toJson();
     }

@@ -13,23 +13,23 @@ class TablaAlumnos extends Migration
      */
     public function up()
     {
-        Schema::create('alumnos', function (Blueprint $table) {
-            $table->bigIncrements('matricula');
+        Schema::create('students', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('ap');
             $table->string('am');
-            $table->string('edad');
-            $table->string('nacimiento');
-            $table->string('direccion');
-            $table->string('ciudad');
-            $table->string('ocupacion');
-            $table->string('estudios');
-            $table->string('nivel');
-            $table->string('descuento');
-            $table->string('casa');
-            $table->string('oficina');
-            $table->string('celular');
-            $table->string('activo');            
+            $table->date('nacimiento')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('ciudad')->nullable();
+            $table->string('ocupacion')->nullable();
+            $table->string('estudios')->nullable();
+            $table->string('nivel')->nullable();
+            $table->integer('descuento')->nullable();
+            $table->string('casa')->nullable();
+            $table->string('oficina')->nullable();
+            $table->string('celular')->nullable();
+            $table->integer('activo')->nullable();  
+            $table->string('ruta_foto')->nullable();          
             $table->timestamps();
         });
     }
@@ -41,6 +41,6 @@ class TablaAlumnos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alumnos');
+        Schema::dropIfExists('students');
     }
 }
