@@ -14,7 +14,7 @@ trait Levels
 
     public function LevelsList()
     {
-        return Nivel::where('active', 1)->groupBy('nombre')->orderBY('nombre', 'ASC')->get();
+        return Nivel::active()->groupBy('nombre')->orderBY('nombre', 'ASC')->get();
     }
 
     public function horary()
@@ -24,6 +24,6 @@ trait Levels
 
     public function LevelswithSchedule($active)
     {
-        return Nivel::where('active', $active)->with('levelSchedule');
+        return Nivel::active($active)->with('levelSchedule');
     }
 }

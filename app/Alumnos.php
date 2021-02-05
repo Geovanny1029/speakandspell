@@ -77,6 +77,11 @@ class Alumnos extends Model
 		return $this->belongsTo('App\Nivel', 'nivel')->with('levelSchedule');
 	}
 
+	public function scopeActive($query, $status = 1)
+    {
+        return $query->where('activo', $status);
+    }
+
 	public function getSchedule()
 	{
 		$nivel = Nivel::find($this->nivel);

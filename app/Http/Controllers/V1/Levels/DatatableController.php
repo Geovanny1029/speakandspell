@@ -10,7 +10,7 @@ class DatatableController extends Controller
 {
     use Levels;
 
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         $active   = isset($request->activo) ? $request->activo : 0;
 

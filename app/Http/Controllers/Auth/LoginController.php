@@ -23,15 +23,13 @@ class LoginController extends Controller
         setlocale(LC_TIME, 'es_Es.utf8');
     }
 
-    public function index(Request $request){
-        return view('auth.login');
-    }
-
     public function login(Request $request)
     {
         $credentials = request(['name', 'password']);
 
         if (!auth()->attempt($credentials)) {
+            toast('Usuario o Contraseña no valido','error');
+
             return view('auth.login');
         }
 
