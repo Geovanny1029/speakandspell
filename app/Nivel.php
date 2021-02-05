@@ -16,7 +16,7 @@ class Nivel extends Model
         'finicio',
         'ffin',
         'costo',
-        'active',
+        'activo',
     ];
 
     public $timestamps = false;
@@ -26,9 +26,13 @@ class Nivel extends Model
         $this->attributes['nombre'] = Str::upper($value);
     }
 
+    public function scopeActive($query, $status = 1)
+    {
+        return $query->where('activo', $status);
+    }
+
     public function alumno()
     {
-
         return $this->hasMany('App\Alumnos');
     }
 

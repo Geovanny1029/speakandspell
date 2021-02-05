@@ -8,7 +8,7 @@ Route::resource('user', 'UserController');
 
 Route::namespace('Auth')->group(function () {
 
-    Route::get('/login', 'LoginController@index')->name('login');
+    Route::view('/login', 'auth.login')->name('login');
 
     Route::post('/login', 'LoginController@login');
 
@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function()
 
 		Route::namespace('Students')->group(function () {
 
-			Route::get('/pdf/students', 'PdfController@index')->name('students.pdf');
+			Route::get('/pdf/students', 'PdfController')->name('students.pdf');
 
 			Route::prefix('students')->group(function () {
 
@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function()
 
 				Route::put('/{student}', 'StudentsController@update')->name('student.update');
 
-				Route::post('/datatable', 'DataTableController@index')->name('student.datatable');
+				Route::post('/datatable', 'DataTableController')->name('student.datatable');
 				
 			});
 
@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function()
 
 			Route::post('/store', 'LevelsController@store')->name('level.store');
 
-			Route::post('/datatable','DataTableController@index')->name('level.datatable');
+			Route::post('/datatable','DataTableController')->name('level.datatable');
 
 		});
 

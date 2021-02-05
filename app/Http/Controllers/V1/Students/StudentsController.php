@@ -46,7 +46,7 @@ class StudentsController extends Controller
 
     public function show(Request $request, Alumnos $student)
     {
-        $nivel  = $student->nivelAl()->where('active', 1)->first();
+        $nivel  = $student->nivelAl()->active()->first();
 
         $schedule = $nivel ? $nivel->levelSchedule()->first() : null;
 
