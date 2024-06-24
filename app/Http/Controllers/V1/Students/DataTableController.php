@@ -11,14 +11,14 @@ class DataTableController extends Controller
 {
     use Students;
 
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         $schedule = isset($request->horario) ? $request->horario : null;
         $level    = isset($request->nivel) ? $request->nivel : null;
         $active   = isset($request->activo) ? $request->activo : 0;
 
         return datatables()
-            ->eloquent(
+            ->collection(
                 $this->StudentsWithLevels($active, $schedule, $level)
             )->toJson();
     }

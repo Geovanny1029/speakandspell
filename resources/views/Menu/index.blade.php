@@ -14,7 +14,7 @@
                     <i class="shortcut-icon icon icon-group"></i>
                     <span class="shortcut-label">Alumnos</span> 
                 </a>                
-                <a href="javascript:;" class="shortcut" data-toggle="modal" data-target="#menuNiveles">
+                <a href="{{ route('levels') }}" class="shortcut">
                     <i class="shortcut-icon icon icon-sitemap"></i>
                     <span class="shortcut-label">Niveles</span> 
                 </a>

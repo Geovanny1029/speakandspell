@@ -1,9 +1,10 @@
 <div id="kv-avatar-errors-2" class="center-block" style="width:800px;display:none"></div>
     <div class="row">
         <div class="col-sm-4 text-center">
+            {!! Form::text('ruta_foto',null,['style' => 'display:none','id' => 'ruta_foto']) !!}
             <div class="kv-avatar">
                 <div class="file-loading">
-                    <input id="avatar" name="avatar" type="file">
+                    {!! Form::file('avatar',['id' => 'avatar']) !!}
                 </div>
             </div>
             <div class="kv-avatar-hint">
@@ -287,7 +288,7 @@
                             [
                                 'class'       => 'form-control',
                                 'id'          => 'nivel',
-                                'placeholder' => 'selecciona'
+                                'placeholder' => 'Selecciona el nivel'
                             ]
                         ) 
                     !!}
@@ -308,89 +309,19 @@
                         Form::select(
                             'horario',
                             Levels::Schedule(),
-                            null,
+                            isset($student) ? $student->getSchedule() : null,
                             [
                                 'class'       => 'form-control',
                                 'id'          => 'horario',
-                                'placeholder' => 'Seleccione Horario'
+                                'placeholder' => 'Seleccione Horario',
+                                'disabled'    => true
                             ]
                         ) 
                     !!}
                 </div>
             </div>
         </div>
-    </div>
-
-    <hr>
-    <h6 class="text-center">Pago</h6>
-
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="form-group">
-                {!! Form::label('FamiliarDirecto', 'Familiar Directo') !!}<br>
-                {!! 
-                    Form::checkbox(
-                        'familiard', 
-                        '1',
-                        null,
-                        [
-                            'class' => 'familiar',
-                            'id'    => 'familiard'
-                        ]
-                    ) 
-                !!}
-            </div>
-        </div>
-
-        <div class="col-sm-5">
-            <div class="form-group">
-                {!! Form::label('Inscripcion', 'inscripcion') !!}
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            $
-                        </div>
-                    </div>
-                    {!! 
-                        Form::number(
-                            'inscripcion',
-                            null,
-                            [
-                                'class' => 'form-control',
-                                'style' => 'text-transform: uppercase;',
-                                'id'    => 'inscripcion',
-                                'min'   => "1",
-                                'max'   => '500' 
-                            ] 
-                        ) 
-                    !!}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-5">
-            <div class="form-group mb-2">
-                {!! Form::label('Colegiatura', 'Colegiatura') !!} 
-                <div class="input-group">
-                    <div class="input-group-text">
-                        $
-                    </div>
-                    {!! 
-                        Form::number(
-                            'colegiatura',
-                            null,
-                            [
-                                'class' => 'form-control',
-                                'style' => 'text-transform: uppercase;',
-                                'id'    => 'colegio',
-                                'min'   => '1' 
-                            ] 
-                        ) 
-                    !!}
-                </div>
-            </div>
-        </div>
-    </div>
+    </div>   
 
     <div class="form-group">
         <hr>

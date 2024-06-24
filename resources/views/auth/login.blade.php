@@ -125,7 +125,7 @@
     
 </div> <!-- /account-container -->
 
-
+@include('sweetalert::alert')
 
 <div class="login-extra">
     <a href="#">Reset Password</a>

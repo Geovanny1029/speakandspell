@@ -1,19 +1,19 @@
 .navbar-nav .dropdown-menu {
-	position: absolute;
+    position: absolute;
 }
 
-.dropdown-menu{
+.dropdown-menu {
     left: -60px;
 }
 
-td .btn{
+td .btn {
     margin-right: 10px;
 }
 
-td .btn-secondary{
+td .btn-secondary {
     margin-right: 0px;
 }
 
-td .btn-danger{
+td .btn-danger {
     margin-right: 0px;
 }

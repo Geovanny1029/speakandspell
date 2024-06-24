@@ -53,15 +53,17 @@
             </tr>            
         </thead>
         <tbody>
-            @foreach ($students as $student)
-                <tr>
-                    <td style="text-align: center">{{ $student->id }}</td>
-                    <td>
-                        <p>{{ $student->nombre }}</p>
-                    </td>
-                    <td></td>
-                </tr>
-            @endforeach
+            @if($students)
+                @foreach ($students as $student)
+                    <tr>
+                        <td style="text-align: center">{{ $student['id'] }}</td>
+                        <td>
+                            <p>{{ $student['nombre'] }}</p>
+                        </td>
+                        <td></td>
+                    </tr>
+                @endforeach
+            @endif
         </tbody>
     </table>  
 </body>

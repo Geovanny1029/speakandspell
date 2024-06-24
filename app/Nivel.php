@@ -2,36 +2,54 @@
 
 namespace App;
 
+use Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Nivel extends Model
 {
-	protected $table = "niveles";
+    protected $table = "levels";
 
-	protected $fillable= [
-   		'id',
-   		'nombre',
-   		'horario',
-   		'finicio',
-   		'ffin',
-   		'costo',
-        'activo',   
-   	];
+    protected $fillable = [
+        'id',
+        'nombre',
+        'horario',
+        'finicio',
+        'ffin',
+        'costo',
+        'activo',
+    ];
 
     public $timestamps = false;
 
-    public function alumno(){
+    public function setNombreAttribute($value)
+    {
+        $this->attributes['nombre'] = Str::upper($value);
+    }
 
-        return $this->hasMany('App\Alumnos'); 
-    }   	
+    public function scopeActive($query, $status = 1)
+    {
+        return $query->where('activo', $status);
+    }
 
-    public function pagos(){
+    public function alumno()
+    {
+        return $this->hasMany('App\Alumnos');
+    }
 
-        return $this->hasMany('App\Pagos'); 
-    }   
+    public function pagos()
+    {
 
-    public function pagosp(){
+        return $this->hasMany('App\Pagos');
+    }
 
-        return $this->hasMany('App\Pagos_estatus'); 
-    }  
+    public function pagosp()
+    {
+
+        return $this->hasMany('App\Pagos_estatus');
+    }
+
+    public function levelSchedule()
+    {
+        return $this->belongsTo('App\Models\Schedule', 'horario');
+    }
 }

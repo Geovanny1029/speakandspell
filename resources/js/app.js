@@ -13,6 +13,8 @@ require('jquery-datetimepicker');
 require('bootstrap4-toggle');
 
 require('jquery-confirm');
+
+require('jquery-timepicker/jquery.timepicker');
 // window.Vue = require('vue');
 
 /**

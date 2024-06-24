@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -46,6 +47,21 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        
+        if ( $exception instanceof ValidationException) {
+            $errors = "<ul class='list-group list-group-flush'>";
+                    
+            $e = collect($exception->validator->errors()->messages())->flatten();
+
+            foreach ($e as $key => $value) {
+                $errors .= "<li class='list-group-item'>$value</li>";
+            }
+
+            toast("$errors</ul>",'error');
+
+            return back();
+        }
+        
         return parent::render($request, $exception);
     }
 }
