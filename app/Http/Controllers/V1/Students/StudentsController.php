@@ -32,6 +32,7 @@ class StudentsController extends Controller
     public function store(Request $request)
     {     
         $student = new Alumnos($request->all());
+        $student->activo = 1;
         $student->save();
 
         if(isset($request->avatar)){
@@ -57,9 +58,13 @@ class StudentsController extends Controller
 
     public function update(Request $request, Alumnos $student)
     {
-        if($request->ajax())
-        {
+        if($request_ajax = $request->ajax()){
             return response()->json($student->update($request->all()));
+        }else{
+            $student->update($request->all());
+            toast("usuario {$student->getCompleteName()} Actualizado", 'success');
+            return redirect()->route('students');
         }
+           
     }
 }

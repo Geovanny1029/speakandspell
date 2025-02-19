@@ -20,6 +20,7 @@ class TablaNiveles extends Migration
             $table->string('finicio');
             $table->string('ffin');
             $table->integer('costo');
+            $table->integer('activo');
         });
     }
 

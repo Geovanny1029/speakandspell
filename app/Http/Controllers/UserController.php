@@ -95,7 +95,12 @@ class UserController extends Controller
     public function create()
     {
         $matricula = DB::table('alumnos')->orderBy('id', 'DESC')->first();
-        $ultimo = $matricula->id + 1;
+        if($matricula == null){
+            $ultimo = 1;
+        }else{
+            $ultimo = $matricula->id + 1;
+        }
+        
         $listaN = Nivel::where('activo', 1)->groupBy('nombre')->orderBY('nombre', 'ASC')->pluck('nombre', 'nombre');
         $listaH = Nivel::where('activo', 1)->orderBY('horario', 'ASC')->pluck('horario', 'id');
         return view('usuarios.altaU')->with('listaN', $listaN)->with('listaH', $listaH)->with('ultimo', $ultimo);
@@ -182,7 +187,7 @@ class UserController extends Controller
         $colegiaturaR = $request->colegiatura;
         $letras = $this->convertir($request->colegiatura);
 
-        $pdf = PDF::loadView('pdf.fichaInscripcion', ['user' => $user, 'meses' => $meses, 'edad' => $edad, 'colegiatura' => $colegiaturaR, 'inscripcion' => $inscripcionR, 'letras' => $letras]);
+        $pdf = PDF::loadView('pdf.fichaInscripcion', ['user' => $user, 'meses' => $meses, 'edad' => $edad, 'colegiatura' => $colegiaturaR, 'inscripcion' => $inscripcionR, 'letras' => $letras])->setOptions(['defaultFont' => 'sans-serif']);
 
         //datos necesarios para algortitmo de pago
         $nivelP = Nivel::find($request->horario);
@@ -2279,7 +2284,7 @@ class UserController extends Controller
         } else {
             $estatus = "Inactivos";
         }
-        $pdf = PDF::loadView('pdf.listaalumno', ['info' => $info, 'estatus' => $estatus]);
+        $pdf = PDF::loadView('pdf.listaalumno', ['info' => $info, 'estatus' => $estatus])->setOptions(['defaultFont' => 'sans-serif']);
 
         return $pdf->stream();
     }

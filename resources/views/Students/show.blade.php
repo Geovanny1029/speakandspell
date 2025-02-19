@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img src="{{ isset($student->ruta) ? '/fotos/'.$student->ruta : '/img/avatar-default.jpg' }}" alt="" width="200px;"/>
+                            <img src="{{ isset($student->ruta_foto) ? $student->ruta_foto : '/img/avatar-default.jpg' }}" alt="" width="200px;"/>
                         </div>
                     </div>
                     <div class="col-md-6">

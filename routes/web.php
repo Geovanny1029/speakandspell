@@ -44,7 +44,22 @@ Route::middleware('auth')->group(function()
 		});
 
 	});
+		Route::prefix('level')->group(function () {
 
+			Route::get('/', 'LevelController@index')->name('levels');
+
+			Route::get('/create', 'LevelController@create')->name('level.create');
+
+			Route::post('/store', 'LevelController@store')->name('level.store');
+
+			Route::get('/{level}', 'LevelController@show')->name('level.show');
+
+			Route::get('/{level}/edit', 'LevelController@edit')->name('level.edit');
+
+			Route::put('/{level}', 'LevelController@update')->name('level.update');
+
+			Route::post('/datatable', 'DataTableController@index')->name('level.datatable');
+		});
 });
 
 
@@ -91,7 +106,7 @@ Route::get('pagos', [
 
 //lista niveles
 Route::get('listaNivel', [
-	'uses' => 'UserController@listaNivel',
+	'uses' => 'LevelController@index',
 	'as'   => 'user.listaNivel'
 ]);
 

@@ -14,7 +14,7 @@ class TablaAlumnos extends Migration
     public function up()
     {
         Schema::create('alumnos', function (Blueprint $table) {
-            $table->bigIncrements('matricula');
+            $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('ap');
             $table->string('am');
@@ -29,7 +29,8 @@ class TablaAlumnos extends Migration
             $table->string('casa');
             $table->string('oficina');
             $table->string('celular');
-            $table->string('activo');            
+            $table->string('activo');  
+            $table->string('ruta_foto');          
             $table->timestamps();
         });
     }

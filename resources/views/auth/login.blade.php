@@ -42,26 +42,7 @@
                 Speak and Spell System              
             </a>        
             
-            <div class="nav-collapse">
-                <ul class="nav pull-right">
-                    
-                    <li class="">                       
-                        <a href="signup.html" class="">
-                            Don't have an account?
-                        </a>
-                        
-                    </li>
-                    
-                    <li class="">                       
-                        <a href="" class="">
-                            <i class="icon-chevron-left"></i>
-                            Back to Homepage
-                        </a>
-                        
-                    </li>
-                </ul>
-                
-            </div><!--/.nav-collapse -->    
+
     
         </div> <!-- /container -->
         
@@ -110,7 +91,7 @@
                 
                 <span class="login-checkbox">
                     <input id="Field" name="Field" type="checkbox" class="field login-checkbox" value="First Choice" tabindex="4" />
-                    <label class="choice" for="Field">Keep me signed in</label>
+                    <label class="choice" for="Field">Recordarme</label>
                 </span>
                                     
                 <button class="button btn btn-success btn-large">Ingresar</button>
@@ -127,9 +108,9 @@
 
 
 
-<div class="login-extra">
+<!-- <div class="login-extra">
     <a href="#">Reset Password</a>
-</div> <!-- /login-extra -->
+</div> /login-extra -->
 
 <script src="{{ URL::asset('js/login/jquery-1.7.2.min.js')}}"></script>
 <script src="{{ URL::asset('js/login/bootstrap.js')}}"></script>
